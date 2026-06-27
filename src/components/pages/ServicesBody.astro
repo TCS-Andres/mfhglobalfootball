@@ -1,0 +1,74 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const players = ['sv.p1', 'sv.p2', 'sv.p3', 'sv.p4', 'sv.p5'];
+const coaches = ['sv.c1', 'sv.c2', 'sv.c3'];
+const families = ['sv.f1', 'sv.f2', 'sv.f3'];
+---
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.eyebrow')}</span></span>
+    <h1>{t(lang, 'sv.h1')}</h1>
+    <p>{t(lang, 'sv.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cats">
+      <div class="cat">
+        <h3>{t(lang, 'sv.cat1.t')}</h3>
+        <p>{t(lang, 'sv.cat1.d')}</p>
+      </div>
+      <div class="cat">
+        <h3>{t(lang, 'sv.cat2.t')}</h3>
+        <p>{t(lang, 'sv.cat2.d')}</p>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.players.eyebrow')}</span></span>
+        <h2>{t(lang, 'sv.players.h2')}</h2>
+      </div>
+      <div class="grid g3">
+        {players.map((k) => (
+          <div class="card reveal"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        ))}
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.coaches.eyebrow')}</span></span>
+        <h2>{t(lang, 'sv.coaches.h2')}</h2>
+      </div>
+      <div class="grid g3">
+        {coaches.map((k) => (
+          <div class="card reveal"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        ))}
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.families.eyebrow')}</span></span>
+        <h2>{t(lang, 'sv.families.h2')}</h2>
+      </div>
+      <div class="grid g3">
+        {families.map((k) => (
+          <div class="card reveal"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />

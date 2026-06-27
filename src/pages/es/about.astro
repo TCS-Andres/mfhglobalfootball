@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AboutBody from '../../components/pages/AboutBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'es';
+---
+
+<BaseLayout lang={lang} title={`${t(lang, 'ab.title')} | MFH Global Football`} description={t(lang, 'ab.metaDesc')}>
+  <AboutBody lang={lang} />
+</BaseLayout>

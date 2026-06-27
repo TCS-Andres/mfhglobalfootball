@@ -1,0 +1,161 @@
+---
+import { t, localizePath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const contact = localizePath('/contact', lang);
+const plan = localizePath('/the-mfh-plan', lang);
+const about = localizePath('/about', lang);
+const services = localizePath('/services', lang);
+---
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'hero.eyebrow')}</span></span>
+      <h1 set:html={t(lang, 'hero.h1')} />
+      <p class="sub">{t(lang, 'hero.sub')}</p>
+      <div class="actions">
+        <a href={contact} class="btn btn-primary">{t(lang, 'hero.cta1')}</a>
+        <a href={plan} class="btn btn-ghost">{t(lang, 'hero.cta2')}</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="/logos/ball.png" alt="" width="420" height="407" fetchpriority="high" />
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="wrap">
+      <span><i class="pent"></i>{t(lang, 'strip.1')}</span>
+      <span><i class="pent"></i>{t(lang, 'strip.2')}</span>
+      <span><i class="pent"></i>{t(lang, 'strip.3')}</span>
+      <span><i class="pent"></i>{t(lang, 'strip.4')}</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'problem.eyebrow')}</span></span>
+      <h2>{t(lang, 'problem.h2')}</h2>
+      <p class="lead">{t(lang, 'problem.intro')}</p>
+    </div>
+    <div class="grid g4">
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p1.t')}</h3><p>{t(lang, 'p1.d')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p2.t')}</h3><p>{t(lang, 'p2.d')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p3.t')}</h3><p>{t(lang, 'p3.d')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p4.t')}</h3><p>{t(lang, 'p4.d')}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE -->
+<section class="section sky" id="guide">
+  <div class="wrap">
+    <div class="guide">
+      <div class="body">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'guide.eyebrow')}</span></span>
+        <h2>{t(lang, 'guide.h2')}</h2>
+        <p>{t(lang, 'guide.body')}</p>
+        <a href={about} class="btn btn-outline">{t(lang, 'guide.cta')}</a>
+      </div>
+      <div class="panel">
+        <h3>{t(lang, 'guide.panel')}</h3>
+        <ul>
+          <li><i class="pent"></i><span>{t(lang, 'guide.l1')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'guide.l2')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'guide.l3')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'guide.l4')}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="section" id="plan">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'plan.eyebrow')}</span></span>
+      <h2>{t(lang, 'plan.h2')}</h2>
+    </div>
+    <div class="plan-grid">
+      <div class="step reveal"><div class="num">1</div><h3>{t(lang, 's1.t')}</h3><p>{t(lang, 's1.d')}</p></div>
+      <div class="step reveal"><div class="num">2</div><h3>{t(lang, 's2.t')}</h3><p>{t(lang, 's2.d')}</p></div>
+      <div class="step reveal"><div class="num">3</div><h3>{t(lang, 's3.t')}</h3><p>{t(lang, 's3.d')}</p></div>
+      <div class="step reveal"><div class="num">4</div><h3>{t(lang, 's4.t')}</h3><p>{t(lang, 's4.d')}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="section promise">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'promise.eyebrow')}</span></span>
+    <blockquote set:html={t(lang, 'promise.quote')} />
+  </div>
+</section>
+
+<!-- BRIDGE -->
+<section class="section sky" id="bridge">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'bridge.eyebrow')}</span></span>
+      <h2>{t(lang, 'bridge.h2')}</h2>
+      <p class="lead">{t(lang, 'bridge.body')}</p>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-card"><h3>{t(lang, 'bridge.left')}</h3><p>{t(lang, 'bridge.leftd')}</p></div>
+      <div class="bridge-mid"><span class="bridge-line"></span><i class="pent"></i><span class="bridge-line"></span></div>
+      <div class="bridge-card"><h3>{t(lang, 'bridge.right')}</h3><p>{t(lang, 'bridge.rightd')}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE HELP -->
+<section class="section" id="who">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'who.eyebrow')}</span></span>
+      <h2>{t(lang, 'who.h2')}</h2>
+    </div>
+    <div class="grid g3">
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w1.t')}</h3><p>{t(lang, 'w1.d')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w2.t')}</h3><p>{t(lang, 'w2.d')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w3.t')}</h3><p>{t(lang, 'w3.d')}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="section sky" id="services">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'services.eyebrow')}</span></span>
+      <h2>{t(lang, 'services.h2')}</h2>
+      <p class="lead">{t(lang, 'services.intro')}</p>
+    </div>
+    <div class="svc">
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b1.t')}</h3><p class="items">{t(lang, 'b1.i')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b2.t')}</h3><p class="items">{t(lang, 'b2.i')}</p></div>
+      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b3.t')}</h3><p class="items">{t(lang, 'b3.i')}</p></div>
+    </div>
+    <div style="margin-top:30px" class="reveal"><a href={services} class="btn btn-outline">{t(lang, 'services.cta')}</a></div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>{t(lang, 'cta.h2')}</h2>
+      <p>{t(lang, 'cta.sub')}</p>
+    </div>
+    <a href={contact} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+---
+import { t, toggledPath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const paths = toggledPath(Astro.url.pathname);
+---
+
+<div class="lang" role="group" aria-label={t(lang, 'lang.label')}>
+  <a href={paths.en} hreflang="en" aria-current={lang === 'en' ? 'true' : 'false'}>EN</a>
+  <a href={paths.es} hreflang="es" aria-current={lang === 'es' ? 'true' : 'false'}>ES</a>
+</div>

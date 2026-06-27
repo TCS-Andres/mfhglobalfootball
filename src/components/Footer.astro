@@ -1,0 +1,52 @@
+---
+import { t, localizePath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// Social handles are an open client input. Update these when provided.
+const social = {
+  instagram: '#',
+  youtube: '#',
+  linkedin: '#',
+};
+---
+
+<footer class="site">
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <img class="flogo" src="/logos/footer.png" alt="MFH Global Football" width="128" height="64" />
+        <p class="tag">{t(lang, 'footer.tagline')}</p>
+        <p class="verse">{t(lang, 'footer.verse')}</p>
+      </div>
+      <div>
+        <h4>{t(lang, 'footer.col1')}</h4>
+        <ul>
+          <li><a href={localizePath('/services', lang)}>{t(lang, 'nav.services')}</a></li>
+          <li><a href={localizePath('/about', lang)}>{t(lang, 'nav.about')}</a></li>
+          <li><a href={localizePath('/the-mfh-plan', lang)}>{t(lang, 'nav.plan')}</a></li>
+          <li><a href={localizePath('/contact', lang)}>{t(lang, 'nav.contact')}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>{t(lang, 'footer.col2')}</h4>
+        <ul>
+          <li><a href={localizePath('/contact', lang)}>{t(lang, 'cta.consult')}</a></li>
+          <li>{t(lang, 'footer.contactLine')}</li>
+        </ul>
+        <div class="social" aria-label="Social media">
+          <a href={social.instagram} aria-label="Instagram" rel="me">IG</a>
+          <a href={social.youtube} aria-label="YouTube" rel="me">YT</a>
+          <a href={social.linkedin} aria-label="LinkedIn" rel="me">in</a>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>{t(lang, 'footer.rights')}</span>
+      <span>{t(lang, 'footer.domain')}</span>
+    </div>
+  </div>
+</footer>

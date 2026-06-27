@@ -1,0 +1,18 @@
+---
+import { t, localizePath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<section class="cta-banner">
+  <div class="wrap">
+    <div>
+      <h2>{t(lang, 'cta.h2')}</h2>
+      <p>{t(lang, 'cta.sub')}</p>
+    </div>
+    <a href={localizePath('/contact', lang)} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
+  </div>
+</section>

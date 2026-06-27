@@ -1,0 +1,30 @@
+/* MFH Global Football — design tokens
+   Ported from the approved prototype. Use these variables, do not hardcode hex. */
+:root{
+  /* color */
+  --blue:#005391;
+  --blue-deep:#00355C;
+  --blue-700:#013E6B;
+  --gold:#C9A227;
+  --gold-soft:#E4C45E;
+  --ink:#0C1B29;
+  --ink-soft:#475A70;
+  --sky:#EAF1F8;
+  --line:#D9E2EC;
+  --paper:#FFFFFF;
+
+  /* shape and layout */
+  --r:8px;
+  --maxw:1180px;
+  --section-pad:96px;
+  --shadow:0 18px 50px -24px rgba(0,53,92,.35);
+  --shadow-sm:0 6px 20px -12px rgba(0,53,92,.30);
+
+  /* type */
+  --font-display:"Archivo",sans-serif;
+  --font-body:"Source Sans 3",system-ui,sans-serif;
+  --font-serif:"Source Serif 4",serif;
+}
+@media(max-width:680px){
+  :root{ --section-pad:64px; }
+}

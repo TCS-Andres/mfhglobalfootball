@@ -1,0 +1,144 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// Booking and form sources come from environment variables, never hardcoded.
+// PUBLIC_BOOKING_URL : a Calendly (or similar) embed URL for the consultation block.
+// PUBLIC_FORM_ENDPOINT : a Formspree or Web3Forms style endpoint for the footage form.
+// PUBLIC_CONTACT_EMAIL : address used for the graceful mailto fallback.
+const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL ?? '';
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'hello@mfhglobal.football';
+
+const mailSubject = encodeURIComponent(
+  lang === 'es' ? 'Solicitud de consulta gratis' : 'Free consultation request'
+);
+const ages = ['U10', 'U12', 'U14', 'U16', 'U18', 'U21', 'Senior'];
+const positions =
+  lang === 'es'
+    ? ['Portero', 'Defensa', 'Mediocampista', 'Delantero', 'Otra']
+    : ['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Other'];
+---
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'ct.eyebrow')}</span></span>
+    <h1>{t(lang, 'ct.h1')}</h1>
+    <p>{t(lang, 'ct.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="contact-grid">
+      <!-- Block 1: Book a free consultation -->
+      <div class="panel-card">
+        <h2>{t(lang, 'ct.book.h2')}</h2>
+        <p>{t(lang, 'ct.book.d')}</p>
+        {bookingUrl ? (
+          <iframe
+            class="booking-embed"
+            src={bookingUrl}
+            title={t(lang, 'ct.book.h2')}
+            loading="lazy"
+          ></iframe>
+        ) : (
+          <>
+            <p style="margin-top:16px">{t(lang, 'ct.book.fallback')}</p>
+            <div class="form-actions">
+              <a class="btn btn-primary" href={`mailto:${contactEmail}?subject=${mailSubject}`}>
+                {t(lang, 'ct.book.button')}
+              </a>
+            </div>
+          </>
+        )}
+      </div>
+
+      <!-- Block 2: Share your footage -->
+      <div class="panel-card">
+        <h2>{t(lang, 'ct.footage.h2')}</h2>
+        <p>{t(lang, 'ct.footage.d')}</p>
+        <form
+          id="footage-form"
+          method="POST"
+          action={formEndpoint || undefined}
+          novalidate
+        >
+          <div class="field">
+            <label for="f-name">{t(lang, 'ct.f.name')} <span class="req">({t(lang, 'ct.f.required')})</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="f-contact">{t(lang, 'ct.f.email')} <span class="req">({t(lang, 'ct.f.required')})</span></label>
+            <input id="f-contact" name="contact" type="text" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="f-age">{t(lang, 'ct.f.age')}</label>
+            <select id="f-age" name="age_group">
+              {ages.map((a) => <option value={a}>{a}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-position">{t(lang, 'ct.f.position')}</label>
+            <select id="f-position" name="position">
+              {positions.map((p) => <option value={p}>{p}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-link">{t(lang, 'ct.f.link')} <span class="req">({t(lang, 'ct.f.required')})</span></label>
+            <input id="f-link" name="footage_link" type="url" inputmode="url" placeholder="https://" required />
+            <small>{t(lang, 'ct.f.linkHelp')}</small>
+          </div>
+          <div class="field">
+            <label for="f-message">{t(lang, 'ct.f.message')}</label>
+            <textarea id="f-message" name="message" rows="3"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{t(lang, 'ct.f.submit')}</button>
+          </div>
+        </form>
+        <div class="contact-details">
+          <h2 style="font-size:1.1rem;margin-top:8px">{t(lang, 'ct.details.h2')}</h2>
+          <span>{t(lang, 'ct.details.location')}</span>
+          <span>{t(lang, 'ct.details.langs')}</span>
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Lightweight client validation. Native validation handles the rest.
+  const form = document.getElementById('footage-form') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      const link = form.querySelector<HTMLInputElement>('#f-link');
+      if (link && link.value) {
+        try {
+          const u = new URL(link.value);
+          if (u.protocol !== 'http:' && u.protocol !== 'https:') throw new Error('bad protocol');
+          link.setCustomValidity('');
+        } catch {
+          link.setCustomValidity(link.title || 'Please enter a valid URL.');
+        }
+      }
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      // If no endpoint is configured, prevent a broken submit and guide the user.
+      if (!form.getAttribute('action')) {
+        e.preventDefault();
+        const email =
+          document.querySelector<HTMLAnchorElement>('.contact-details a[href^="mailto:"]')?.href;
+        if (email) window.location.href = email;
+      }
+    });
+  }
+</script>

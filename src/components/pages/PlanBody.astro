@@ -1,0 +1,49 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const stories = ['pl.story1', 'pl.story2', 'pl.story3'];
+---
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'pl.eyebrow')}</span></span>
+    <h1>{t(lang, 'pl.h1')}</h1>
+    <p>{t(lang, 'pl.intro')}</p>
+  </div>
+</section>
+
+<!-- Four step plan, expanded -->
+<section class="section">
+  <div class="wrap">
+    <div class="plan-grid">
+      <div class="step reveal"><div class="num">1</div><h3>{t(lang, 'pl.s1.t')}</h3><p>{t(lang, 'pl.s1.d')}</p></div>
+      <div class="step reveal"><div class="num">2</div><h3>{t(lang, 'pl.s2.t')}</h3><p>{t(lang, 'pl.s2.d')}</p></div>
+      <div class="step reveal"><div class="num">3</div><h3>{t(lang, 'pl.s3.t')}</h3><p>{t(lang, 'pl.s3.d')}</p></div>
+      <div class="step reveal"><div class="num">4</div><h3>{t(lang, 'pl.s4.t')}</h3><p>{t(lang, 'pl.s4.d')}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaching stories -->
+<section class="section sky">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'pl.stories.eyebrow')}</span></span>
+      <h2>{t(lang, 'pl.stories.h2')}</h2>
+      <p class="lead">{t(lang, 'pl.stories.intro')}</p>
+    </div>
+    <div class="stories">
+      {stories.map((k) => (
+        <div class="story reveal"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />

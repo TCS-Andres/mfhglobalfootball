@@ -1,0 +1,39 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const blocks = ['ab.traj', 'ab.lic', 'ab.bil', 'ab.fam'];
+---
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'ab.eyebrow')}</span></span>
+    <h1>{t(lang, 'ab.h1')}</h1>
+    <p>{t(lang, 'ab.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="prose-grid">
+      {blocks.map((k) => (
+        <div class="prose-block reveal">
+          <h2>{t(lang, `${k}.h2`)}</h2>
+          <p>{t(lang, `${k}.body`)}</p>
+        </div>
+      ))}
+      <div class="prose-block reveal">
+        <h2>{t(lang, 'ab.faith.h2')}</h2>
+        <p>{t(lang, 'ab.faith.body')}</p>
+        <p class="about-verse">{t(lang, 'ab.verse')}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />

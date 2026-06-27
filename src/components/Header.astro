@@ -1,0 +1,56 @@
+---
+import { t, localizePath, type Lang } from '../i18n/ui';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<header class="site" id="top">
+  <div class="wrap nav">
+    <a class="brand" href={localizePath('/', lang)} aria-label="MFH Global Football home">
+      <img src="/logos/header.png" alt="MFH Global Football" width="180" height="67" />
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href={localizePath('/services', lang)}>{t(lang, 'nav.services')}</a>
+      <a href={localizePath('/about', lang)}>{t(lang, 'nav.about')}</a>
+      <a href={localizePath('/the-mfh-plan', lang)}>{t(lang, 'nav.plan')}</a>
+      <a href={localizePath('/contact', lang)}>{t(lang, 'nav.contact')}</a>
+    </nav>
+    <div class="nav-right">
+      <LangSwitch lang={lang} />
+      <a href={localizePath('/contact', lang)} class="btn btn-outline">{t(lang, 'cta.consult')}</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Sticky header shadow on scroll
+  const header = document.querySelector('header.site');
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const links = document.getElementById('navlinks');
+  if (burger && links) {
+    burger.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      })
+    );
+  }
+</script>
