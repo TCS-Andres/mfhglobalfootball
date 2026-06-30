@@ -443,3 +443,39 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
   .hero__creds{gap:12px 22px}
   .hero__creds span{font-size:.7rem}
 }
+
+/* ============================================================
+   Bold identity carried across every page and section
+   ============================================================ */
+/* Section headings: uppercase, heavy, tight, like the heroes */
+.head h2,
+.guide .body h2,
+.group h2,
+.cta-banner h2,
+.prose-block h2,
+.panel-card h2,
+.contact-details h2{
+  text-transform:uppercase;font-weight:900;letter-spacing:-.015em;line-height:1.02}
+.head h2{font-size:clamp(2.1rem,3.8vw,3.1rem)}
+.guide .body h2{font-size:clamp(2rem,3.4vw,2.8rem)}
+.group h2{font-size:clamp(1.8rem,3vw,2.5rem)}
+.prose-block h2{font-size:clamp(1.55rem,2.6vw,2.15rem)}
+
+/* Eyebrows a touch stronger */
+.eyebrow{font-weight:800;font-size:.8rem}
+
+/* Card and tile titles: heavier */
+.card h3,.story h3,.cat h3,.bridge-card h3,.guide .panel h3{
+  font-weight:900;letter-spacing:-.01em}
+.card h3{font-size:1.22rem}
+
+/* Gold accent rule under every section heading block */
+.head .eyebrow,.group-head .eyebrow{position:relative}
+.head h2::after,.group h2::after{content:"";display:block;width:54px;height:4px;border-radius:2px;
+  background:var(--gold);margin-top:18px}
+.cta-banner h2::after{content:"";display:block;width:54px;height:4px;border-radius:2px;
+  background:var(--gold-soft);margin-top:14px}
+
+/* Bolder card surfaces and hover */
+.card,.cat,.story,.bridge-card,.panel-card{border-width:1px}
+.card:hover{transform:translateY(-5px)}
