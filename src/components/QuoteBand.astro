@@ -8,21 +8,22 @@ const { lang } = Astro.props;
 ---
 
 <section class="quote-band" data-quote-band>
-  <div class="quote-band__frame">
-    <div class="quote-band__media">
-      <img src="/photos/quote-parallax.jpg" alt={t(lang, 'media.altQuote')} width="1600" height="1067" loading="lazy" />
-    </div>
-    <div class="quote-band__content">
-      <p class="quote-band__small">{t(lang, 'quote.small')}</p>
-      <p class="quote-band__big">{t(lang, 'quote.big')}</p>
+  <div class="wrap">
+    <div class="quote-band__frame">
+      <div class="quote-band__media">
+        <img src="/photos/quote-parallax.jpg" alt={t(lang, 'media.altQuote')} width="1600" height="1067" loading="lazy" />
+      </div>
+      <div class="quote-band__content">
+        <p class="quote-band__small">{t(lang, 'quote.small')}</p>
+        <p class="quote-band__big">{t(lang, 'quote.big')}</p>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .quote-band {
-    padding: 0 8px;
-    margin: 8px 0;
+    padding: 24px 0;
   }
   .quote-band__frame {
     position: relative;
