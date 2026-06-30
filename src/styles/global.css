@@ -234,6 +234,7 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
 @media(max-width:920px){
   .hero .wrap{grid-template-columns:1fr;padding-top:56px;padding-bottom:64px}
   .hero-art{order:-1}.hero-art img{width:230px}
+  .hero .hero-badge{display:none}
   .guide{grid-template-columns:1fr;gap:34px}
   .g4{grid-template-columns:repeat(2,1fr)}
   .g3{grid-template-columns:1fr}
@@ -289,6 +290,44 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
 @keyframes floatA{0%,100%{transform:translate(0,0)}50%{transform:translate(-4%,5%)}}
 @keyframes floatB{0%,100%{transform:translate(0,0)}50%{transform:translate(5%,-4%)}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ---- cinematic hero: film grain, grid, glass badges, 3D tilt ---- */
+.hero-fx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-size:58px 58px;
+  background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),
+                   linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(ellipse 80% 75% at 72% 32%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(ellipse 80% 75% at 72% 32%,#000 0%,transparent 72%)}
+.film-grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
+  background:url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>')}
+
+.hero-art{perspective:1100px}
+.hero-art__stage{position:relative;display:flex;align-items:center;justify-content:center;width:100%;
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.25,1,.5,1);will-change:transform}
+.hero-glow{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;z-index:0;
+  background:radial-gradient(circle,rgba(201,162,39,.30),transparent 62%);filter:blur(12px)}
+.hero-ball{position:relative;z-index:1}
+
+.hero-badge{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--font-display);font-weight:700;font-size:.8rem;letter-spacing:.01em;color:#fff;
+  padding:11px 16px;border-radius:999px;white-space:nowrap;
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.03));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 20px 44px -18px rgba(0,0,0,.75),inset 0 1px 1px rgba(255,255,255,.2);
+  transition:transform .5s cubic-bezier(.25,1,.5,1);will-change:transform}
+.hero-badge .pent{width:10px;height:10px}
+.hero-badge--a{top:4%;left:-6%;animation-delay:1.25s}
+.hero-badge--b{top:46%;right:-9%;animation-delay:1.4s}
+.hero-badge--c{bottom:6%;left:1%;animation-delay:1.55s}
+
+/* hero entrance, plays on load with no JS dependency */
+.hero-in{opacity:0;animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay:calc(var(--i,0)*140ms + 120ms)}
+@keyframes heroIn{from{opacity:0;transform:translateY(26px);filter:blur(8px)}
+  to{opacity:1;transform:none;filter:blur(0)}}
+.hero-badge{opacity:0;animation:badgeIn .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes badgeIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}
 
 /* gold sheen sweep on the primary button */
 .btn-primary{position:relative;overflow:hidden}
@@ -369,5 +408,7 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
   .reveal,.reveal-l,.reveal-r,.reveal-scale{opacity:1!important;transform:none!important;transition:none!important}
   .btn,.card,.story{transition:none!important}
   .hero::before,.hero::after,.hero-art img,.page-hero::after,.marquee__track{animation:none!important}
+  .hero-in,.hero-badge{opacity:1!important;animation:none!important;transform:none!important}
+  .hero-art__stage{transform:none!important;transition:none!important}
   .btn-primary::after{display:none}
 }
