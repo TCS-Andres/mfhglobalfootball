@@ -22,37 +22,23 @@ const stats = [
 ];
 ---
 
-<!-- HERO (cinematic) -->
+<!-- HERO (Modern Sport) -->
 <section class="hero" data-hero>
-  <div class="hero-fx" aria-hidden="true">
-    <div class="hero-grid"></div>
-    <div class="film-grain"></div>
-  </div>
-  <div class="wrap">
-    <div class="hero-copy">
-      <span class="eyebrow hero-in" style="--i:0"><i class="pent"></i><span>{t(lang, 'hero.eyebrow')}</span></span>
-      <h1 class="hero-in" style="--i:1" set:html={t(lang, 'hero.h1')} />
-      <p class="sub hero-in" style="--i:2">{t(lang, 'hero.sub')}</p>
-      <div class="actions hero-in" style="--i:3">
-        <a href={contact} class="btn btn-primary">{t(lang, 'hero.cta1')}</a>
-        <a href={plan} class="btn btn-ghost">{t(lang, 'hero.cta2')}</a>
-      </div>
+  <img class="hero__bg" src="/photos/hero-action.jpg" alt="" fetchpriority="high" />
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__inner">
+    <span class="eyebrow hero-in" style="--i:0"><i class="pent"></i><span>{t(lang, 'hero.eyebrow')}</span></span>
+    <h1 class="hero__title hero-in" style="--i:1" set:html={t(lang, 'hero.h1')} />
+    <p class="hero__sub hero-in" style="--i:2">{t(lang, 'hero.sub')}</p>
+    <div class="actions hero-in" style="--i:3">
+      <a href={contact} class="btn btn-primary">{t(lang, 'hero.cta1')}</a>
+      <a href={plan} class="btn btn-ghost">{t(lang, 'hero.cta2')}</a>
     </div>
-    <div class="hero-art hero-in" style="--i:2" data-tilt>
-      <div class="hero-art__stage" data-tilt-inner>
-        <span class="hero-glow" aria-hidden="true"></span>
-        <img class="hero-ball" src="/logos/ball.png" alt="" width="420" height="407" fetchpriority="high" />
-        <span class="hero-badge hero-badge--a" data-tilt-layer="2.2"><i class="pent"></i>{t(lang, 'strip.1')}</span>
-        <span class="hero-badge hero-badge--b" data-tilt-layer="1.6"><i class="pent"></i>{t(lang, 'strip.4')}</span>
-        <span class="hero-badge hero-badge--c" data-tilt-layer="2.8"><i class="pent"></i>{t(lang, 'strip.3')}</span>
-      </div>
-    </div>
-  </div>
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      {[...strip, ...strip].map((k) => (
-        <span><i class="pent"></i>{t(lang, k)}</span>
-      ))}
+    <div class="hero__creds hero-in" style="--i:4">
+      <span>{t(lang, 'strip.1')}</span>
+      <span>{t(lang, 'strip.2')}</span>
+      <span>{t(lang, 'strip.3')}</span>
+      <span>{t(lang, 'strip.4')}</span>
     </div>
   </div>
 </section>
@@ -204,37 +190,3 @@ const stats = [
     <a href={contact} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
   </div>
 </section>
-
-<script>
-  // Cinematic hero: 3D mouse tilt + layered badge parallax.
-  // Pointer-fine devices only, disabled under reduced motion. No scroll hijack.
-  const hero = document.querySelector('[data-hero]');
-  const stage = hero?.querySelector('[data-tilt-inner]') as HTMLElement | null;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fine = matchMedia('(pointer: fine)').matches;
-
-  if (hero && stage && fine && !reduce) {
-    const layers = [...hero.querySelectorAll<HTMLElement>('[data-tilt-layer]')];
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const r = hero.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        stage.style.transform = `rotateY(${(px * 14).toFixed(2)}deg) rotateX(${(-py * 12).toFixed(2)}deg)`;
-        layers.forEach((el) => {
-          const d = parseFloat(el.dataset.tiltLayer || '1');
-          el.style.transform = `translate3d(${(px * d * 14).toFixed(1)}px, ${(py * d * 14).toFixed(1)}px, 0)`;
-        });
-      });
-    };
-    const reset = () => {
-      cancelAnimationFrame(raf);
-      stage.style.transform = '';
-      layers.forEach((el) => (el.style.transform = ''));
-    };
-    hero.addEventListener('pointermove', onMove);
-    hero.addEventListener('pointerleave', reset);
-  }
-</script>
