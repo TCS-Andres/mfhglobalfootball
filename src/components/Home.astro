@@ -9,6 +9,16 @@ const contact = localizePath('/contact', lang);
 const plan = localizePath('/the-mfh-plan', lang);
 const about = localizePath('/about', lang);
 const services = localizePath('/services', lang);
+
+const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5', 'strip.6'];
+const problems = ['p1', 'p2', 'p3', 'p4'];
+const who = ['w1', 'w2', 'w3'];
+const stats = [
+  { n: 'stat1.n', l: 'stat1.l', count: true },
+  { n: 'stat2.n', l: 'stat2.l', count: true },
+  { n: 'stat3.n', l: 'stat3.l', count: true },
+  { n: 'stat4.n', l: 'stat4.l', count: false },
+];
 ---
 
 <!-- HERO -->
@@ -23,22 +33,21 @@ const services = localizePath('/services', lang);
         <a href={plan} class="btn btn-ghost">{t(lang, 'hero.cta2')}</a>
       </div>
     </div>
-    <div class="hero-art">
+    <div class="hero-art" data-parallax data-parallax-speed="0.12">
       <img src="/logos/ball.png" alt="" width="420" height="407" fetchpriority="high" />
     </div>
   </div>
-  <div class="hero-strip">
-    <div class="wrap">
-      <span><i class="pent"></i>{t(lang, 'strip.1')}</span>
-      <span><i class="pent"></i>{t(lang, 'strip.2')}</span>
-      <span><i class="pent"></i>{t(lang, 'strip.3')}</span>
-      <span><i class="pent"></i>{t(lang, 'strip.4')}</span>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {[...strip, ...strip].map((k) => (
+        <span><i class="pent"></i>{t(lang, k)}</span>
+      ))}
     </div>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="section" id="problem">
+<!-- THE LANDSCAPE -->
+<section class="section" id="landscape">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'problem.eyebrow')}</span></span>
@@ -46,38 +55,55 @@ const services = localizePath('/services', lang);
       <p class="lead">{t(lang, 'problem.intro')}</p>
     </div>
     <div class="grid g4">
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p1.t')}</h3><p>{t(lang, 'p1.d')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p2.t')}</h3><p>{t(lang, 'p2.d')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p3.t')}</h3><p>{t(lang, 'p3.d')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'p4.t')}</h3><p>{t(lang, 'p4.d')}</p></div>
+      {problems.map((k, i) => (
+        <div class="card reveal" style={`--d:${i * 90}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+      ))}
     </div>
   </div>
 </section>
 
-<!-- GUIDE -->
+<!-- MEET BERT -->
 <section class="section sky" id="guide">
   <div class="wrap">
-    <div class="guide">
-      <div class="body">
+    <div class="guide has-media">
+      <div class="media-slot media-tall reveal-l">
+        <i class="pent"></i><span class="tag">{t(lang, 'media.placeholder')}</span>
+      </div>
+      <div class="body reveal-r">
         <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'guide.eyebrow')}</span></span>
         <h2>{t(lang, 'guide.h2')}</h2>
         <p>{t(lang, 'guide.body')}</p>
+        <div class="panel">
+          <h3>{t(lang, 'guide.panel')}</h3>
+          <ul>
+            <li><i class="pent"></i><span>{t(lang, 'guide.l1')}</span></li>
+            <li><i class="pent"></i><span>{t(lang, 'guide.l2')}</span></li>
+            <li><i class="pent"></i><span>{t(lang, 'guide.l3')}</span></li>
+            <li><i class="pent"></i><span>{t(lang, 'guide.l4')}</span></li>
+          </ul>
+        </div>
         <a href={about} class="btn btn-outline">{t(lang, 'guide.cta')}</a>
-      </div>
-      <div class="panel">
-        <h3>{t(lang, 'guide.panel')}</h3>
-        <ul>
-          <li><i class="pent"></i><span>{t(lang, 'guide.l1')}</span></li>
-          <li><i class="pent"></i><span>{t(lang, 'guide.l2')}</span></li>
-          <li><i class="pent"></i><span>{t(lang, 'guide.l3')}</span></li>
-          <li><i class="pent"></i><span>{t(lang, 'guide.l4')}</span></li>
-        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PLAN -->
+<!-- STATS BAND -->
+<section class="section stats">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'stats.eyebrow')}</span></span>
+    <div class="stat-grid">
+      {stats.map((s, i) => (
+        <div class="stat reveal-scale" style={`--d:${i * 110}ms`}>
+          <div class="n" class:list={[{ count: s.count }]} data-count={s.count ? t(lang, s.n) : undefined}>{t(lang, s.n)}</div>
+          <div class="l">{t(lang, s.l)}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
 <section class="section" id="plan">
   <div class="wrap">
     <div class="head">
@@ -85,10 +111,9 @@ const services = localizePath('/services', lang);
       <h2>{t(lang, 'plan.h2')}</h2>
     </div>
     <div class="plan-grid">
-      <div class="step reveal"><div class="num">1</div><h3>{t(lang, 's1.t')}</h3><p>{t(lang, 's1.d')}</p></div>
-      <div class="step reveal"><div class="num">2</div><h3>{t(lang, 's2.t')}</h3><p>{t(lang, 's2.d')}</p></div>
-      <div class="step reveal"><div class="num">3</div><h3>{t(lang, 's3.t')}</h3><p>{t(lang, 's3.d')}</p></div>
-      <div class="step reveal"><div class="num">4</div><h3>{t(lang, 's4.t')}</h3><p>{t(lang, 's4.d')}</p></div>
+      {[1, 2, 3, 4].map((n, i) => (
+        <div class="step reveal" style={`--d:${i * 110}ms`}><div class="num">{n}</div><h3>{t(lang, `s${n}.t`)}</h3><p>{t(lang, `s${n}.d`)}</p></div>
+      ))}
     </div>
   </div>
 </section>
@@ -110,14 +135,20 @@ const services = localizePath('/services', lang);
       <p class="lead">{t(lang, 'bridge.body')}</p>
     </div>
     <div class="bridge-row">
-      <div class="bridge-card"><h3>{t(lang, 'bridge.left')}</h3><p>{t(lang, 'bridge.leftd')}</p></div>
+      <div class="bridge-card reveal-l">
+        <div class="media-slot" style="aspect-ratio:16/10;margin-bottom:18px"><i class="pent"></i><span class="tag">{t(lang, 'media.placeholder')}</span></div>
+        <h3>{t(lang, 'bridge.left')}</h3><p>{t(lang, 'bridge.leftd')}</p>
+      </div>
       <div class="bridge-mid"><span class="bridge-line"></span><i class="pent"></i><span class="bridge-line"></span></div>
-      <div class="bridge-card"><h3>{t(lang, 'bridge.right')}</h3><p>{t(lang, 'bridge.rightd')}</p></div>
+      <div class="bridge-card reveal-r">
+        <div class="media-slot" style="aspect-ratio:16/10;margin-bottom:18px"><i class="pent"></i><span class="tag">{t(lang, 'media.placeholder')}</span></div>
+        <h3>{t(lang, 'bridge.right')}</h3><p>{t(lang, 'bridge.rightd')}</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- WHO WE HELP -->
+<!-- WHO WE WORK WITH -->
 <section class="section" id="who">
   <div class="wrap">
     <div class="head">
@@ -125,9 +156,9 @@ const services = localizePath('/services', lang);
       <h2>{t(lang, 'who.h2')}</h2>
     </div>
     <div class="grid g3">
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w1.t')}</h3><p>{t(lang, 'w1.d')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w2.t')}</h3><p>{t(lang, 'w2.d')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'w3.t')}</h3><p>{t(lang, 'w3.d')}</p></div>
+      {who.map((k, i) => (
+        <div class="card reveal" style={`--d:${i * 90}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+      ))}
     </div>
   </div>
 </section>
@@ -141,9 +172,9 @@ const services = localizePath('/services', lang);
       <p class="lead">{t(lang, 'services.intro')}</p>
     </div>
     <div class="svc">
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b1.t')}</h3><p class="items">{t(lang, 'b1.i')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b2.t')}</h3><p class="items">{t(lang, 'b2.i')}</p></div>
-      <div class="card reveal"><i class="pent"></i><h3>{t(lang, 'b3.t')}</h3><p class="items">{t(lang, 'b3.i')}</p></div>
+      <div class="card reveal" style="--d:0ms"><i class="pent"></i><h3>{t(lang, 'b1.t')}</h3><p class="items">{t(lang, 'b1.i')}</p></div>
+      <div class="card reveal" style="--d:90ms"><i class="pent"></i><h3>{t(lang, 'b2.t')}</h3><p class="items">{t(lang, 'b2.i')}</p></div>
+      <div class="card reveal" style="--d:180ms"><i class="pent"></i><h3>{t(lang, 'b3.t')}</h3><p class="items">{t(lang, 'b3.i')}</p></div>
     </div>
     <div style="margin-top:30px" class="reveal"><a href={services} class="btn btn-outline">{t(lang, 'services.cta')}</a></div>
   </div>

@@ -10,10 +10,16 @@ education, and intake. The single most important goal of the site is to get visi
 free bilingual consultation.
 
 ## Source of truth
-The approved homepage prototype is at `/reference/mfh_home.html`. It is the visual and copy
-specification. Match it exactly: same palette, spacing, typography, section order, and copy in
-both English and Spanish. When anything is ambiguous, open the prototype and follow it. Do not
-redesign it. The fastest path is to reuse its CSS class names so the ported markup looks identical.
+The original homepage prototype is at `/reference/mfh_home.html`. It defined the palette,
+typography, and base component CSS, which are still the foundation.
+
+Note (June 2026): the client approved a bolder, more energetic redesign and a copy rewrite. The
+live site is now the source of truth, not the prototype. Visible copy no longer uses StoryBrand
+framework labels (no "The Problem", "Your Guide", "Our Promise", "Who We Help", "What We Do").
+Eyebrows speak into each section conversationally, headings carry Bert's voice. Keep the navy and
+gold palette and the design tokens. Motion is bolder (animated hero glow, marquee, staggered
+reveals, parallax, count-up stats) but always disabled under prefers-reduced-motion. Photo slots
+(`.media-slot`) are designed placeholders ready for real `<img>` swaps.
 
 ## Non negotiable brand rules
 - Use "MFH" or "MFH Global Football" only. Never spell out the family holdings name.

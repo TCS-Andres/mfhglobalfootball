@@ -1,4 +1,4 @@
-/* MFH Global Football — global stylesheet
+/* MFH Global Football, global stylesheet
    Ported verbatim from the approved prototype at /reference/mfh_home.html.
    Brand palette literals are replaced with the tokens in tokens.css.
    One off tints used only in the prototype (hero text, dark section text) have no
@@ -256,8 +256,118 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
   footer.site .top{grid-template-columns:1fr}
   .cta-banner .wrap{flex-direction:column;align-items:flex-start}
 }
+/* ============================================================
+   BOLD & ENERGETIC ENHANCEMENTS + LIVELY MOTION
+   Layered on top of the ported prototype. All animation is
+   transform/opacity based and disabled under reduced motion.
+   ============================================================ */
+
+/* staggered reveals: pages set --d per item */
+.reveal{transition-delay:var(--d,0ms)}
+.reveal-l{opacity:0;transform:translateX(-26px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0ms)}
+.reveal-r{opacity:0;transform:translateX(26px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0ms)}
+.reveal-l.in,.reveal-r.in{opacity:1;transform:none}
+.reveal-scale{opacity:0;transform:scale(.94);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0ms)}
+.reveal-scale.in{opacity:1;transform:none}
+
+/* bigger, bolder type on the home hero */
+.hero h1{font-size:clamp(2.7rem,6vw,4.6rem);letter-spacing:-.02em}
+.hero p.sub{font-size:clamp(1.05rem,1.6vw,1.25rem)}
+/* animated aurora glow behind the hero */
+.hero::before{content:"";position:absolute;inset:-25% -15% auto auto;width:62vw;height:62vw;z-index:0;
+  background:radial-gradient(circle,rgba(201,162,39,.22),transparent 60%);filter:blur(24px);
+  animation:floatA 16s ease-in-out infinite;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:auto auto -30% -20%;width:54vw;height:54vw;z-index:0;
+  background:radial-gradient(circle,rgba(10,79,134,.55),transparent 62%);filter:blur(28px);
+  animation:floatB 20s ease-in-out infinite;pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-strip{position:relative;z-index:1}
+/* floating, parallax-ready ball mark */
+.hero-art img{will-change:transform;animation:bob 7s ease-in-out infinite}
+.hero-art[data-parallax] img,[data-parallax]{will-change:transform}
+
+@keyframes floatA{0%,100%{transform:translate(0,0)}50%{transform:translate(-4%,5%)}}
+@keyframes floatB{0%,100%{transform:translate(0,0)}50%{transform:translate(5%,-4%)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* gold sheen sweep on the primary button */
+.btn-primary{position:relative;overflow:hidden}
+.btn-primary::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg)}
+.btn-primary:hover::after{animation:sheen .8s ease}
+@keyframes sheen{from{left:-120%}to{left:140%}}
+
+/* trust marquee (replaces the static strip) */
+.marquee{position:relative;z-index:1;overflow:hidden;border-top:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.14);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee__track{display:flex;align-items:center;gap:0;width:max-content;animation:marquee 34s linear infinite}
+.marquee:hover .marquee__track{animation-play-state:paused}
+.marquee__track span{font-family:var(--font-display);font-weight:700;font-size:.82rem;letter-spacing:.12em;
+  text-transform:uppercase;color:#bcd3e8;display:inline-flex;align-items:center;gap:12px;padding:18px 26px}
+.marquee__track span .pent{width:9px;height:9px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* bolder cards: growing gold top accent */
+.card{position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.card:hover::before{transform:scaleX(1)}
+.card:hover{transform:translateY(-6px)}
+.story{position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.story::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.story:hover::before{transform:scaleX(1)}
+.story:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:#c4d4e4}
+
+/* eyebrows can hold a short conversational phrase */
+.eyebrow{letter-spacing:.14em;max-width:46ch}
+
+/* honest stats band */
+.stats{background:linear-gradient(120deg,var(--blue-deep),#04283f);color:#fff;position:relative;overflow:hidden}
+.stats::after{content:"";position:absolute;inset:auto -120px -160px auto;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,162,39,.14),transparent 60%)}
+.stats .wrap{position:relative;z-index:1}
+.stats .eyebrow{color:var(--gold-soft);justify-content:center;display:flex;margin-bottom:36px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.stat{text-align:center;padding:0 8px}
+.stat .n{font-family:var(--font-display);font-weight:900;font-size:clamp(2.6rem,5vw,3.8rem);color:var(--gold-soft);
+  line-height:1;letter-spacing:-.02em}
+.stat .l{margin-top:12px;color:#cdddec;font-size:.96rem;line-height:1.5}
+.stat .pent{margin:14px auto 0}
+
+/* swappable photo slots: look designed, ready for a real <img> */
+.media-slot{position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);
+  background:linear-gradient(135deg,#0a4f86,var(--blue-deep));aspect-ratio:4/3}
+.media-slot::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 70% 20%,rgba(201,162,39,.28),transparent 55%),
+  repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 14px,transparent 14px 28px)}
+.media-slot .pent{position:absolute;left:22px;bottom:22px;width:26px;height:26px}
+.media-slot .tag{position:absolute;right:16px;bottom:14px;font-family:var(--font-display);font-weight:700;
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.media-tall{aspect-ratio:3/4}
+
+/* guide section: photo + panel rhythm */
+.guide.has-media{grid-template-columns:.9fr 1.1fr}
+@media(max-width:920px){.guide.has-media{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr;gap:30px 20px}}
+@media(max-width:560px){.stat-grid{grid-template-columns:1fr}}
+
+/* page-hero gets the same energy: bigger + animated glow */
+.page-hero{position:relative;overflow:hidden}
+.page-hero h1{font-size:clamp(2.4rem,5vw,3.8rem);letter-spacing:-.02em}
+.page-hero::after{content:"";position:absolute;inset:-30% -10% auto auto;width:50vw;height:50vw;
+  background:radial-gradient(circle,rgba(201,162,39,.18),transparent 60%);filter:blur(22px);
+  animation:floatA 18s ease-in-out infinite;pointer-events:none}
+.page-hero .wrap{position:relative;z-index:1}
+
+/* section divider accent */
+.accent-rule{height:4px;width:64px;background:var(--gold);border-radius:2px;margin-top:18px}
+
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important}
-  .reveal{opacity:1!important;transform:none!important;transition:none!important}
-  .btn,.card{transition:none!important}
+  .reveal,.reveal-l,.reveal-r,.reveal-scale{opacity:1!important;transform:none!important;transition:none!important}
+  .btn,.card,.story{transition:none!important}
+  .hero::before,.hero::after,.hero-art img,.page-hero::after,.marquee__track{animation:none!important}
+  .btn-primary::after{display:none}
 }

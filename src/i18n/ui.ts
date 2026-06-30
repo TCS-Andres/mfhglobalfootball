@@ -1,7 +1,9 @@
-// MFH Global Football — i18n dictionary.
-// Homepage strings are copied verbatim from the approved prototype I18N object.
-// Inner page strings are drawn from the Master Brain, in MFH voice, EN and ES as equals.
-// Do not paraphrase or "improve" approved copy. No em dashes anywhere.
+// MFH Global Football, i18n dictionary.
+// Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype.
+// Eyebrows speak into the section conversationally. Headings carry Bert's voice.
+// No StoryBrand framework labels in visible copy. EN and ES are equals.
+// Hard rules: MFH only (never the holdings name), no guarantees, faith only in the
+// footer (plus one understated About mention), parents always in the room, no em dashes.
 
 export const languages = {
   en: 'English',
@@ -16,50 +18,65 @@ export const ui = {
     // nav + global CTA
     'nav.services': 'Services',
     'nav.about': 'About',
-    'nav.plan': 'The MFH Plan',
+    'nav.plan': 'How It Works',
     'nav.contact': 'Contact',
     'cta.consult': 'Book a Free Consultation',
+    'lang.label': 'Language',
+    'skip.link': 'Skip to content',
 
     // hero
-    'hero.eyebrow': 'Player-First · Globally Connected',
+    'hero.eyebrow': 'FIFA-Licensed · South Florida & Colombia',
     'hero.h1': "We help players and coaches <span class='hl'>build futures</span> in football.",
-    'hero.sub': "MFH Global Football is a FIFA-licensed agency that guides players and parents through every important decision and opportunity on the path to professional football, so the player's future always comes first.",
+    'hero.sub': 'MFH Global Football is a FIFA-licensed agency. We guide players and parents through every decision and opportunity on the road to professional football, and we keep your future first the whole way.',
     'hero.cta1': 'Book a Free Consultation',
     'hero.cta2': 'See how it works',
 
-    // trust strip
+    // trust marquee
     'strip.1': 'FIFA-Licensed Agent',
     'strip.2': 'Player & Coach Representation',
     'strip.3': 'South Florida & Colombia',
     'strip.4': 'English & Español',
+    'strip.5': 'Education First',
+    'strip.6': 'Parents Always Welcome',
 
-    // problem
-    'problem.eyebrow': 'The Problem',
-    'problem.h2': 'The path to pro is confusing, and not every agent earns your trust.',
-    'problem.intro': 'Talented players and families too often navigate this alone, or alongside someone who puts the commission before the player. We think families deserve better.',
+    // the landscape (recast from "The Problem")
+    'problem.eyebrow': 'Before you trust anyone with your future',
+    'problem.h2': 'The road to professional football is confusing, and not everyone on it is on your side.',
+    'problem.intro': 'Too many talented players and families walk this road alone, or next to someone who puts the commission first. You deserve better, and you deserve to understand every step before you take it.',
     'p1.t': 'Unlicensed agents',
-    'p1.d': "Operators working without structure or accountability, outside FIFA's rules.",
-    'p2.t': 'Confusing regulations',
-    'p2.d': 'Work permits, quotas, transfer windows, and minor rules that decide a career, often misunderstood.',
-    'p3.t': 'Language barriers',
+    'p1.d': "People working without structure or accountability, outside FIFA's rules.",
+    'p2.t': 'Rules that decide careers',
+    'p2.d': 'Work permits, quotas, transfer windows, and minor rules that shape a career, and are easy to get wrong.',
+    'p3.t': 'Language in the way',
     'p3.d': 'Legal complexity is hard enough. It is harder when the contract is not in your first language.',
     'p4.t': 'Approaches to minors',
     'p4.d': 'Scouts and intermediaries reaching young players without the parents in the room.',
 
-    // guide
-    'guide.eyebrow': 'Your Guide',
+    // meet bert (recast from "Your Guide")
+    'guide.eyebrow': 'The person in your corner',
     'guide.h2': 'An agent who has lived every side of the game.',
     'guide.body': 'MFH was founded by Bert Mahecha, a FIFA-licensed football agent based in South Florida with deep ties to Colombia. He has played, refereed, coached, owned a club, and run a league. That full-spectrum experience is why MFH asks the right questions before a player ever boards a plane.',
     'guide.cta': 'More about Bert and MFH',
-    'guide.panel': 'Why families trust MFH',
+    'guide.panel': 'Why families work with MFH',
     'guide.l1': 'FIFA-licensed under the modern framework.',
     'guide.l2': 'Bilingual, English and Spanish as equals.',
     'guide.l3': 'A family business, built with his sons and cousin.',
     'guide.l4': 'Education first. Parents are always in the room.',
 
-    // plan stepper
-    'plan.eyebrow': 'The MFH Plan',
-    'plan.h2': 'Four steps, and parents are welcome at every one.',
+    // stats band (honest facts from the Master Brain)
+    'stats.eyebrow': 'Experience you can count',
+    'stat1.n': '5',
+    'stat1.l': 'sides of the game lived: player, referee, coach, club owner, league president',
+    'stat2.n': '2',
+    'stat2.l': 'countries connected, South Florida and Colombia',
+    'stat3.n': '3',
+    'stat3.l': 'transfer windows a year, the rhythm of the work',
+    'stat4.n': '2023',
+    'stat4.l': "the modern FIFA framework Bert is licensed under",
+
+    // how it works (recast from "The MFH Plan")
+    'plan.eyebrow': 'How we work together',
+    'plan.h2': 'Four steps, and your family is in every one.',
     's1.t': 'Book a free consultation',
     's1.d': 'In English or Spanish. Parents welcome.',
     's2.t': 'Share your footage',
@@ -69,21 +86,21 @@ export const ui = {
     's4.t': 'Sign with an agent who fights for you',
     's4.d': 'Representation built on protection and education, not promises.',
 
-    // promise
-    'promise.eyebrow': 'Our Promise',
+    // promise (recast eyebrow from "Our Promise")
+    'promise.eyebrow': 'Straight talk',
     'promise.quote': "We can't promise you a contract. <span class='hl'>We promise to open doors</span> for you to showcase your skills, to protect you through the entire process, and to make sure you understand every rule that governs your future.",
 
-    // bridge
-    'bridge.eyebrow': 'The Bridge',
+    // bridge (recast eyebrow from "The Bridge")
+    'bridge.eyebrow': 'Two homes, one path',
     'bridge.h2': 'South Florida and Colombia, connected.',
-    'bridge.body': 'Real relationships on both ends, bilingual and bicultural, with a growth corridor from MLS to Liga BetPlay to Europe. This is the bridge MFH is built to walk with you.',
+    'bridge.body': 'Real relationships on both ends, bilingual and bicultural, with a growth corridor from MLS to Liga BetPlay to Europe. This is the road MFH is built to walk with you.',
     'bridge.left': 'South Florida',
     'bridge.leftd': 'A deep club ecosystem and growing player volume.',
     'bridge.right': 'Colombia',
     'bridge.rightd': 'Hungry, committed players and strong club institutions.',
 
-    // who we help
-    'who.eyebrow': 'Who We Help',
+    // who we work with (recast eyebrow from "Who We Help")
+    'who.eyebrow': 'Who we work with',
     'who.h2': 'Built for players, families, and the clubs that need them.',
     'w1.t': 'Professional & transfer-ready players',
     'w1.d': 'Representation, negotiation, and FIFA TMS transfers, handled with regulatory care.',
@@ -92,9 +109,9 @@ export const ui = {
     'w3.t': 'Clubs, coaches & scouts',
     'w3.d': 'Coach placement, scouting, and referral partnerships across the Americas.',
 
-    // services preview
-    'services.eyebrow': 'What We Do',
-    'services.h2': 'Full-spectrum representation, within the rules.',
+    // services preview (recast eyebrow from "What We Do")
+    'services.eyebrow': 'What representation looks like',
+    'services.h2': 'Full-spectrum representation, always within the rules.',
     'services.intro': "Everything MFH does follows FIFA's framework, wrapped in an education-first, player-first approach.",
     'b1.t': 'Players',
     'b1.i': 'Professional representation · Transfers & loans (FIFA TMS) · Video-supported evaluation · Welfare & ongoing management',
@@ -117,76 +134,75 @@ export const ui = {
     'footer.rights': '© 2026 MFH Global Football. All rights reserved.',
     'footer.domain': 'mfhglobal.football',
 
-    // hero secondary CTA target + accessibility
-    'lang.label': 'Language',
-    'skip.link': 'Skip to content',
+    // media slot label (swappable photo placeholders)
+    'media.placeholder': 'Photo',
 
     // ---------------- Services page ----------------
-    'sv.title': 'Services',
-    'sv.metaDesc': 'Full-spectrum, FIFA-licensed representation for players, coaches, clubs, and families. Everything MFH does follows FIFA’s framework, education first.',
-    'sv.eyebrow': 'What We Do',
-    'sv.h1': 'Full-spectrum representation, within the rules.',
-    'sv.intro': 'Everything MFH does follows FIFA’s framework. FIFA divides what a licensed agent does into two categories, and MFH delivers both, wrapped in an education-first, player-first approach.',
+    'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
+    'sv.metaDesc': 'FIFA-licensed representation for players, coaches, clubs, and families in South Florida and Colombia. Transfers, evaluations, welfare, scouting, and youth pathways, education first.',
+    'sv.eyebrow': 'What representation looks like',
+    'sv.h1': 'Full-spectrum representation, always within the rules.',
+    'sv.intro': "Everything MFH does follows FIFA's framework. FIFA splits what a licensed agent does into two categories, and MFH delivers both, wrapped in an education-first, player-first approach.",
     'sv.cat1.t': 'Football Agent Services',
     'sv.cat1.d': 'The core transaction work: negotiating, communicating, and acting to help conclude a player or coach deal. This covers employment, registration, and the transfer of a player or coach between clubs.',
     'sv.cat2.t': 'Other Services',
-    'sv.cat2.d': 'Everything else we do for a client beyond the transaction itself, such as scouting, advisory, off-field support, and arranging basic needs, all within FIFA’s rules.',
+    'sv.cat2.d': 'Everything else we do for a client beyond the transaction itself, such as scouting, advisory, off-field support, and arranging basic needs, all within FIFA rules.',
 
     'sv.players.h2': 'Players',
-    'sv.players.eyebrow': 'For Players',
+    'sv.players.eyebrow': 'When the game is your profession',
     'sv.p1.t': 'Professional Player Representation',
     'sv.p1.d': 'Full FIFA-licensed representation for professional and transfer-ready players: contract negotiation, club placement, and career guidance, within FIFA, international, national, and state law.',
     'sv.p2.t': 'Transfer & Loan Negotiation (FIFA TMS)',
-    'sv.p2.d': 'Transfers and loans executed through FIFA’s Transfer Matching System, including the regulatory homework many skip: work permits, foreign-player quotas, and eligibility windows.',
+    'sv.p2.d': "Transfers and loans executed through FIFA's Transfer Matching System, including the regulatory homework many skip: work permits, foreign-player quotas, and eligibility windows.",
     'sv.p3.t': 'Player Evaluation (Video-Supported)',
-    'sv.p3.d': 'An honest read on a player’s level and prospects. Because many players are abroad, MFH evaluates through submitted match footage before or after the first consultation.',
+    'sv.p3.d': "An honest read on a player's level and prospects. Because many players are abroad, MFH evaluates through submitted match footage before or after the first consultation.",
     'sv.p4.t': 'Player Welfare & Ongoing Management',
     'sv.p4.d': 'Post-signing support: trainers to elevate specific skills, guidance when needed, and the steady hand a player wants when placed far from home.',
     'sv.p5.t': 'Commercial & Off-Field Support',
-    'sv.p5.d': 'Image rights, sponsorships, endorsements, public relations, and social media support as a player’s profile grows.',
+    'sv.p5.d': "Image rights, sponsorships, endorsements, public relations, and social media support as a player's profile grows.",
 
     'sv.coaches.h2': 'Coaches & Clubs',
-    'sv.coaches.eyebrow': 'For Coaches & Clubs',
+    'sv.coaches.eyebrow': 'For the people who build teams',
     'sv.c1.t': 'Coach Representation',
     'sv.c1.d': 'Placement and employment negotiation for coaches with clubs, leagues, and member associations, handled within the FIFA framework.',
     'sv.c2.t': 'Club & Sporting Director Services',
     'sv.c2.d': 'Player identification, monitoring, and assessment for clubs and sporting directors, including the emerging US second and third divisions.',
     'sv.c3.t': 'Scout & Referral Partnerships',
-    'sv.c3.d': 'Formal agreements with scouts who surface talent into the MFH pipeline, built on clear terms and accountability.',
+    'sv.c3.d': 'Formal agreements with scouts who surface talent into the MFH network, built on clear terms and accountability.',
 
     'sv.families.h2': 'Families & Youth',
-    'sv.families.eyebrow': 'For Families & Youth',
+    'sv.families.eyebrow': 'For the parents in the room',
     'sv.f1.t': 'Trials & Showcases',
     'sv.f1.d': 'Organizing and facilitating trials and arranging club meetings. Opening doors is the work, never a promise of the outcome.',
     'sv.f2.t': 'Youth & Family Advisory and Education',
-    'sv.f2.d': 'Guidance for parents of aspiring players: their rights, parental consent rules, the real odds of going pro, and what a legitimate path looks like. Education is a deliverable, not a sales tactic.',
+    'sv.f2.d': 'Guidance for parents of aspiring players: their rights, parental consent rules, the real odds of going pro, and what a legitimate path looks like. Education is a service, not a sales tactic.',
     'sv.f3.t': 'Youth-to-Pro Pathway Development',
     'sv.f3.d': 'Building the South Florida player pipeline and relationships with local clubs, so young players have a real, structured path to grow.',
 
     // ---------------- About page ----------------
-    'ab.title': 'About',
-    'ab.metaDesc': 'Meet Bert Mahecha, the FIFA-licensed founder of MFH Global Football. A full-spectrum football life, a family business, and the South Florida to Colombia bridge.',
-    'ab.eyebrow': 'Your Guide',
+    'ab.title': 'About Bert Mahecha | FIFA-Licensed Football Agent',
+    'ab.metaDesc': 'Bert Mahecha founded MFH Global Football, a FIFA-licensed, family-built agency bridging South Florida and Colombia. Player, referee, coach, club owner, and league president.',
+    'ab.eyebrow': 'The person in your corner',
     'ab.h1': 'An agent who has lived every side of the game.',
-    'ab.intro': 'MFH Global Football was founded by Bert Mahecha, a FIFA-licensed football agent based in South Florida with deep ties to Colombia. He guides players and families through every important decision on the path to professional football, so the player’s future always comes first.',
+    'ab.intro': "MFH Global Football was founded by Bert Mahecha, a FIFA-licensed football agent based in South Florida with deep ties to Colombia. He guides players and families through every important decision on the road to professional football, so the player's future always comes first.",
     'ab.traj.h2': 'A full-spectrum football life.',
     'ab.traj.body': 'Bert has lived every side of the game. He played it, refereed it, coached it, owned a club, and ran a league, serving as president of the American Premier Soccer League and director of the Florida State Soccer Association. Most agents have done a fraction of that. That full-spectrum experience is why MFH asks the right questions before a player ever boards a plane.',
     'ab.lic.h2': 'FIFA-licensed under the modern framework.',
-    'ab.lic.body': 'Bert earned his FIFA agent license under the restructured framework in place since 2023. He describes it as an attorney-style privilege: being one of the selected people authorized to represent players within FIFA’s governance. He wanted to be inside that structure, licensed and accountable, rather than among the unlicensed operators families have every reason to be wary of.',
+    'ab.lic.body': "Bert earned his FIFA agent license under the restructured framework in place since 2023. He describes it as an attorney-style privilege: being one of the selected people authorized to represent players within FIFA's governance. He wanted to be inside that structure, licensed and accountable, rather than among the unlicensed operators families have every reason to be wary of.",
     'ab.bil.h2': 'Bilingual, bicultural, connected.',
     'ab.bil.body': 'Colombian-American and fully bilingual, Bert works in English and Spanish as equals. MFH is built on real relationships on both ends, in South Florida and in Colombia, with the local knowledge that helps families feel understood, not processed.',
     'ab.fam.h2': 'A family business.',
-    'ab.fam.body': 'MFH is a family business in the most literal sense. Bert builds it alongside his sons and his cousin, and that family foundation is part of the brand’s credibility, not a footnote. MFH treats client families the way it treats its own: with education, patience, and protection.',
+    'ab.fam.body': "MFH is a family business in the most literal sense. Bert builds it alongside his sons and his cousin, and that family foundation is part of the brand's credibility, not a footnote. MFH treats client families the way it treats its own: with education, patience, and protection.",
     'ab.faith.h2': 'Faith as foundation.',
-    'ab.faith.body': 'Faith is the foundation of Bert’s integrity and ethics, which is why MFH is described as faith-driven. It is handled quietly. It shapes the conduct, it is not a billboard, and it never asks anyone to share the same beliefs. Knowing the person guiding your family is grounded in something gives peace of mind, whatever you believe.',
+    'ab.faith.body': "Faith is the foundation of Bert's integrity and ethics, which is why MFH is described as faith-driven. It is handled quietly. It shapes the conduct, it is not a billboard, and it never asks anyone to share the same beliefs. Knowing the person guiding your family is grounded in something gives peace of mind, whatever you believe.",
     'ab.verse': '"For I know the plans I have for you..."  Jeremiah 29:11',
 
-    // ---------------- The MFH Plan page ----------------
-    'pl.title': 'The MFH Plan',
-    'pl.metaDesc': 'The four-step MFH journey and the teaching stories behind it. Calm, educational guidance for players and parents on the path to professional football.',
-    'pl.eyebrow': 'The MFH Plan',
-    'pl.h1': 'Four steps, and parents are welcome at every one.',
-    'pl.intro': 'The path to professional football is full of decisions and opportunities. The MFH Plan keeps it simple and keeps parents in the room from the first conversation.',
+    // ---------------- How It Works page (the plan) ----------------
+    'pl.title': 'How It Works | The Road to Professional Football',
+    'pl.metaDesc': 'The four-step MFH journey and the lessons behind it. Calm, educational guidance for players and parents on the road to professional football, in English and Spanish.',
+    'pl.eyebrow': 'How we work together',
+    'pl.h1': 'Four steps, and your family is in every one.',
+    'pl.intro': 'The road to professional football is full of decisions and opportunities. We keep it simple, and we keep parents in the room from the first conversation.',
     'pl.s1.t': 'Book a free consultation',
     'pl.s1.d': 'In English or Spanish, with parents welcome. We listen first and answer your questions honestly.',
     'pl.s2.t': 'Share your footage',
@@ -194,22 +210,22 @@ export const ui = {
     'pl.s3.t': 'Get an honest evaluation and a roadmap',
     'pl.s3.d': 'A clear read on your level and prospects, and a personalized roadmap for what comes next.',
     'pl.s4.t': 'Sign with an agent who fights for your future',
-    'pl.s4.d': 'Representation built on protection and education, not promises. The player’s future always comes first.',
-    'pl.stories.eyebrow': 'Lessons From the Game',
+    'pl.s4.d': "Representation built on protection and education, not promises. The player's future always comes first.",
+    'pl.stories.eyebrow': 'Lessons from the game',
     'pl.stories.h2': 'Why the right questions come before the plane ticket.',
-    'pl.stories.intro': 'These are teaching stories Bert uses with families. They are about how to think, not what to fear.',
+    'pl.stories.intro': 'These are stories Bert uses with families. They are about how to think, not what to fear.',
     'pl.story1.t': 'Hunger over comfort',
-    'pl.story1.d': 'In Medellín, committed young players train three times a day because football is their lifeline. Bert once worked with a player who, given a chance abroad, wanted to come home within a week. The lesson is simple: you have to truly want it before you go.',
+    'pl.story1.d': 'In Medellin, committed young players train three times a day because football is their lifeline. Bert once worked with a player who, given a chance abroad, wanted to come home within a week. The lesson is simple: you have to truly want it before you go.',
     'pl.story2.t': 'Ask the right questions',
     'pl.story2.d': 'A player was flown to England for tryouts. The club wanted him, but could not sign him, because the work-permit slots were already full. All that effort was lost because nobody did the regulatory homework first. The homework comes before the plane ticket.',
     'pl.story3.t': 'Know which doors close',
     'pl.story3.d': 'Signing professionally at sixteen can close college soccer forever, and going pro is roughly a one percent outcome. Knowing which doors a decision closes, before you make it, is what separates a guide from a salesperson.',
 
     // ---------------- Contact page ----------------
-    'ct.title': 'Contact',
-    'ct.metaDesc': 'Book a free bilingual consultation with MFH Global Football, or share your footage by link. In English or Spanish, with your family welcome.',
-    'ct.eyebrow': 'Get in Touch',
-    'ct.h1': 'Let’s talk about your future in football.',
+    'ct.title': 'Contact | Book a Free Bilingual Consultation',
+    'ct.metaDesc': 'Book a free bilingual consultation with MFH Global Football, or share your footage by link. FIFA-licensed representation in South Florida and Colombia. English or Spanish.',
+    'ct.eyebrow': "Let's talk",
+    'ct.h1': 'Let us talk about your future in football.',
     'ct.intro': 'Booking a consultation is free and there is no pressure. In English or Spanish, with your family welcome.',
     'ct.book.h2': 'Book a free consultation',
     'ct.book.d': 'Tell us a little about the player and we will reach out to schedule a call. Parents are welcome and encouraged.',
@@ -234,50 +250,65 @@ export const ui = {
     // nav + global CTA
     'nav.services': 'Servicios',
     'nav.about': 'Quiénes Somos',
-    'nav.plan': 'El Plan MFH',
+    'nav.plan': 'Cómo Funciona',
     'nav.contact': 'Contacto',
     'cta.consult': 'Agenda una Consulta Gratis',
+    'lang.label': 'Idioma',
+    'skip.link': 'Saltar al contenido',
 
     // hero
-    'hero.eyebrow': 'El Jugador Primero · Conexión Global',
+    'hero.eyebrow': 'Con Licencia FIFA · Sur de la Florida y Colombia',
     'hero.h1': "Ayudamos a jugadores y entrenadores a <span class='hl'>construir su futuro</span> en el fútbol.",
-    'hero.sub': 'MFH Global Football es una agencia con licencia FIFA que acompaña a jugadores y padres en cada decisión y oportunidad importante en el camino al fútbol profesional, para que el futuro del jugador siempre esté primero.',
+    'hero.sub': 'MFH Global Football es una agencia con licencia FIFA. Acompañamos a jugadores y padres en cada decisión y oportunidad en el camino al fútbol profesional, y mantenemos tu futuro primero en todo momento.',
     'hero.cta1': 'Agenda una Consulta Gratis',
     'hero.cta2': 'Conoce cómo funciona',
 
-    // trust strip
+    // trust marquee
     'strip.1': 'Agente con Licencia FIFA',
     'strip.2': 'Representación de Jugadores y Entrenadores',
     'strip.3': 'Sur de la Florida y Colombia',
     'strip.4': 'English & Español',
+    'strip.5': 'La Educación Primero',
+    'strip.6': 'Padres Siempre Bienvenidos',
 
-    // problem
-    'problem.eyebrow': 'El Problema',
-    'problem.h2': 'El camino al profesionalismo es confuso, y no todos los agentes se ganan tu confianza.',
-    'problem.intro': 'Con demasiada frecuencia, jugadores talentosos y sus familias recorren este camino solos, o junto a alguien que pone la comisión por encima del jugador. Creemos que las familias merecen algo mejor.',
+    // the landscape
+    'problem.eyebrow': 'Antes de confiar tu futuro a alguien',
+    'problem.h2': 'El camino al fútbol profesional es confuso, y no todos los que están en él están de tu lado.',
+    'problem.intro': 'Con demasiada frecuencia, jugadores talentosos y sus familias recorren este camino solos, o junto a alguien que pone la comisión primero. Mereces algo mejor, y mereces entender cada paso antes de darlo.',
     'p1.t': 'Agentes sin licencia',
     'p1.d': 'Personas que operan sin estructura ni responsabilidad, fuera de las reglas de la FIFA.',
-    'p2.t': 'Reglas confusas',
-    'p2.d': 'Permisos de trabajo, cupos, ventanas de transferencia y reglas para menores que definen una carrera, y que muchas veces se malinterpretan.',
-    'p3.t': 'Barreras de idioma',
+    'p2.t': 'Reglas que deciden carreras',
+    'p2.d': 'Permisos de trabajo, cupos, ventanas de transferencia y reglas para menores que moldean una carrera, y que es fácil malinterpretar.',
+    'p3.t': 'El idioma de por medio',
     'p3.d': 'La complejidad legal ya es difícil. Lo es más cuando el contrato no está en tu idioma.',
     'p4.t': 'Acercamientos a menores',
     'p4.d': 'Buscadores e intermediarios que se acercan a jóvenes sin que los padres estén presentes.',
 
-    // guide
-    'guide.eyebrow': 'Tu Guía',
+    // meet bert
+    'guide.eyebrow': 'Quien está en tu esquina',
     'guide.h2': 'Un agente que ha vivido cada lado del juego.',
     'guide.body': 'MFH fue fundada por Bert Mahecha, agente de fútbol con licencia FIFA radicado en el Sur de la Florida y con raíces profundas en Colombia. Ha jugado, arbitrado, dirigido, sido dueño de un club y administrado una liga. Esa experiencia completa es la razón por la que MFH hace las preguntas correctas antes de que un jugador suba a un avión.',
     'guide.cta': 'Más sobre Bert y MFH',
-    'guide.panel': 'Por qué las familias confían en MFH',
+    'guide.panel': 'Por qué las familias trabajan con MFH',
     'guide.l1': 'Licencia FIFA bajo el marco actual.',
     'guide.l2': 'Bilingüe, inglés y español por igual.',
     'guide.l3': 'Una empresa familiar, construida junto a sus hijos y su primo.',
     'guide.l4': 'La educación primero. Los padres siempre están presentes.',
 
-    // plan stepper
-    'plan.eyebrow': 'El Plan MFH',
-    'plan.h2': 'Cuatro pasos, y los padres son bienvenidos en cada uno.',
+    // stats band
+    'stats.eyebrow': 'Experiencia que se nota',
+    'stat1.n': '5',
+    'stat1.l': 'lados del juego vividos: jugador, árbitro, entrenador, dueño de club, presidente de liga',
+    'stat2.n': '2',
+    'stat2.l': 'países conectados, el Sur de la Florida y Colombia',
+    'stat3.n': '3',
+    'stat3.l': 'ventanas de transferencia al año, el ritmo del trabajo',
+    'stat4.n': '2023',
+    'stat4.l': 'el marco moderno de la FIFA bajo el que Bert tiene licencia',
+
+    // how it works
+    'plan.eyebrow': 'Cómo trabajamos juntos',
+    'plan.h2': 'Cuatro pasos, y tu familia está en cada uno.',
     's1.t': 'Agenda una consulta gratis',
     's1.d': 'En inglés o español. Padres bienvenidos.',
     's2.t': 'Comparte tu material',
@@ -288,20 +319,20 @@ export const ui = {
     's4.d': 'Representación construida sobre protección y educación, no sobre promesas.',
 
     // promise
-    'promise.eyebrow': 'Nuestra Promesa',
+    'promise.eyebrow': 'Hablando claro',
     'promise.quote': "No podemos prometerte un contrato. <span class='hl'>Prometemos abrirte puertas</span> para que muestres tu talento, protegerte durante todo el proceso y asegurarnos de que entiendas cada regla que rige tu futuro.",
 
     // bridge
-    'bridge.eyebrow': 'El Puente',
+    'bridge.eyebrow': 'Dos hogares, un camino',
     'bridge.h2': 'El Sur de la Florida y Colombia, conectados.',
-    'bridge.body': 'Relaciones reales en ambos extremos, bilingües y biculturales, con un corredor de crecimiento desde la MLS hasta la Liga BetPlay y Europa. Este es el puente que MFH está hecho para recorrer contigo.',
+    'bridge.body': 'Relaciones reales en ambos extremos, bilingües y biculturales, con un corredor de crecimiento desde la MLS hasta la Liga BetPlay y Europa. Este es el camino que MFH está hecho para recorrer contigo.',
     'bridge.left': 'Sur de la Florida',
     'bridge.leftd': 'Un ecosistema de clubes profundo y un volumen de jugadores en crecimiento.',
     'bridge.right': 'Colombia',
     'bridge.rightd': 'Jugadores hambrientos y comprometidos, e instituciones de clubes sólidas.',
 
-    // who we help
-    'who.eyebrow': 'A Quién Ayudamos',
+    // who we work with
+    'who.eyebrow': 'Con quién trabajamos',
     'who.h2': 'Hecho para jugadores, familias y los clubes que los necesitan.',
     'w1.t': 'Jugadores profesionales y listos para transferencia',
     'w1.d': 'Representación, negociación y transferencias por FIFA TMS, con rigor regulatorio.',
@@ -311,8 +342,8 @@ export const ui = {
     'w3.d': 'Colocación de entrenadores, scouting y alianzas de referidos en las Américas.',
 
     // services preview
-    'services.eyebrow': 'Lo Que Hacemos',
-    'services.h2': 'Representación integral, dentro de las reglas.',
+    'services.eyebrow': 'Cómo es la representación',
+    'services.h2': 'Representación integral, siempre dentro de las reglas.',
     'services.intro': 'Todo lo que hace MFH sigue el marco de la FIFA, con un enfoque que pone la educación y al jugador primero.',
     'b1.t': 'Jugadores',
     'b1.i': 'Representación profesional · Transferencias y préstamos (FIFA TMS) · Evaluación con video · Bienestar y gestión continua',
@@ -335,14 +366,13 @@ export const ui = {
     'footer.rights': '© 2026 MFH Global Football. Todos los derechos reservados.',
     'footer.domain': 'mfhglobal.football',
 
-    'lang.label': 'Idioma',
-    'skip.link': 'Saltar al contenido',
+    'media.placeholder': 'Foto',
 
     // ---------------- Services page ----------------
-    'sv.title': 'Servicios',
-    'sv.metaDesc': 'Representación integral con licencia FIFA para jugadores, entrenadores, clubes y familias. Todo lo que hace MFH sigue el marco de la FIFA, con la educación primero.',
-    'sv.eyebrow': 'Lo Que Hacemos',
-    'sv.h1': 'Representación integral, dentro de las reglas.',
+    'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
+    'sv.metaDesc': 'Representación con licencia FIFA para jugadores, entrenadores, clubes y familias en el Sur de la Florida y Colombia. Transferencias, evaluaciones, bienestar, scouting y caminos juveniles, la educación primero.',
+    'sv.eyebrow': 'Cómo es la representación',
+    'sv.h1': 'Representación integral, siempre dentro de las reglas.',
     'sv.intro': 'Todo lo que hace MFH sigue el marco de la FIFA. La FIFA divide lo que hace un agente con licencia en dos categorías, y MFH ofrece ambas, con un enfoque que pone la educación y al jugador primero.',
     'sv.cat1.t': 'Servicios de Agente de Fútbol',
     'sv.cat1.d': 'El trabajo central de la transacción: negociar, comunicar y actuar para ayudar a concretar el acuerdo de un jugador o entrenador. Cubre el empleo, el registro y la transferencia de un jugador o entrenador entre clubes.',
@@ -350,7 +380,7 @@ export const ui = {
     'sv.cat2.d': 'Todo lo demás que hacemos para un cliente más allá de la transacción, como scouting, asesoría, apoyo fuera del campo y la gestión de necesidades básicas, siempre dentro de las reglas de la FIFA.',
 
     'sv.players.h2': 'Jugadores',
-    'sv.players.eyebrow': 'Para Jugadores',
+    'sv.players.eyebrow': 'Cuando el juego es tu profesión',
     'sv.p1.t': 'Representación Profesional de Jugadores',
     'sv.p1.d': 'Representación completa con licencia FIFA para jugadores profesionales y listos para transferencia: negociación de contratos, colocación en clubes y orientación de carrera, dentro de la ley FIFA, internacional, nacional y estatal.',
     'sv.p2.t': 'Negociación de Transferencias y Préstamos (FIFA TMS)',
@@ -363,7 +393,7 @@ export const ui = {
     'sv.p5.d': 'Derechos de imagen, patrocinios, endosos, relaciones públicas y apoyo en redes sociales a medida que crece el perfil del jugador.',
 
     'sv.coaches.h2': 'Entrenadores y Clubes',
-    'sv.coaches.eyebrow': 'Para Entrenadores y Clubes',
+    'sv.coaches.eyebrow': 'Para quienes construyen equipos',
     'sv.c1.t': 'Representación de Entrenadores',
     'sv.c1.d': 'Colocación y negociación de empleo para entrenadores con clubes, ligas y asociaciones miembro, dentro del marco de la FIFA.',
     'sv.c2.t': 'Servicios para Clubes y Directores Deportivos',
@@ -372,7 +402,7 @@ export const ui = {
     'sv.c3.d': 'Acuerdos formales con buscadores que llevan talento a la red de MFH, construidos sobre términos claros y responsabilidad.',
 
     'sv.families.h2': 'Familias y Juventud',
-    'sv.families.eyebrow': 'Para Familias y Juventud',
+    'sv.families.eyebrow': 'Para los padres presentes',
     'sv.f1.t': 'Pruebas y Vitrinas',
     'sv.f1.d': 'Organización de pruebas y coordinación de reuniones con clubes. Abrir puertas es el trabajo, nunca una promesa del resultado.',
     'sv.f2.t': 'Asesoría y Educación para Familias y Juventud',
@@ -381,9 +411,9 @@ export const ui = {
     'sv.f3.d': 'Construir la cantera de jugadores del Sur de la Florida y las relaciones con clubes locales, para que los jóvenes tengan un camino real y estructurado para crecer.',
 
     // ---------------- About page ----------------
-    'ab.title': 'Quiénes Somos',
-    'ab.metaDesc': 'Conoce a Bert Mahecha, el fundador con licencia FIFA de MFH Global Football. Una vida completa en el fútbol, una empresa familiar y el puente entre el Sur de la Florida y Colombia.',
-    'ab.eyebrow': 'Tu Guía',
+    'ab.title': 'Sobre Bert Mahecha | Agente de Fútbol con Licencia FIFA',
+    'ab.metaDesc': 'Bert Mahecha fundó MFH Global Football, una agencia familiar con licencia FIFA que conecta el Sur de la Florida y Colombia. Jugador, árbitro, entrenador, dueño de club y presidente de liga.',
+    'ab.eyebrow': 'Quien está en tu esquina',
     'ab.h1': 'Un agente que ha vivido cada lado del juego.',
     'ab.intro': 'MFH Global Football fue fundada por Bert Mahecha, agente de fútbol con licencia FIFA radicado en el Sur de la Florida y con raíces profundas en Colombia. Acompaña a jugadores y familias en cada decisión importante del camino al fútbol profesional, para que el futuro del jugador siempre esté primero.',
     'ab.traj.h2': 'Una vida completa en el fútbol.',
@@ -398,12 +428,12 @@ export const ui = {
     'ab.faith.body': 'La fe es la base de la integridad y la ética de Bert, por eso MFH se describe como guiada por la fe. Se maneja con discreción. Da forma a la conducta, no es un cartel publicitario, y nunca le pide a nadie que comparta las mismas creencias. Saber que la persona que guía a tu familia está afianzada en algo da tranquilidad, sea cual sea tu creencia.',
     'ab.verse': '"Porque yo sé los planes que tengo para ustedes..."  Jeremías 29:11',
 
-    // ---------------- The MFH Plan page ----------------
-    'pl.title': 'El Plan MFH',
-    'pl.metaDesc': 'Los cuatro pasos del camino MFH y las historias que enseñan detrás de ellos. Orientación calmada y educativa para jugadores y padres en el camino al fútbol profesional.',
-    'pl.eyebrow': 'El Plan MFH',
-    'pl.h1': 'Cuatro pasos, y los padres son bienvenidos en cada uno.',
-    'pl.intro': 'El camino al fútbol profesional está lleno de decisiones y oportunidades. El Plan MFH lo mantiene simple y mantiene a los padres presentes desde la primera conversación.',
+    // ---------------- How It Works page ----------------
+    'pl.title': 'Cómo Funciona | El Camino al Fútbol Profesional',
+    'pl.metaDesc': 'Los cuatro pasos del camino MFH y las lecciones detrás de ellos. Orientación calmada y educativa para jugadores y padres en el camino al fútbol profesional, en inglés y español.',
+    'pl.eyebrow': 'Cómo trabajamos juntos',
+    'pl.h1': 'Cuatro pasos, y tu familia está en cada uno.',
+    'pl.intro': 'El camino al fútbol profesional está lleno de decisiones y oportunidades. Lo mantenemos simple, y mantenemos a los padres presentes desde la primera conversación.',
     'pl.s1.t': 'Agenda una consulta gratis',
     'pl.s1.d': 'En inglés o español, con padres bienvenidos. Escuchamos primero y respondemos tus preguntas con honestidad.',
     'pl.s2.t': 'Comparte tu material',
@@ -412,9 +442,9 @@ export const ui = {
     'pl.s3.d': 'Una lectura clara de tu nivel y tus posibilidades, y una hoja de ruta personalizada para lo que sigue.',
     'pl.s4.t': 'Firma con un agente que pelea por tu futuro',
     'pl.s4.d': 'Representación construida sobre protección y educación, no sobre promesas. El futuro del jugador siempre está primero.',
-    'pl.stories.eyebrow': 'Lecciones del Juego',
+    'pl.stories.eyebrow': 'Lecciones del juego',
     'pl.stories.h2': 'Por qué las preguntas correctas van antes que el boleto de avión.',
-    'pl.stories.intro': 'Estas son historias que Bert usa con las familias para enseñar. Tratan de cómo pensar, no de qué temer.',
+    'pl.stories.intro': 'Estas son historias que Bert usa con las familias. Tratan de cómo pensar, no de qué temer.',
     'pl.story1.t': 'El hambre sobre la comodidad',
     'pl.story1.d': 'En Medellín, jóvenes comprometidos entrenan tres veces al día porque el fútbol es su razón de ser. Bert trabajó una vez con un jugador que, con una oportunidad en el exterior, quiso volver a casa en una semana. La lección es simple: tienes que quererlo de verdad antes de partir.',
     'pl.story2.t': 'Haz las preguntas correctas',
@@ -423,9 +453,9 @@ export const ui = {
     'pl.story3.d': 'Firmar como profesional a los dieciséis puede cerrar el fútbol universitario para siempre, y llegar al profesionalismo es aproximadamente un uno por ciento de los casos. Saber qué puertas cierra una decisión, antes de tomarla, es lo que distingue a un guía de un vendedor.',
 
     // ---------------- Contact page ----------------
-    'ct.title': 'Contacto',
-    'ct.metaDesc': 'Agenda una consulta bilingüe gratis con MFH Global Football, o comparte tu material por enlace. En inglés o español, con tu familia bienvenida.',
-    'ct.eyebrow': 'Contáctanos',
+    'ct.title': 'Contacto | Agenda una Consulta Bilingüe Gratis',
+    'ct.metaDesc': 'Agenda una consulta bilingüe gratis con MFH Global Football, o comparte tu material por enlace. Representación con licencia FIFA en el Sur de la Florida y Colombia. En inglés o español.',
+    'ct.eyebrow': 'Hablemos',
     'ct.h1': 'Hablemos de tu futuro en el fútbol.',
     'ct.intro': 'Agendar una consulta es gratis y sin presión. En inglés o español, con tu familia bienvenida.',
     'ct.book.h2': 'Agenda una consulta gratis',
@@ -461,9 +491,6 @@ export function t(lang: Lang, key: string): string {
 /**
  * Build a locale aware href from a canonical English path.
  * English serves with no prefix, Spanish under /es/.
- *   localizePath('/services', 'en') -> '/services'
- *   localizePath('/services', 'es') -> '/es/services'
- *   localizePath('/', 'es')         -> '/es/'
  */
 export function localizePath(path: string, lang: Lang): string {
   const clean = '/' + path.replace(/^\/+/, '');
@@ -477,10 +504,7 @@ export function getLangFromPath(pathname: string): Lang {
   return pathname.startsWith('/es/') || pathname === '/es' ? 'es' : 'en';
 }
 
-/**
- * Given the current pathname, return the equivalent path in the other locale.
- * Used by LangSwitch so EN and ES are real mirrored links.
- */
+/** Given the current pathname, return the equivalent path in the other locale. */
 export function toggledPath(pathname: string): { en: string; es: string } {
   const isEs = pathname.startsWith('/es/') || pathname === '/es';
   let canonical = pathname;

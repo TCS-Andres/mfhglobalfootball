@@ -1,4 +1,4 @@
-# MFH Global Football — Website
+# MFH Global Football, Website
 
 The bilingual (English and Spanish) marketing site for MFH Global Football, a FIFA-licensed,
 faith-driven football agency. Built with Astro, static output, no server runtime.
@@ -55,6 +55,9 @@ These do not block the build; they slot in via the dictionary or an env var:
 
 - Footer social handles: set the real URLs in `src/components/Footer.astro` (currently `#`).
 - Booking choice: Calendly embed (`PUBLIC_BOOKING_URL`) vs simple form (`PUBLIC_FORM_ENDPOINT`).
+- Photography: the `.media-slot` blocks (Meet Bert, the Bridge, the About banner) are designed
+  placeholders. To use a real photo, drop an `<img>` inside the slot, for example
+  `<div class="media-slot"><img src="/photos/bert.jpg" alt="Bert Mahecha" /></div>`.
 
 ## Deploy
 

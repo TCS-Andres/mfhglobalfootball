@@ -18,6 +18,27 @@ const enUrl = new URL(paths.en, site).href;
 const esUrl = new URL(paths.es, site).href;
 const ogImage = new URL('/logos/ball.png', site).href;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+
+// Structured data: a FIFA-licensed sports agency, bilingual, South Florida + Colombia.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['SportsOrganization', 'ProfessionalService'],
+  name: 'MFH Global Football',
+  description:
+    'FIFA-licensed, faith-driven football agency representing players and coaches and guiding families on the path to professional football.',
+  url: site.href,
+  logo: new URL('/logos/header.png', site).href,
+  image: ogImage,
+  knowsLanguage: ['en', 'es'],
+  areaServed: ['US', 'CO'],
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: 'FL',
+    addressCountry: 'US',
+  },
+  founder: { '@type': 'Person', name: 'Bert Mahecha', jobTitle: 'FIFA-Licensed Football Agent' },
+  slogan: 'Faith-Driven, Player-First, Globally Connected',
+};
 ---
 
 <!doctype html>
@@ -32,6 +53,9 @@ const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="es" href={esUrl} />
     <link rel="alternate" hreflang="x-default" href={enUrl} />
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <!-- Favicons generated from the ball mark -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -68,24 +92,63 @@ const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
     <Footer lang={lang} />
 
     <script>
-      // Scroll reveal animation, respects prefers-reduced-motion via CSS.
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const items = document.querySelectorAll('.reveal');
+      const items = document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-scale');
+
+      // Scroll reveal (also fires the count-up when a stats item enters view)
+      const runCount = (el) => {
+        const target = parseInt(el.dataset.count || '', 10);
+        if (!target || el.dataset.done) return;
+        el.dataset.done = '1';
+        const dur = 1100;
+        const start = performance.now();
+        const step = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = String(target);
+        };
+        requestAnimationFrame(step);
+      };
+
       if (reduce || !('IntersectionObserver' in window)) {
         items.forEach((el) => el.classList.add('in'));
+        document.querySelectorAll('.count[data-count]').forEach((el) => (el.textContent = el.dataset.count));
       } else {
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
               if (e.isIntersecting) {
                 e.target.classList.add('in');
+                e.target.querySelectorAll?.('.count[data-count]').forEach(runCount);
+                if (e.target.matches('.count[data-count]')) runCount(e.target);
                 io.unobserve(e.target);
               }
             });
           },
-          { threshold: 0.12 }
+          { threshold: 0.18 }
         );
         items.forEach((el) => io.observe(el));
+
+        // Lightweight parallax on the hero ball mark
+        const layers = [...document.querySelectorAll('[data-parallax]')];
+        if (layers.length) {
+          let ticking = false;
+          const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const y = window.scrollY;
+              layers.forEach((el) => {
+                const speed = parseFloat(el.dataset.parallaxSpeed || '0.1');
+                el.style.transform = `translateY(${y * speed}px)`;
+              });
+              ticking = false;
+            });
+          };
+          addEventListener('scroll', onScroll, { passive: true });
+        }
       }
     </script>
   </body>
