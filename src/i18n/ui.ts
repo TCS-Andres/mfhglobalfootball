@@ -140,6 +140,11 @@ export const ui = {
     'media.altSF': 'A soccer pitch by the water with the Miami skyline',
     'media.altColombia': 'A hillside soccer pitch in the mountains of Medellin',
     'media.altStadium': 'A professional football stadium at golden hour',
+    'media.altQuote': 'A lone football player on a misty floodlit pitch at dusk',
+
+    // parallax quote band
+    'quote.small': 'Talent gets you noticed. Discipline, the right questions, and people who protect you are what build a career.',
+    'quote.big': "The player's future comes first.",
 
     // ---------------- Services page ----------------
     'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
@@ -375,6 +380,11 @@ export const ui = {
     'media.altSF': 'Una cancha de fútbol junto al agua con el horizonte de Miami',
     'media.altColombia': 'Una cancha de fútbol en una ladera de las montañas de Medellín',
     'media.altStadium': 'Un estadio de fútbol profesional al atardecer',
+    'media.altQuote': 'Un jugador de fútbol solo en una cancha iluminada y con niebla al anochecer',
+
+    // parallax quote band
+    'quote.small': 'El talento te hace notar. La disciplina, las preguntas correctas y quienes te protegen son lo que construye una carrera.',
+    'quote.big': 'El futuro del jugador va primero.',
 
     // ---------------- Services page ----------------
     'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
