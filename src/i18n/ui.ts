@@ -136,6 +136,10 @@ export const ui = {
 
     // media slot label (swappable photo placeholders)
     'media.placeholder': 'Photo',
+    'media.altCoach': 'A football coach watching players train at golden hour',
+    'media.altSF': 'A soccer pitch by the water with the Miami skyline',
+    'media.altColombia': 'A hillside soccer pitch in the mountains of Medellin',
+    'media.altStadium': 'A professional football stadium at golden hour',
 
     // ---------------- Services page ----------------
     'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
@@ -367,6 +371,10 @@ export const ui = {
     'footer.domain': 'mfhglobal.football',
 
     'media.placeholder': 'Foto',
+    'media.altCoach': 'Un entrenador de fútbol observando a jugadores entrenar al atardecer',
+    'media.altSF': 'Una cancha de fútbol junto al agua con el horizonte de Miami',
+    'media.altColombia': 'Una cancha de fútbol en una ladera de las montañas de Medellín',
+    'media.altStadium': 'Un estadio de fútbol profesional al atardecer',
 
     // ---------------- Services page ----------------
     'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
