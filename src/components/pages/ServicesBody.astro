@@ -35,6 +35,10 @@ const families = ['sv.f1', 'sv.f2', 'sv.f3'];
       </div>
     </div>
 
+    <div class="media-slot reveal-scale" style="aspect-ratio:16/6;margin-top:44px">
+      <img src="/photos/services-players.jpg" alt={t(lang, 'media.altPlayers')} width="1600" height="600" loading="lazy" />
+    </div>
+
     <div class="group">
       <div class="group-head">
         <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.players.eyebrow')}</span></span>
@@ -68,6 +72,21 @@ const families = ['sv.f1', 'sv.f2', 'sv.f3'];
         {families.map((k, i) => (
           <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
         ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section sky">
+  <div class="wrap">
+    <div class="split">
+      <div class="media-slot media-tall reveal-l">
+        <img src="/photos/youth-pathway.jpg" alt={t(lang, 'media.altYouth')} width="900" height="1100" loading="lazy" />
+      </div>
+      <div class="split__body reveal-r">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.close.eyebrow')}</span></span>
+        <h2>{t(lang, 'sv.close.h2')}</h2>
+        <p class="lead">{t(lang, 'sv.close.body')}</p>
       </div>
     </div>
   </div>

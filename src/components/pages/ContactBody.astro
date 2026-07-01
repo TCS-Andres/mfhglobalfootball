@@ -114,6 +114,23 @@ const positions =
   </div>
 </section>
 
+<section class="section sky">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'ct.next.eyebrow')}</span></span>
+      <h2>{t(lang, 'ct.next.h2')}</h2>
+    </div>
+    <div class="grid g3">
+      {['ct.next.1', 'ct.next.2', 'ct.next.3'].map((k, i) => (
+        <div class="card reveal" style={`--d:${i * 90}ms`}>
+          <div class="numnode">{i + 1}</div>
+          <p>{t(lang, k)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 <script>
   // Lightweight client validation. Native validation handles the rest.
   const form = document.getElementById('footage-form') as HTMLFormElement | null;

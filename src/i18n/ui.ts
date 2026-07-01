@@ -141,10 +141,16 @@ export const ui = {
     'media.altColombia': 'A hillside soccer pitch in the mountains of Medellin',
     'media.altStadium': 'A professional football stadium at golden hour',
     'media.altQuote': 'A lone football player on a misty floodlit pitch at dusk',
+    'media.altPlayers': 'A footballer controlling the ball in training at dusk',
+    'media.altYouth': 'Young academy players training together in the morning light',
+    'media.altMentor': 'A coach guiding a young player at the side of the pitch',
 
     // parallax quote band
     'quote.small': 'Talent gets you noticed. Discipline, the right questions, and people who protect you are what build a career.',
     'quote.big': "The player's future comes first.",
+    'media.altPromise': 'A young football player looking toward the goal at sunrise',
+    'quote.promiseSmall': "We can't promise a contract. We promise to open doors for your talent, protect you through the process, and make sure you understand every rule that shapes your future.",
+    'quote.promiseBig': 'We open doors. We protect. We educate.',
 
     // ---------------- Services page ----------------
     'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
@@ -187,6 +193,9 @@ export const ui = {
     'sv.f2.d': 'Guidance for parents of aspiring players: their rights, parental consent rules, the real odds of going pro, and what a legitimate path looks like. Education is a service, not a sales tactic.',
     'sv.f3.t': 'Youth-to-Pro Pathway Development',
     'sv.f3.d': 'Building the South Florida player pipeline and relationships with local clubs, so young players have a real, structured path to grow.',
+    'sv.close.eyebrow': 'The MFH difference',
+    'sv.close.h2': 'Education first, every step.',
+    'sv.close.body': 'Whatever the service, our approach is the same: explain the rules in plain language, protect the player, and keep the family in the room. That is how good decisions get made.',
 
     // ---------------- About page ----------------
     'ab.title': 'About Bert Mahecha | FIFA-Licensed Football Agent',
@@ -205,6 +214,16 @@ export const ui = {
     'ab.faith.h2': 'Faith as foundation.',
     'ab.faith.body': "Faith is the foundation of Bert's integrity and ethics, which is why MFH is described as faith-driven. It is handled quietly. It shapes the conduct, it is not a billboard, and it never asks anyone to share the same beliefs. Knowing the person guiding your family is grounded in something gives peace of mind, whatever you believe.",
     'ab.verse': '"For I know the plans I have for you..."  Jeremiah 29:11',
+    'ab.values.eyebrow': 'What we believe',
+    'ab.values.h2': 'The values behind every decision.',
+    'ab.v1.t': 'Players first',
+    'ab.v1.d': "Every decision is measured against the player's future, never the commission.",
+    'ab.v2.t': 'Education first',
+    'ab.v2.d': 'Families deserve to understand their rights, the rules, and the real odds. An informed family is a confident one.',
+    'ab.v3.t': 'Protection',
+    'ab.v3.d': 'We guard players from bad deals and from opportunities that only look like opportunities.',
+    'ab.v4.t': 'Family',
+    'ab.v4.d': 'MFH is a family business, and it treats client families the way it treats its own.',
 
     // ---------------- How It Works page (the plan) ----------------
     'pl.title': 'How It Works | The Road to Professional Football',
@@ -254,6 +273,11 @@ export const ui = {
     'ct.details.h2': 'Contact details',
     'ct.details.location': 'South Florida, USA, with deep ties to Colombia.',
     'ct.details.langs': 'We work in English and Spanish as equals.',
+    'ct.next.eyebrow': 'What happens next',
+    'ct.next.h2': 'Simple, and no pressure.',
+    'ct.next.1': 'We reply and set up a free call, in English or Spanish.',
+    'ct.next.2': 'We listen, answer your questions, and review footage if you have it.',
+    'ct.next.3': 'You get honest feedback and a clear next step. No obligation.',
   },
   es: {
     // nav + global CTA
@@ -381,10 +405,16 @@ export const ui = {
     'media.altColombia': 'Una cancha de fútbol en una ladera de las montañas de Medellín',
     'media.altStadium': 'Un estadio de fútbol profesional al atardecer',
     'media.altQuote': 'Un jugador de fútbol solo en una cancha iluminada y con niebla al anochecer',
+    'media.altPlayers': 'Un futbolista controlando el balón en un entrenamiento al anochecer',
+    'media.altYouth': 'Jóvenes de academia entrenando juntos con la luz de la mañana',
+    'media.altMentor': 'Un entrenador guiando a un joven jugador al borde de la cancha',
 
     // parallax quote band
     'quote.small': 'El talento te hace notar. La disciplina, las preguntas correctas y quienes te protegen son lo que construye una carrera.',
     'quote.big': 'El futuro del jugador va primero.',
+    'media.altPromise': 'Un joven jugador de fútbol mirando hacia la portería al amanecer',
+    'quote.promiseSmall': 'No podemos prometerte un contrato. Prometemos abrir puertas para tu talento, protegerte durante todo el proceso y asegurarnos de que entiendas cada regla que rige tu futuro.',
+    'quote.promiseBig': 'Abrimos puertas. Protegemos. Educamos.',
 
     // ---------------- Services page ----------------
     'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
@@ -427,6 +457,9 @@ export const ui = {
     'sv.f2.d': 'Orientación para padres de jugadores en formación: sus derechos, las reglas de consentimiento parental, las probabilidades reales de llegar al profesionalismo y cómo es un camino legítimo. La educación es un servicio, no una táctica de venta.',
     'sv.f3.t': 'Desarrollo del Camino de Juventud a Profesional',
     'sv.f3.d': 'Construir la cantera de jugadores del Sur de la Florida y las relaciones con clubes locales, para que los jóvenes tengan un camino real y estructurado para crecer.',
+    'sv.close.eyebrow': 'La diferencia MFH',
+    'sv.close.h2': 'La educación primero, en cada paso.',
+    'sv.close.body': 'Sea cual sea el servicio, nuestro enfoque es el mismo: explicar las reglas en lenguaje claro, proteger al jugador y mantener a la familia presente. Así se toman buenas decisiones.',
 
     // ---------------- About page ----------------
     'ab.title': 'Sobre Bert Mahecha | Agente de Fútbol con Licencia FIFA',
@@ -445,6 +478,16 @@ export const ui = {
     'ab.faith.h2': 'La fe como base.',
     'ab.faith.body': 'La fe es la base de la integridad y la ética de Bert, por eso MFH se describe como guiada por la fe. Se maneja con discreción. Da forma a la conducta, no es un cartel publicitario, y nunca le pide a nadie que comparta las mismas creencias. Saber que la persona que guía a tu familia está afianzada en algo da tranquilidad, sea cual sea tu creencia.',
     'ab.verse': '"Porque yo sé los planes que tengo para ustedes..."  Jeremías 29:11',
+    'ab.values.eyebrow': 'En qué creemos',
+    'ab.values.h2': 'Los valores detrás de cada decisión.',
+    'ab.v1.t': 'El jugador primero',
+    'ab.v1.d': 'Cada decisión se mide frente al futuro del jugador, nunca frente a la comisión.',
+    'ab.v2.t': 'La educación primero',
+    'ab.v2.d': 'Las familias merecen entender sus derechos, las reglas y las probabilidades reales. Una familia informada es una familia segura.',
+    'ab.v3.t': 'Protección',
+    'ab.v3.d': 'Cuidamos a los jugadores de malos acuerdos y de oportunidades que solo parecen oportunidades.',
+    'ab.v4.t': 'Familia',
+    'ab.v4.d': 'MFH es una empresa familiar, y trata a las familias de sus clientes como trata a la suya.',
 
     // ---------------- How It Works page ----------------
     'pl.title': 'Cómo Funciona | El Camino al Fútbol Profesional',
@@ -494,6 +537,11 @@ export const ui = {
     'ct.details.h2': 'Datos de contacto',
     'ct.details.location': 'Sur de la Florida, EE. UU., con raíces profundas en Colombia.',
     'ct.details.langs': 'Trabajamos en inglés y español por igual.',
+    'ct.next.eyebrow': 'Qué sigue',
+    'ct.next.h2': 'Simple y sin presión.',
+    'ct.next.1': 'Respondemos y coordinamos una llamada gratis, en inglés o español.',
+    'ct.next.2': 'Escuchamos, respondemos tus preguntas y revisamos tu material si lo tienes.',
+    'ct.next.3': 'Recibes comentarios honestos y un siguiente paso claro. Sin compromiso.',
   },
 } as const;
 

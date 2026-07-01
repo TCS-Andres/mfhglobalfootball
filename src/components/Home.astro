@@ -115,13 +115,14 @@ const stats = [
   </div>
 </section>
 
-<!-- PROMISE -->
-<section class="section promise">
-  <div class="wrap">
-    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'promise.eyebrow')}</span></span>
-    <blockquote set:html={t(lang, 'promise.quote')} />
-  </div>
-</section>
+<!-- PROMISE (bold band) -->
+<QuoteBand
+  lang={lang}
+  img="/photos/promise-bg.jpg"
+  altKey="media.altPromise"
+  smallKey="quote.promiseSmall"
+  bigKey="quote.promiseBig"
+/>
 
 <!-- BRIDGE -->
 <section class="section sky" id="bridge">

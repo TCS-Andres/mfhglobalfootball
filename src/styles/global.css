@@ -16,6 +16,8 @@ p{margin:0}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+/* Clip horizontal overflow from off-screen reveal transforms (header is outside main) */
+main{overflow-x:clip}
 .section{padding:96px 0}
 .eyebrow{
   display:inline-flex;align-items:center;gap:9px;font-family:var(--font-display);
@@ -444,18 +446,31 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
   .hero__creds span{font-size:.7rem}
 }
 
+/* numbered node (reusable, gold pentagon) */
+.numnode{font-family:var(--font-display);font-weight:900;font-size:1rem;color:var(--blue-deep);
+  width:40px;height:40px;display:grid;place-items:center;background:var(--gold);
+  clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);margin-bottom:14px}
+
+/* two-column image + text split (inner pages) */
+.split{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(28px,4vw,56px);align-items:center}
+.split__body h2{margin-top:8px}
+.split__body .lead{margin-top:16px}
+@media(max-width:920px){.split{grid-template-columns:1fr}}
+
 /* ============================================================
    Bold identity carried across every page and section
    ============================================================ */
 /* Section headings: uppercase, heavy, tight, like the heroes */
 .head h2,
 .guide .body h2,
+.split__body h2,
 .group h2,
 .cta-banner h2,
 .prose-block h2,
 .panel-card h2,
 .contact-details h2{
   text-transform:uppercase;font-weight:900;letter-spacing:-.015em;line-height:1.02}
+.split__body h2{font-size:clamp(1.8rem,3vw,2.5rem)}
 .head h2{font-size:clamp(2.1rem,3.8vw,3.1rem)}
 .guide .body h2{font-size:clamp(2rem,3.4vw,2.8rem)}
 .group h2{font-size:clamp(1.8rem,3vw,2.5rem)}

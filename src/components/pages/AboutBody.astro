@@ -8,6 +8,7 @@ interface Props {
 const { lang } = Astro.props;
 
 const blocks = ['ab.traj', 'ab.lic', 'ab.bil', 'ab.fam'];
+const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
 ---
 
 <section class="page-hero">
@@ -37,6 +38,23 @@ const blocks = ['ab.traj', 'ab.lic', 'ab.bil', 'ab.fam'];
         <p>{t(lang, 'ab.faith.body')}</p>
         <p class="about-verse">{t(lang, 'ab.verse')}</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section sky">
+  <div class="wrap">
+    <div class="media-slot reveal-scale" style="aspect-ratio:21/8;margin-bottom:48px">
+      <img src="/photos/about-mentor.jpg" alt={t(lang, 'media.altMentor')} width="1600" height="610" loading="lazy" />
+    </div>
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'ab.values.eyebrow')}</span></span>
+      <h2>{t(lang, 'ab.values.h2')}</h2>
+    </div>
+    <div class="grid g4">
+      {values.map((k, i) => (
+        <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+      ))}
     </div>
   </div>
 </section>
