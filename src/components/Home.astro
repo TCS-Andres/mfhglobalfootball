@@ -14,8 +14,8 @@ const services = localizePath('/services', lang);
 const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5', 'strip.6'];
 const problems = ['p1', 'p2', 'p3', 'p4'];
 const who = ['w1', 'w2', 'w3'];
+// The "5 sides of the game" stat lives on the About page, not here.
 const stats = [
-  { n: 'stat1.n', l: 'stat1.l', count: true },
   { n: 'stat2.n', l: 'stat2.l', count: true },
   { n: 'stat3.n', l: 'stat3.l', count: true },
   { n: 'stat4.n', l: 'stat4.l', count: false },
@@ -118,10 +118,11 @@ const stats = [
 <!-- PROMISE (bold band) -->
 <QuoteBand
   lang={lang}
-  img="/photos/promise-bg.jpg"
+  img="/photos/promise-bg2.jpg"
   altKey="media.altPromise"
   smallKey="quote.promiseSmall"
   bigKey="quote.promiseBig"
+  scrim={true}
 />
 
 <!-- BRIDGE -->

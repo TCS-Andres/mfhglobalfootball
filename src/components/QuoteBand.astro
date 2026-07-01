@@ -7,6 +7,7 @@ interface Props {
   altKey?: string;
   smallKey?: string;
   bigKey?: string;
+  scrim?: boolean;
 }
 const {
   lang,
@@ -14,6 +15,7 @@ const {
   altKey = 'media.altQuote',
   smallKey = 'quote.small',
   bigKey = 'quote.big',
+  scrim = false,
 } = Astro.props;
 ---
 
@@ -23,9 +25,10 @@ const {
       <div class="quote-band__media">
         <img src={img} alt={t(lang, altKey)} width="1600" height="1067" loading="lazy" />
       </div>
-      <div class="quote-band__content">
+      {scrim && <div class="quote-band__scrim" aria-hidden="true"></div>}
+      <div class:list={['quote-band__content', { 'quote-band__content--solid': scrim }]}>
         <p class="quote-band__small">{t(lang, smallKey)}</p>
-        <p class="quote-band__big">{t(lang, bigKey)}</p>
+        <p class="quote-band__big" set:html={t(lang, bigKey)} />
       </div>
     </div>
   </div>
@@ -54,9 +57,20 @@ const {
     object-fit: cover;
     display: block;
   }
+  .quote-band__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 29, 0.55) 0%,
+      rgba(0, 16, 29, 0.12) 40%,
+      rgba(0, 16, 29, 0.82) 100%
+    );
+  }
   .quote-band__content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -64,6 +78,11 @@ const {
     padding: clamp(28px, 5vw, 80px);
     color: #fff;
     mix-blend-mode: difference;
+  }
+  .quote-band__content--solid {
+    mix-blend-mode: normal;
+    color: #fff;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
   }
   .quote-band__small {
     width: min(52vw, 640px);
@@ -80,7 +99,7 @@ const {
     font-weight: 900;
     text-transform: uppercase;
     font-size: clamp(2rem, 6.5vw, 5.5rem);
-    line-height: 1.02;
+    line-height: 1.05;
     letter-spacing: -0.02em;
     max-width: 16ch;
   }

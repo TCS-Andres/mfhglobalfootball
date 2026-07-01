@@ -68,11 +68,11 @@ export const ui = {
     'stat1.n': '5',
     'stat1.l': 'sides of the game lived: player, referee, coach, club owner, league president',
     'stat2.n': '2',
-    'stat2.l': 'countries connected, South Florida and Colombia',
+    'stat2.l': 'Countries connected',
     'stat3.n': '3',
-    'stat3.l': 'transfer windows a year, the rhythm of the work',
+    'stat3.l': 'Transfer windows a year',
     'stat4.n': '2023',
-    'stat4.l': "the modern FIFA framework Bert is licensed under",
+    'stat4.l': 'FIFA-licensed since',
 
     // how it works (recast from "The MFH Plan")
     'plan.eyebrow': 'How we work together',
@@ -149,8 +149,8 @@ export const ui = {
     'quote.small': 'Talent gets you noticed. Discipline, the right questions, and people who protect you are what build a career.',
     'quote.big': "The player's future comes first.",
     'media.altPromise': 'A young football player looking toward the goal at sunrise',
-    'quote.promiseSmall': "We can't promise a contract. We promise to open doors for your talent, protect you through the process, and make sure you understand every rule that shapes your future.",
-    'quote.promiseBig': 'We open doors. We protect. We educate.',
+    'quote.promiseSmall': 'We promise to open doors for your talent, protect you through the process, and help you understand every rule that shapes your future.',
+    'quote.promiseBig': 'We open doors.<br>We protect.<br>We educate.',
 
     // ---------------- Services page ----------------
     'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
@@ -333,11 +333,11 @@ export const ui = {
     'stat1.n': '5',
     'stat1.l': 'lados del juego vividos: jugador, árbitro, entrenador, dueño de club, presidente de liga',
     'stat2.n': '2',
-    'stat2.l': 'países conectados, el Sur de la Florida y Colombia',
+    'stat2.l': 'Países conectados',
     'stat3.n': '3',
-    'stat3.l': 'ventanas de transferencia al año, el ritmo del trabajo',
+    'stat3.l': 'Ventanas de transferencia al año',
     'stat4.n': '2023',
-    'stat4.l': 'el marco moderno de la FIFA bajo el que Bert tiene licencia',
+    'stat4.l': 'Con licencia FIFA desde',
 
     // how it works
     'plan.eyebrow': 'Cómo trabajamos juntos',
@@ -413,8 +413,8 @@ export const ui = {
     'quote.small': 'El talento te hace notar. La disciplina, las preguntas correctas y quienes te protegen son lo que construye una carrera.',
     'quote.big': 'El futuro del jugador va primero.',
     'media.altPromise': 'Un joven jugador de fútbol mirando hacia la portería al amanecer',
-    'quote.promiseSmall': 'No podemos prometerte un contrato. Prometemos abrir puertas para tu talento, protegerte durante todo el proceso y asegurarnos de que entiendas cada regla que rige tu futuro.',
-    'quote.promiseBig': 'Abrimos puertas. Protegemos. Educamos.',
+    'quote.promiseSmall': 'Prometemos abrir puertas para tu talento, protegerte durante todo el proceso y ayudarte a entender cada regla que rige tu futuro.',
+    'quote.promiseBig': 'Abrimos puertas.<br>Protegemos.<br>Educamos.',
 
     // ---------------- Services page ----------------
     'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
