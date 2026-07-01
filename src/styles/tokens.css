@@ -15,8 +15,9 @@
 
   /* shape and layout */
   --r:8px;
-  --maxw:1180px;
-  --section-pad:96px;
+  --maxw:1240px;
+  --gutter:clamp(22px,3.2vw,46px);
+  --section-pad:clamp(64px,8vw,120px);
   --shadow:0 18px 50px -24px rgba(0,53,92,.35);
   --shadow-sm:0 6px 20px -12px rgba(0,53,92,.30);
 

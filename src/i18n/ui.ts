@@ -25,9 +25,9 @@ export const ui = {
     'skip.link': 'Skip to content',
 
     // hero
-    'hero.eyebrow': 'FIFA-Licensed · South Florida & Colombia',
-    'hero.h1': "We help players and coaches <span class='hl'>build futures</span> in football.",
-    'hero.sub': 'MFH Global Football is a FIFA-licensed agency. We guide players and parents through every decision and opportunity on the road to professional football, and we keep your future first the whole way.',
+    'hero.eyebrow': 'FIFA-Licensed Agent · South Florida & Colombia',
+    'hero.h1': "We <span class='hl'>build futures</span> for players and coaches in football.",
+    'hero.sub': 'A FIFA-licensed agency guiding players and parents through every decision on the road to professional football. Your future comes first.',
     'hero.cta1': 'Book a Free Consultation',
     'hero.cta2': 'See how it works',
 
@@ -40,9 +40,9 @@ export const ui = {
     'strip.6': 'Parents Always Welcome',
 
     // the landscape (recast from "The Problem")
-    'problem.eyebrow': 'Before you trust anyone with your future',
-    'problem.h2': 'The road to professional football is confusing, and not everyone on it is on your side.',
-    'problem.intro': 'Too many talented players and families walk this road alone, or next to someone who puts the commission first. You deserve better, and you deserve to understand every step before you take it.',
+    'problem.eyebrow': 'Before you trust anyone',
+    'problem.h2': 'The path to pro is confusing.',
+    'problem.intro': 'Too many families walk it alone, or beside someone who puts the commission first. You deserve a guide who puts the player first.',
     'p1.t': 'Unlicensed agents',
     'p1.d': "People working without structure or accountability, outside FIFA's rules.",
     'p2.t': 'Rules that decide careers',
@@ -93,7 +93,7 @@ export const ui = {
     // bridge (recast eyebrow from "The Bridge")
     'bridge.eyebrow': 'Two homes, one path',
     'bridge.h2': 'South Florida and Colombia, connected.',
-    'bridge.body': 'Real relationships on both ends, bilingual and bicultural, with a growth corridor from MLS to Liga BetPlay to Europe. This is the road MFH is built to walk with you.',
+    'bridge.body': 'Real relationships on both ends, bilingual and bicultural, from MLS to Liga BetPlay to Europe. This is the road we walk with you.',
     'bridge.left': 'South Florida',
     'bridge.leftd': 'A deep club ecosystem and growing player volume.',
     'bridge.right': 'Colombia',
@@ -101,7 +101,7 @@ export const ui = {
 
     // who we work with (recast eyebrow from "Who We Help")
     'who.eyebrow': 'Who we work with',
-    'who.h2': 'Built for players, families, and the clubs that need them.',
+    'who.h2': 'Built for players, families, and clubs.',
     'w1.t': 'Professional & transfer-ready players',
     'w1.d': 'Representation, negotiation, and FIFA TMS transfers, handled with regulatory care.',
     'w2.t': 'Families & aspiring players',
@@ -266,9 +266,9 @@ export const ui = {
     'skip.link': 'Saltar al contenido',
 
     // hero
-    'hero.eyebrow': 'Con Licencia FIFA · Sur de la Florida y Colombia',
-    'hero.h1': "Ayudamos a jugadores y entrenadores a <span class='hl'>construir su futuro</span> en el fútbol.",
-    'hero.sub': 'MFH Global Football es una agencia con licencia FIFA. Acompañamos a jugadores y padres en cada decisión y oportunidad en el camino al fútbol profesional, y mantenemos tu futuro primero en todo momento.',
+    'hero.eyebrow': 'Agente con Licencia FIFA · Sur de la Florida y Colombia',
+    'hero.h1': "<span class='hl'>Construimos futuros</span> para jugadores y entrenadores en el fútbol.",
+    'hero.sub': 'Una agencia con licencia FIFA que acompaña a jugadores y padres en cada decisión del camino al fútbol profesional. Tu futuro va primero.',
     'hero.cta1': 'Agenda una Consulta Gratis',
     'hero.cta2': 'Conoce cómo funciona',
 
@@ -281,9 +281,9 @@ export const ui = {
     'strip.6': 'Padres Siempre Bienvenidos',
 
     // the landscape
-    'problem.eyebrow': 'Antes de confiar tu futuro a alguien',
-    'problem.h2': 'El camino al fútbol profesional es confuso, y no todos los que están en él están de tu lado.',
-    'problem.intro': 'Con demasiada frecuencia, jugadores talentosos y sus familias recorren este camino solos, o junto a alguien que pone la comisión primero. Mereces algo mejor, y mereces entender cada paso antes de darlo.',
+    'problem.eyebrow': 'Antes de confiar en alguien',
+    'problem.h2': 'El camino al profesionalismo es confuso.',
+    'problem.intro': 'Muchas familias lo recorren solas, o junto a alguien que pone la comisión primero. Mereces un guía que ponga al jugador primero.',
     'p1.t': 'Agentes sin licencia',
     'p1.d': 'Personas que operan sin estructura ni responsabilidad, fuera de las reglas de la FIFA.',
     'p2.t': 'Reglas que deciden carreras',
@@ -334,7 +334,7 @@ export const ui = {
     // bridge
     'bridge.eyebrow': 'Dos hogares, un camino',
     'bridge.h2': 'El Sur de la Florida y Colombia, conectados.',
-    'bridge.body': 'Relaciones reales en ambos extremos, bilingües y biculturales, con un corredor de crecimiento desde la MLS hasta la Liga BetPlay y Europa. Este es el camino que MFH está hecho para recorrer contigo.',
+    'bridge.body': 'Relaciones reales en ambos extremos, bilingües y biculturales, desde la MLS hasta la Liga BetPlay y Europa. Este es el camino que recorremos contigo.',
     'bridge.left': 'Sur de la Florida',
     'bridge.leftd': 'Un ecosistema de clubes profundo y un volumen de jugadores en crecimiento.',
     'bridge.right': 'Colombia',
@@ -342,7 +342,7 @@ export const ui = {
 
     // who we work with
     'who.eyebrow': 'Con quién trabajamos',
-    'who.h2': 'Hecho para jugadores, familias y los clubes que los necesitan.',
+    'who.h2': 'Hecho para jugadores, familias y clubes.',
     'w1.t': 'Jugadores profesionales y listos para transferencia',
     'w1.d': 'Representación, negociación y transferencias por FIFA TMS, con rigor regulatorio.',
     'w2.t': 'Familias y jugadores en formación',
