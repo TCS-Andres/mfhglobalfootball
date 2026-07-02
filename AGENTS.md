@@ -33,6 +33,11 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Site email: info@mfhglobal.football.
 - Staff page at /staff lists the team (Bert, Phil Zayas, Sebastian Mahecha, John Cardona Mahecha,
   Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal).
+- Carlos Bernal, CPA, MAcc is an INDEPENDENT "Accounting & Tax Support Partner" (CEO of
+  BM Accountax LLC), per his official bio of July 2026. Do not call him CFO. His card carries the
+  independence disclaimer; keep it.
+- The bilingual Player Intake Questionnaire PDF is hosted at
+  /docs/mfh-player-intake-questionnaire.pdf and linked from the Contact page.
 
 ## Non negotiable brand rules
 - Use "MFH" or "MFH Global Football" only. Never spell out the family holdings name.

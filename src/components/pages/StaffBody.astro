@@ -15,7 +15,8 @@ const divisions = [
   { key: 'st.div3', people: [{ key: 'st.p5' }] },
   { key: 'st.div4', people: [{ key: 'st.p6' }] },
   { key: 'st.div5', people: [{ key: 'st.p7' }] },
-  { key: 'st.div6', people: [{ key: 'st.p8' }] },
+  // Carlos is an independent partner (BM Accountax LLC); bio + disclaimer per his official one-pager.
+  { key: 'st.div6', people: [{ key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true }] },
 ];
 
 const initials = (name: string) =>
@@ -47,7 +48,7 @@ const initials = (name: string) =>
         </div>
         <div class="staff-grid">
           {d.people.map((person, pi) => (
-            <div class="person card reveal" style={`--d:${pi * 90}ms`}>
+            <div class="person card reveal" class:list={[{ 'person--wide': 'bio' in person && person.bio }]} style={`--d:${pi * 90}ms`}>
               {'photo' in person && person.photo ? (
                 <img class="person__photo" src={person.photo} alt={t(lang, `${person.key}.n`)} width="160" height="160" loading="lazy" />
               ) : (
@@ -55,6 +56,8 @@ const initials = (name: string) =>
               )}
               <h3>{t(lang, `${person.key}.n`)}</h3>
               <p>{t(lang, `${person.key}.t`)}</p>
+              {'bio' in person && person.bio && <p class="person__bio">{t(lang, `${person.key}.bio`)}</p>}
+              {'note' in person && person.note && <p class="person__note">{t(lang, `${person.key}.note`)}</p>}
             </div>
           ))}
         </div>
@@ -104,6 +107,28 @@ const initials = (name: string) =>
   .person p {
     margin-top: 6px;
     font-size: 0.92rem;
+  }
+  .person--wide {
+    grid-column: span 2;
+  }
+  @media (max-width: 920px) {
+    .person--wide {
+      grid-column: span 1;
+    }
+  }
+  .person__bio {
+    text-align: left;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+  .person__note {
+    text-align: left;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-style: italic;
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
   }
   .staff-growing {
     margin-top: 44px;

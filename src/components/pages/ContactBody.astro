@@ -112,8 +112,32 @@ const positions =
         </div>
       </div>
     </div>
+
+    <!-- Player Intake Questionnaire download -->
+    <div class="panel-card questionnaire reveal" style="margin-top:22px">
+      <div>
+        <h2>{t(lang, 'ct.q.h2')}</h2>
+        <p>{t(lang, 'ct.q.d')}</p>
+      </div>
+      <a class="btn btn-outline" href="/docs/mfh-player-intake-questionnaire.pdf" download>
+        {t(lang, 'ct.q.button')}
+      </a>
+    </div>
   </div>
 </section>
+
+<style>
+  .questionnaire {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .questionnaire .btn {
+    flex: none;
+  }
+</style>
 
 <section class="section sky">
   <div class="wrap">
