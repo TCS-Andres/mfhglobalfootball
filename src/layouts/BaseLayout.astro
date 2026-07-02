@@ -56,6 +56,19 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
 
+    <!-- Preloader gate: first visit per session only, never under reduced motion.
+         Runs synchronously so returning visitors never see a flash. -->
+    <script is:inline>
+      try {
+        if (
+          !sessionStorage.getItem('mfh-preloaded') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          document.documentElement.classList.add('preloading');
+        }
+      } catch (e) {}
+    </script>
+
     <link rel="canonical" href={canonical} />
     {alternates.map((a) => <link rel="alternate" hreflang={a.code} href={a.url} />)}
     <link rel="alternate" hreflang="x-default" href={xDefault} />
@@ -90,6 +103,16 @@ const jsonLd = {
     />
   </head>
   <body>
+    <!-- Preloader: white brand ball bouncing on the navy gradient, first visit only -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__stage">
+        <img class="preloader__ball" src="/logos/ball.png" alt="" width="110" height="107" />
+        <span class="preloader__shadow"></span>
+      </div>
+      <p class="preloader__word">MFH <span>Global Football</span></p>
+      <span class="preloader__bar"></span>
+    </div>
+
     <a href="#main" class="skip-link">{t(lang, 'skip.link')}</a>
     <Header lang={lang} />
     <main id="main">
@@ -98,6 +121,38 @@ const jsonLd = {
     <Footer lang={lang} />
 
     <script>
+      // Preloader dismissal: wait for page load, keep a minimum on-screen time so it
+      // never blinks, cap the total so it never stalls, then slide away and clean up.
+      const pre = document.getElementById('preloader');
+      if (pre && document.documentElement.classList.contains('preloading')) {
+        const MIN = 900;
+        const MAX = 2500;
+        const started = performance.now();
+        let hidden = false;
+        const hide = () => {
+          if (hidden) return;
+          hidden = true;
+          try {
+            sessionStorage.setItem('mfh-preloaded', '1');
+          } catch (e) {}
+          pre.classList.add('preloader--done');
+          pre.addEventListener(
+            'transitionend',
+            () => {
+              pre.remove();
+              document.documentElement.classList.remove('preloading');
+            },
+            { once: true }
+          );
+        };
+        const onReady = () => setTimeout(hide, Math.max(0, MIN - (performance.now() - started)));
+        if (document.readyState === 'complete') onReady();
+        else addEventListener('load', onReady, { once: true });
+        setTimeout(hide, MAX);
+      } else if (pre) {
+        pre.remove();
+      }
+
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const items = document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-scale');
 
