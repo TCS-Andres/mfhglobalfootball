@@ -12,12 +12,13 @@ const { lang } = Astro.props;
 // PUBLIC_CONTACT_EMAIL : address used for the graceful mailto fallback.
 const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL ?? '';
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
-const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'hello@mfhglobal.football';
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'info@mfhglobal.football';
 
 const mailSubject = encodeURIComponent(
   lang === 'es' ? 'Solicitud de consulta gratis' : 'Free consultation request'
 );
-const ages = ['U10', 'U12', 'U14', 'U16', 'U18', 'U21', 'Senior'];
+// Client rule: age categories start at U12.
+const ages = ['U12', 'U14', 'U16', 'U18', 'U21', 'Senior'];
 const positions =
   lang === 'es'
     ? ['Portero', 'Defensa', 'Mediocampista', 'Delantero', 'Otra']

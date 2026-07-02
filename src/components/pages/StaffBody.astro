@@ -1,0 +1,124 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// Divisions and people per the client's organizational structure.
+// Bert carries a real photo; everyone else gets an initials mark until photos arrive.
+const divisions = [
+  { key: 'st.div1', people: [{ key: 'st.p1', photo: '/photos/bert.jpg' }] },
+  { key: 'st.div2', people: [{ key: 'st.p2' }, { key: 'st.p3' }, { key: 'st.p4' }] },
+  { key: 'st.div3', people: [{ key: 'st.p5' }] },
+  { key: 'st.div4', people: [{ key: 'st.p6' }] },
+  { key: 'st.div5', people: [{ key: 'st.p7' }] },
+  { key: 'st.div6', people: [{ key: 'st.p8' }] },
+];
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+---
+
+<section class="page-hero">
+  <img class="page-hero__bg" src="/photos/about-banner.jpg" alt="" />
+  <div class="page-hero__scrim"></div>
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'st.eyebrow')}</span></span>
+    <h1>{t(lang, 'st.h1')}</h1>
+    <p>{t(lang, 'st.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {divisions.map((d, di) => (
+      <div class="group" class:list={[{ 'group--first': di === 0 }]}>
+        <div class="group-head">
+          <span class="eyebrow"><i class="pent"></i><span>{t(lang, d.key)}</span></span>
+        </div>
+        <div class="staff-grid">
+          {d.people.map((person, pi) => (
+            <div class="person card reveal" style={`--d:${pi * 90}ms`}>
+              {'photo' in person && person.photo ? (
+                <img class="person__photo" src={person.photo} alt={t(lang, `${person.key}.n`)} width="160" height="160" loading="lazy" />
+              ) : (
+                <div class="person__avatar" aria-hidden="true">{initials(t(lang, `${person.key}.n`))}</div>
+              )}
+              <h3>{t(lang, `${person.key}.n`)}</h3>
+              <p>{t(lang, `${person.key}.t`)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    <p class="staff-growing reveal">{t(lang, 'st.growing')}</p>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .group--first {
+    margin-top: 0;
+  }
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .person {
+    text-align: center;
+    padding: 34px 26px;
+  }
+  .person__photo,
+  .person__avatar {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    object-fit: cover;
+    display: grid;
+    place-items: center;
+    border: 3px solid var(--gold);
+  }
+  .person__avatar {
+    background: var(--sky);
+    color: var(--blue-deep);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+  }
+  .person h3 {
+    font-size: 1.14rem;
+  }
+  .person p {
+    margin-top: 6px;
+    font-size: 0.92rem;
+  }
+  .staff-growing {
+    margin-top: 44px;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    max-width: 62ch;
+  }
+  @media (max-width: 920px) {
+    .staff-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .staff-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -10,6 +10,10 @@ const { lang } = Astro.props;
 const players = ['sv.p1', 'sv.p2', 'sv.p3', 'sv.p4', 'sv.p5'];
 const coaches = ['sv.c1', 'sv.c2', 'sv.c3'];
 const families = ['sv.f1', 'sv.f2', 'sv.f3'];
+
+// Official FIFA example lists, collapsed by default to keep the page scannable.
+const cat1Examples = Array.from({ length: 13 }, (_, i) => `sv.cat1.e${i + 1}`);
+const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
 ---
 
 <section class="page-hero">
@@ -28,10 +32,22 @@ const families = ['sv.f1', 'sv.f2', 'sv.f3'];
       <div class="cat">
         <h3>{t(lang, 'sv.cat1.t')}</h3>
         <p>{t(lang, 'sv.cat1.d')}</p>
+        <details class="cat__more">
+          <summary>{t(lang, 'sv.ex.label')}</summary>
+          <ul>
+            {cat1Examples.map((k) => <li>{t(lang, k)}</li>)}
+          </ul>
+        </details>
       </div>
       <div class="cat">
         <h3>{t(lang, 'sv.cat2.t')}</h3>
         <p>{t(lang, 'sv.cat2.d')}</p>
+        <details class="cat__more">
+          <summary>{t(lang, 'sv.ex.label')}</summary>
+          <ul>
+            {cat2Examples.map((k) => <li>{t(lang, k)}</li>)}
+          </ul>
+        </details>
       </div>
     </div>
 

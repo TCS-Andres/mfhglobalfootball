@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StaffBody from '../../components/pages/StaffBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'es';
+---
+
+<BaseLayout lang={lang} title={t(lang, 'st.title')} description={t(lang, 'st.metaDesc')}>
+  <StaffBody lang={lang} />
+</BaseLayout>

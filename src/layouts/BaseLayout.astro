@@ -16,10 +16,10 @@ const paths = toggledPath(Astro.url.pathname);
 const canonical = new URL(lang === 'es' ? paths.es : paths.en, site).href;
 const enUrl = new URL(paths.en, site).href;
 const esUrl = new URL(paths.es, site).href;
-const ogImage = new URL('/logos/ball.png', site).href;
+const ogImage = new URL('/og.jpg', site).href;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 
-// Structured data: a FIFA-licensed sports agency, bilingual, South Florida + Colombia.
+// Structured data: a FIFA-licensed sports agency, bilingual, South Florida + Colombia + Europe.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['SportsOrganization', 'ProfessionalService'],
@@ -29,8 +29,9 @@ const jsonLd = {
   url: site.href,
   logo: new URL('/logos/header.png', site).href,
   image: ogImage,
+  email: 'info@mfhglobal.football',
   knowsLanguage: ['en', 'es'],
-  areaServed: ['US', 'CO'],
+  areaServed: ['US', 'CO', 'Europe'],
   address: {
     '@type': 'PostalAddress',
     addressRegion: 'FL',
@@ -59,7 +60,6 @@ const jsonLd = {
 
     <!-- Favicons generated from the ball mark -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Open Graph -->

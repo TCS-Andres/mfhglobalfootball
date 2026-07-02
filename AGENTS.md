@@ -21,6 +21,19 @@ gold palette and the design tokens. Motion is bolder (animated hero glow, marque
 reveals, parallax, count-up stats) but always disabled under prefers-reduced-motion. Photo slots
 (`.media-slot`) are designed placeholders ready for real `<img>` swaps.
 
+## Client-confirmed facts (July 2026, do not contradict)
+- The company is called "MFH Global Football". Use the full name when copy names the company;
+  never spell out the family holdings name.
+- Bert earned his FIFA agent license in 2026, under the modern framework FIFA introduced in 2023.
+- Bert owned local and national leagues under the Florida State Soccer Association (part of
+  US Soccer). Do not say he "ran a league" or was "president of the APSL".
+- Bert also holds a US Soccer National C coaching license.
+- Target markets: South Florida, Colombia, AND Europe. Always include Europe.
+- Age categories start at U12. Never offer U10 or younger in forms.
+- Site email: info@mfhglobal.football.
+- Staff page at /staff lists the team (Bert, Phil Zayas, Sebastian Mahecha, John Cardona Mahecha,
+  Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal).
+
 ## Non negotiable brand rules
 - Use "MFH" or "MFH Global Football" only. Never spell out the family holdings name.
 - Never guarantee placements, contracts, signings, or results. Use the core promise framing:
