@@ -262,7 +262,7 @@ footer.site .bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:46px;p
   .contact-grid{grid-template-columns:1fr}
 }
 
-/* ---- preloader: brand ball bounce, first visit per session ---- */
+/* ---- preloader: spinning brand ball + wordmark, first visit per session ---- */
 .preloader{display:none}
 html.preloading .preloader{
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
@@ -274,33 +274,19 @@ html.preloading .preloader--done{opacity:0;transform:translateY(-3.5%);visibilit
 html.preloading{overflow:hidden}
 html.preloading:has(.preloader--done){overflow:auto}
 
-.preloader__stage{position:relative;height:150px;display:flex;align-items:flex-end;justify-content:center}
-.preloader__ball{width:96px;height:auto;position:relative;z-index:1;
-  filter:drop-shadow(0 12px 22px rgba(0,0,0,.35));transform-origin:50% 100%;
-  animation:preBounce 1.1s cubic-bezier(.35,0,.65,1) infinite}
-.preloader__shadow{position:absolute;bottom:-14px;left:50%;width:74px;height:14px;border-radius:50%;
-  background:rgba(0,0,0,.35);filter:blur(5px);transform:translateX(-50%) scaleX(1);
-  animation:preShadow 1.1s cubic-bezier(.35,0,.65,1) infinite}
-.preloader__word{font-family:var(--font-display);font-weight:900;letter-spacing:.2em;
-  text-transform:uppercase;color:#fff;font-size:1.05rem;text-align:center;
-  animation:preWord 1.6s ease both .2s}
-.preloader__word span{display:block;font-size:.62rem;font-weight:800;letter-spacing:.34em;
-  color:var(--gold-soft);margin-top:6px}
+.preloader__stage{position:relative;height:132px;display:flex;align-items:center;justify-content:center}
+.preloader__ball{width:104px;height:auto;position:relative;z-index:1;
+  filter:drop-shadow(0 16px 26px rgba(0,0,0,.35));
+  animation:preSpin 1.5s linear infinite}
+.preloader__shadow{position:absolute;bottom:-8px;left:50%;width:80px;height:13px;border-radius:50%;
+  background:rgba(0,0,0,.3);filter:blur(6px);transform:translateX(-50%)}
+.preloader__word{width:min(232px,60vw);height:auto;animation:preWord 1.6s ease both .2s}
 .preloader__bar{width:150px;height:3px;border-radius:2px;overflow:hidden;position:relative;
   background:rgba(255,255,255,.18)}
 .preloader__bar::after{content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;
   border-radius:2px;background:var(--gold);animation:preBar 1.1s ease-in-out infinite}
 
-@keyframes preBounce{
-  0%,100%{transform:translateY(0) scale(1.06,.92)}
-  18%{transform:translateY(-6%) scale(.98,1.04)}
-  50%{transform:translateY(-64%) scale(.96,1.05) rotate(6deg)}
-  82%{transform:translateY(-6%) scale(.98,1.04)}
-}
-@keyframes preShadow{
-  0%,100%{transform:translateX(-50%) scaleX(1);opacity:.4}
-  50%{transform:translateX(-50%) scaleX(.55);opacity:.18}
-}
+@keyframes preSpin{to{transform:rotate(360deg)}}
 @keyframes preWord{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes preBar{0%{left:-40%}60%,100%{left:100%}}
 

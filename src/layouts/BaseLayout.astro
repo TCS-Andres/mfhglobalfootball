@@ -36,6 +36,10 @@ const jsonLd = {
   logo: new URL('/logos/header.png', site).href,
   image: ogImage,
   email: 'info@mfhglobal.football',
+  sameAs: [
+    'https://www.linkedin.com/company/mfh-global-football',
+    'https://www.instagram.com/mfhglobalfootball/',
+  ],
   knowsLanguage: ['en', 'es'],
   areaServed: ['US', 'CO', 'Europe'],
   address: {
@@ -103,13 +107,13 @@ const jsonLd = {
     />
   </head>
   <body>
-    <!-- Preloader: white brand ball bouncing on the navy gradient, first visit only -->
+    <!-- Preloader: white brand ball spinning over the wordmark, first visit only -->
     <div class="preloader" id="preloader" aria-hidden="true">
       <div class="preloader__stage">
-        <img class="preloader__ball" src="/logos/ball.png" alt="" width="110" height="107" />
+        <img class="preloader__ball" src="/logos/ball-spin.png" alt="" width="110" height="110" />
         <span class="preloader__shadow"></span>
       </div>
-      <p class="preloader__word">MFH <span>Global Football</span></p>
+      <img class="preloader__word" src="/logos/wordmark-white.png" alt="" width="232" height="124" />
       <span class="preloader__bar"></span>
     </div>
 
@@ -125,8 +129,8 @@ const jsonLd = {
       // never blinks, cap the total so it never stalls, then slide away and clean up.
       const pre = document.getElementById('preloader');
       if (pre && document.documentElement.classList.contains('preloading')) {
-        const MIN = 900;
-        const MAX = 2500;
+        const MIN = 1700;
+        const MAX = 3200;
         const started = performance.now();
         let hidden = false;
         const hide = () => {
@@ -136,14 +140,13 @@ const jsonLd = {
             sessionStorage.setItem('mfh-preloaded', '1');
           } catch (e) {}
           pre.classList.add('preloader--done');
-          pre.addEventListener(
-            'transitionend',
-            () => {
-              pre.remove();
-              document.documentElement.classList.remove('preloading');
-            },
-            { once: true }
-          );
+          const cleanup = () => {
+            pre.remove();
+            document.documentElement.classList.remove('preloading');
+          };
+          pre.addEventListener('transitionend', cleanup, { once: true });
+          // Background tabs pause transitions, so transitionend may never fire.
+          setTimeout(cleanup, 700);
         };
         const onReady = () => setTimeout(hide, Math.max(0, MIN - (performance.now() - started)));
         if (document.readyState === 'complete') onReady();

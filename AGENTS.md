@@ -31,13 +31,18 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Target markets: South Florida, Colombia, AND Europe. Always include Europe.
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
-- Staff page at /staff lists the team (Bert, Phil Zayas, Sebastian Mahecha, John Cardona Mahecha,
+- Staff page at /staff lists the team (Bert, Phil Zayas, Sebastian Mahecha, John Mahecha,
   Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal).
 - Carlos Bernal, CPA, MAcc is an INDEPENDENT "Accounting & Tax Support Partner" (CEO of
   BM Accountax LLC), per his official bio of July 2026. Do not call him CFO. His card carries the
   independence disclaimer; keep it.
 - The bilingual Player Intake Questionnaire PDF is hosted at
   /docs/mfh-player-intake-questionnaire.pdf and linked from the Contact page.
+- Official social profiles (provided July 2026): Instagram
+  https://www.instagram.com/mfhglobalfootball/, company LinkedIn
+  https://www.linkedin.com/company/mfh-global-football, and Bert's personal LinkedIn
+  https://www.linkedin.com/in/berts. These live in the footer, the founder card, and JSON-LD
+  sameAs. There is no YouTube channel yet, do not link one.
 
 ## Non negotiable brand rules
 - Use "MFH" or "MFH Global Football" only. Never spell out the family holdings name.
