@@ -196,8 +196,8 @@ export const ui = {
     'quote.promiseBig': 'We open doors.<br>We protect.<br>We educate.',
 
     // ---------------- Services page ----------------
-    'sv.title': 'Services | FIFA-Licensed Player & Coach Representation',
-    'sv.metaDesc': 'FIFA-licensed representation for players, coaches, clubs, and families across South Florida, Colombia, and Europe. Transfers, evaluations, welfare, scouting, and youth pathways, education first.',
+    'sv.title': 'FIFA-Licensed Agency Services',
+    'sv.metaDesc': 'FIFA-licensed representation for players, coaches, and families across South Florida, Colombia, and Europe. Transfers, evaluations, scouting, and youth pathways.',
     'sv.eyebrow': 'What representation looks like',
     'sv.h1': 'Full-spectrum representation, always within the rules.',
     'sv.intro': "Everything MFH Global Football does follows FIFA's framework. FIFA splits what a licensed agent does into two categories, and MFH Global Football delivers both, wrapped in an education-first, player-first approach.",
@@ -260,8 +260,8 @@ export const ui = {
     'sv.close.body': 'Whatever the service, our approach is the same: explain the rules in plain language, protect the player, and keep the family in the room. That is how good decisions get made.',
 
     // ---------------- About page ----------------
-    'ab.title': 'About Bert Mahecha | FIFA-Licensed Football Agent',
-    'ab.metaDesc': 'Bert Mahecha founded MFH Global Football, a FIFA-licensed, family-built agency bridging South Florida, Colombia, and Europe. Player, referee, coach, club owner, and league owner under US Soccer.',
+    'ab.title': 'About Bert Mahecha, FIFA-Licensed Agent',
+    'ab.metaDesc': 'Bert Mahecha founded MFH Global Football, a FIFA-licensed, family-built agency bridging South Florida, Colombia, and Europe. He has lived every side of the game.',
     'ab.eyebrow': 'The person in your corner',
     'ab.h1': 'An agent who has lived every side of the game.',
     'ab.intro': "MFH Global Football was founded by Bert Mahecha, a FIFA-licensed football agent based in South Florida with deep ties to Colombia. He guides players and families through every important decision on the road to professional football, so the player's future always comes first.",
@@ -288,8 +288,8 @@ export const ui = {
     'ab.v4.d': 'MFH Global Football is a family business, and it treats client families the way it treats its own.',
 
     // ---------------- How It Works page (the plan) ----------------
-    'pl.title': 'How It Works | The Road to Professional Football',
-    'pl.metaDesc': 'The four-step MFH Global Football journey and the lessons behind it. Calm, educational guidance for players and parents on the road to professional football, in English and Spanish.',
+    'pl.title': 'How It Works',
+    'pl.metaDesc': 'The four-step MFH Global Football journey and the lessons behind it. Calm, educational guidance for players and parents on the road to professional football.',
     'pl.eyebrow': 'How we work together',
     'pl.h1': 'Four steps, and your family is in every one.',
     'pl.intro': 'The road to professional football is full of decisions and opportunities. We keep it simple, and we keep parents in the room from the first conversation.',
@@ -312,8 +312,8 @@ export const ui = {
     'pl.story3.d': 'Some choices, like signing professionally at sixteen, can affect college eligibility later. Understanding your options before you decide keeps every door within reach, so you choose the path that fits your dream.',
 
     // ---------------- Contact page ----------------
-    'ct.title': 'Contact | Book a Free Bilingual Consultation',
-    'ct.metaDesc': 'Book a free bilingual consultation with MFH Global Football, or share your footage by link. FIFA-licensed representation across South Florida, Colombia, and Europe. English or Spanish.',
+    'ct.title': 'Book a Free Consultation',
+    'ct.metaDesc': 'Book a free bilingual consultation with MFH Global Football, or share your footage by link. FIFA-licensed representation in South Florida, Colombia, and Europe.',
     'ct.eyebrow': "Let's talk",
     'ct.h1': 'Let us talk about your future in football.',
     'ct.intro': 'Booking a consultation is free and there is no pressure. In English or Spanish, with your family welcome.',
@@ -528,8 +528,8 @@ export const ui = {
     'quote.promiseBig': 'Abrimos puertas.<br>Protegemos.<br>Educamos.',
 
     // ---------------- Services page ----------------
-    'sv.title': 'Servicios | Representación de Jugadores y Entrenadores con Licencia FIFA',
-    'sv.metaDesc': 'Representación con licencia FIFA para jugadores, entrenadores, clubes y familias en el Sur de la Florida, Colombia y Europa. Transferencias, evaluaciones, bienestar, scouting y caminos juveniles, la educación primero.',
+    'sv.title': 'Servicios de Agencia con Licencia FIFA',
+    'sv.metaDesc': 'Representación con licencia FIFA para jugadores, entrenadores y familias en el Sur de la Florida, Colombia y Europa. Transferencias, evaluaciones y scouting.',
     'sv.eyebrow': 'Cómo es la representación',
     'sv.h1': 'Representación integral, siempre dentro de las reglas.',
     'sv.intro': 'Todo lo que hace MFH Global Football sigue el marco de la FIFA. La FIFA divide lo que hace un agente con licencia en dos categorías, y MFH Global Football ofrece ambas, con un enfoque que pone la educación y al jugador primero.',
@@ -592,8 +592,8 @@ export const ui = {
     'sv.close.body': 'Sea cual sea el servicio, nuestro enfoque es el mismo: explicar las reglas en lenguaje claro, proteger al jugador y mantener a la familia presente. Así se toman buenas decisiones.',
 
     // ---------------- About page ----------------
-    'ab.title': 'Sobre Bert Mahecha | Agente de Fútbol con Licencia FIFA',
-    'ab.metaDesc': 'Bert Mahecha fundó MFH Global Football, una agencia familiar con licencia FIFA que conecta el Sur de la Florida, Colombia y Europa. Jugador, árbitro, entrenador, dueño de club y dueño de ligas bajo US Soccer.',
+    'ab.title': 'Bert Mahecha, Agente con Licencia FIFA',
+    'ab.metaDesc': 'Bert Mahecha fundó MFH Global Football, una agencia familiar con licencia FIFA que conecta el Sur de la Florida, Colombia y Europa. Ha vivido cada lado del juego.',
     'ab.eyebrow': 'Quien está en tu esquina',
     'ab.h1': 'Un agente que ha vivido cada lado del juego.',
     'ab.intro': 'MFH Global Football fue fundada por Bert Mahecha, agente de fútbol con licencia FIFA radicado en el Sur de la Florida y con raíces profundas en Colombia. Acompaña a jugadores y familias en cada decisión importante del camino al fútbol profesional, para que el futuro del jugador siempre esté primero.',
@@ -620,8 +620,8 @@ export const ui = {
     'ab.v4.d': 'MFH Global Football es una empresa familiar, y trata a las familias de sus clientes como trata a la suya.',
 
     // ---------------- How It Works page ----------------
-    'pl.title': 'Cómo Funciona | El Camino al Fútbol Profesional',
-    'pl.metaDesc': 'Los cuatro pasos del camino MFH Global Football y las lecciones detrás de ellos. Orientación calmada y educativa para jugadores y padres en el camino al fútbol profesional, en inglés y español.',
+    'pl.title': 'Cómo Funciona',
+    'pl.metaDesc': 'Los cuatro pasos del camino MFH Global Football y las lecciones detrás de ellos. Orientación calmada y educativa para jugadores y padres.',
     'pl.eyebrow': 'Cómo trabajamos juntos',
     'pl.h1': 'Cuatro pasos, y tu familia está en cada uno.',
     'pl.intro': 'El camino al fútbol profesional está lleno de decisiones y oportunidades. Lo mantenemos simple, y mantenemos a los padres presentes desde la primera conversación.',
@@ -644,8 +644,8 @@ export const ui = {
     'pl.story3.d': 'Algunas decisiones, como firmar como profesional a los dieciséis, pueden afectar la elegibilidad universitaria más adelante. Entender tus opciones antes de decidir mantiene cada puerta a tu alcance, para que elijas el camino que se ajuste a tu sueño.',
 
     // ---------------- Contact page ----------------
-    'ct.title': 'Contacto | Agenda una Consulta Bilingüe Gratis',
-    'ct.metaDesc': 'Agenda una consulta bilingüe gratis con MFH Global Football, o comparte tu material por enlace. Representación con licencia FIFA en el Sur de la Florida, Colombia y Europa. En inglés o español.',
+    'ct.title': 'Agenda una Consulta Gratis',
+    'ct.metaDesc': 'Agenda una consulta bilingüe gratis con MFH Global Football o comparte tu material por enlace. Representación con licencia FIFA en tres mercados.',
     'ct.eyebrow': 'Hablemos',
     'ct.h1': 'Hablemos de tu futuro en el fútbol.',
     'ct.intro': 'Agendar una consulta es gratis y sin presión. En inglés o español, con tu familia bienvenida.',

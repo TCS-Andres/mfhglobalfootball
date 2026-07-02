@@ -18,6 +18,7 @@ const enUrl = new URL(paths.en, site).href;
 const esUrl = new URL(paths.es, site).href;
 const ogImage = new URL('/og.jpg', site).href;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
 
 // Structured data: a FIFA-licensed sports agency, bilingual, South Florida + Colombia + Europe.
 const jsonLd = {
@@ -69,6 +70,7 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

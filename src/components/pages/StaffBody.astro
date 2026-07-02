@@ -26,10 +26,31 @@ const initials = (name: string) =>
     .map((w) => w[0])
     .join('')
     .toUpperCase();
+
+// Founder structured data for search engines.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Bert Mahecha',
+  jobTitle: 'Founder & FIFA-Licensed Football Agent',
+  image: 'https://mfhglobal.football/photos/bert.jpg',
+  worksFor: {
+    '@type': 'SportsOrganization',
+    name: 'MFH Global Football',
+    url: 'https://mfhglobal.football',
+  },
+  knowsLanguage: ['en', 'es'],
+  hasCredential: [
+    { '@type': 'EducationalOccupationalCredential', name: 'FIFA Football Agent License (2026)' },
+    { '@type': 'EducationalOccupationalCredential', name: 'US Soccer National C Coaching License' },
+  ],
+};
 ---
 
+<script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+
 <section class="page-hero">
-  <img class="page-hero__bg" src="/photos/about-banner.jpg" alt="" />
+  <img class="page-hero__bg" src="/photos/about-banner.jpg" alt="" width="1600" height="686" fetchpriority="high" />
   <div class="page-hero__scrim"></div>
   <div class="wrap">
     <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'st.eyebrow')}</span></span>
