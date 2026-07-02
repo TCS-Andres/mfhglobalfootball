@@ -7,7 +7,6 @@ interface Props {
   altKey?: string;
   smallKey?: string;
   bigKey?: string;
-  scrim?: boolean;
 }
 const {
   lang,
@@ -15,7 +14,6 @@ const {
   altKey = 'media.altQuote',
   smallKey = 'quote.small',
   bigKey = 'quote.big',
-  scrim = false,
 } = Astro.props;
 ---
 
@@ -25,8 +23,8 @@ const {
       <div class="quote-band__media">
         <img src={img} alt={t(lang, altKey)} width="1600" height="1067" loading="lazy" />
       </div>
-      {scrim && <div class="quote-band__scrim" aria-hidden="true"></div>}
-      <div class:list={['quote-band__content', { 'quote-band__content--solid': scrim }]}>
+      <div class="quote-band__scrim" aria-hidden="true"></div>
+      <div class="quote-band__content">
         <p class="quote-band__small">{t(lang, smallKey)}</p>
         <p class="quote-band__big" set:html={t(lang, bigKey)} />
       </div>
@@ -76,11 +74,6 @@ const {
     flex-direction: column;
     justify-content: space-between;
     padding: clamp(28px, 5vw, 80px);
-    color: #fff;
-    mix-blend-mode: difference;
-  }
-  .quote-band__content--solid {
-    mix-blend-mode: normal;
     color: #fff;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
   }

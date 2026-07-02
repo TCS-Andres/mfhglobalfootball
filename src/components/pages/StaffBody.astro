@@ -1,5 +1,5 @@
 ---
-import { t, type Lang } from '../../i18n/ui';
+import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
 
 interface Props {
@@ -7,10 +7,9 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// Divisions and people per the client's organizational structure.
-// Bert carries a real photo; everyone else gets an initials mark until photos arrive.
+// Bert leads the page in a featured founder section; the divisions follow.
+// Team members get an initials mark until photos arrive.
 const divisions = [
-  { key: 'st.div1', people: [{ key: 'st.p1', photo: '/photos/bert.jpg' }] },
   { key: 'st.div2', people: [{ key: 'st.p2' }, { key: 'st.p3' }, { key: 'st.p4' }] },
   { key: 'st.div3', people: [{ key: 'st.p5' }] },
   { key: 'st.div4', people: [{ key: 'st.p6' }] },
@@ -39,7 +38,33 @@ const initials = (name: string) =>
   </div>
 </section>
 
+<!-- Featured founder -->
 <section class="section">
+  <div class="wrap">
+    <div class="founder">
+      <div class="founder__media reveal-l">
+        <img src="/photos/bert.jpg" alt={t(lang, 'media.altBert')} width="800" height="872" loading="lazy" />
+      </div>
+      <div class="founder__body reveal-r">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'st.div1')}</span></span>
+        <h2>{t(lang, 'st.p1.n')}</h2>
+        <p class="founder__title">{t(lang, 'st.p1.t')}</p>
+        <p class="founder__bio">{t(lang, 'st.p1.bio1')}</p>
+        <p class="founder__bio">{t(lang, 'st.p1.bio2')}</p>
+        <ul class="founder__creds">
+          <li><i class="pent"></i><span>{t(lang, 'st.p1.c1')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'st.p1.c2')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'st.p1.c3')}</span></li>
+          <li><i class="pent"></i><span>{t(lang, 'st.p1.c4')}</span></li>
+        </ul>
+        <a class="btn btn-outline" href={localizePath('/about', lang)}>{t(lang, 'guide.cta')}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The rest of the team -->
+<section class="section sky" style="padding-top:64px">
   <div class="wrap">
     {divisions.map((d, di) => (
       <div class="group" class:list={[{ 'group--first': di === 0 }]}>
@@ -70,6 +95,84 @@ const initials = (name: string) =>
 <CtaBanner lang={lang} />
 
 <style>
+  .founder {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .founder__media {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .founder__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .founder__body h2 {
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    font-size: clamp(2rem, 3.6vw, 2.9rem);
+  }
+  .founder__body h2::after {
+    content: '';
+    display: block;
+    width: 54px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--gold);
+    margin-top: 16px;
+  }
+  .founder__title {
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--blue);
+    font-size: 1.05rem;
+  }
+  .founder__bio {
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-size: 1.04rem;
+  }
+  .founder__creds {
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+  .founder__creds li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .founder__creds .pent {
+    margin-top: 4px;
+  }
+  .founder__body .btn {
+    margin-top: 26px;
+  }
+  @media (max-width: 920px) {
+    .founder {
+      grid-template-columns: 1fr;
+    }
+    .founder__media {
+      max-width: 420px;
+    }
+    .founder__creds {
+      grid-template-columns: 1fr;
+    }
+  }
   .group--first {
     margin-top: 0;
   }
