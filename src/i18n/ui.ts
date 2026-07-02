@@ -340,9 +340,12 @@ export const ui = {
     'ct.details.langs': 'We work in English and Spanish as equals.',
     'ct.next.eyebrow': 'What happens next',
     'ct.next.h2': 'Simple, and no pressure.',
-    'ct.next.1': 'We reply and set up a free call, in English or Spanish.',
-    'ct.next.2': 'We listen, answer your questions, and review footage if you have it.',
-    'ct.next.3': 'You get honest feedback and a clear next step. No obligation.',
+    'ct.next.1.t': 'We set up a call',
+    'ct.next.1.d': 'We reply quickly and schedule a free call, in English or Spanish.',
+    'ct.next.2.t': 'We listen',
+    'ct.next.2.d': 'We answer your questions and review footage if you have it.',
+    'ct.next.3.t': 'You get a clear next step',
+    'ct.next.3.d': 'Honest feedback and a plan, with no obligation.',
   },
   es: {
     // nav + global CTA
@@ -669,9 +672,12 @@ export const ui = {
     'ct.details.langs': 'Trabajamos en inglés y español por igual.',
     'ct.next.eyebrow': 'Qué sigue',
     'ct.next.h2': 'Simple y sin presión.',
-    'ct.next.1': 'Respondemos y coordinamos una llamada gratis, en inglés o español.',
-    'ct.next.2': 'Escuchamos, respondemos tus preguntas y revisamos tu material si lo tienes.',
-    'ct.next.3': 'Recibes comentarios honestos y un siguiente paso claro. Sin compromiso.',
+    'ct.next.1.t': 'Coordinamos una llamada',
+    'ct.next.1.d': 'Respondemos rápido y agendamos una llamada gratis, en inglés o español.',
+    'ct.next.2.t': 'Escuchamos',
+    'ct.next.2.d': 'Respondemos tus preguntas y revisamos tu material si lo tienes.',
+    'ct.next.3.t': 'Tienes un siguiente paso claro',
+    'ct.next.3.d': 'Comentarios honestos y un plan, sin compromiso.',
   },
 } as const;
 

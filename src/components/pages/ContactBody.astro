@@ -145,11 +145,12 @@ const positions =
       <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'ct.next.eyebrow')}</span></span>
       <h2>{t(lang, 'ct.next.h2')}</h2>
     </div>
-    <div class="grid g3">
-      {['ct.next.1', 'ct.next.2', 'ct.next.3'].map((k, i) => (
-        <div class="card reveal" style={`--d:${i * 90}ms`}>
-          <div class="numnode">{i + 1}</div>
-          <p>{t(lang, k)}</p>
+    <div class="plan-grid plan-grid--3">
+      {[1, 2, 3].map((n, i) => (
+        <div class="step reveal" style={`--d:${i * 110}ms`}>
+          <div class="num">{n}</div>
+          <h3>{t(lang, `ct.next.${n}.t`)}</h3>
+          <p>{t(lang, `ct.next.${n}.d`)}</p>
         </div>
       ))}
     </div>
