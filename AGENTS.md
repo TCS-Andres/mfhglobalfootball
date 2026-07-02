@@ -45,7 +45,11 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   open doors, protect, educate.
 - Faith stays quiet. It belongs in the footer (the Jeremiah 29:11 line), never as a headline or
   banner, never at the top of a page.
-- Bilingual English and Spanish as equals. Every page ships in both. Spanish is never an afterthought.
+- The site ships in five languages: English at /, Spanish /es/, French /fr/, Italian /it/,
+  Portuguese (Portugal) /pt/. English and Spanish are the agency's working languages (consultations
+  are EN/ES); FR/IT/PT are site translations for the European market. Every string lives in all
+  five dictionaries in src/i18n/ui.ts (289 keys each). The language switch is an SVG-flag dropdown
+  (LangSwitch.astro), route-based as always. FR/IT/PT are AI translations pending native review.
 - Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype, no aggressive
   sales language, no profanity, no naming or criticizing competitors.
 - Zero em dashes anywhere, in code, comments, or copy. Use commas, colons, or periods.

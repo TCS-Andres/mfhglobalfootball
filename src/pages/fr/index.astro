@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Home from '../../components/Home.astro';
+
+const lang = 'fr';
+const title = 'MFH Global Football | Agence de Football Licenciée FIFA';
+const description =
+  "MFH Global Football est une agence licenciée FIFA qui guide les joueurs et les familles vers le football professionnel en Floride du Sud, en Colombie et en Europe.";
+---
+
+<BaseLayout lang={lang} title={title} description={description}>
+  <Home lang={lang} />
+</BaseLayout>

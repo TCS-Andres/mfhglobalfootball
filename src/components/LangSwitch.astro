@@ -1,14 +1,155 @@
 ---
-import { t, toggledPath, type Lang } from '../i18n/ui';
+import { t, localePaths, languages, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
-const paths = toggledPath(Astro.url.pathname);
+const paths = localePaths(Astro.url.pathname);
+const codes = Object.keys(languages) as Lang[];
+
+// Simplified inline SVG flags (20x14): reliable everywhere, unlike emoji flags.
+const flags: Record<Lang, string> = {
+  en: `<svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#fff"/><path d="M0 2h20M0 5h20M0 8h20M0 11h20" stroke="#C8102E" stroke-width="1.6"/><path d="M0 2a2 2 0 0 1 2-2h7v7H0Z" fill="#3C3B6E"/></svg>`,
+  es: `<svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#AA151B"/><rect y="3.5" width="20" height="7" fill="#F1BF00"/></svg>`,
+  fr: `<svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#fff"/><path d="M0 2a2 2 0 0 1 2-2h4.7v14H2a2 2 0 0 1-2-2Z" fill="#000091"/><path d="M13.3 0H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4.7Z" fill="#E1000F"/></svg>`,
+  it: `<svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#fff"/><path d="M0 2a2 2 0 0 1 2-2h4.7v14H2a2 2 0 0 1-2-2Z" fill="#008C45"/><path d="M13.3 0H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4.7Z" fill="#CD212A"/></svg>`,
+  pt: `<svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#DA291C"/><path d="M0 2a2 2 0 0 1 2-2h6v14H2a2 2 0 0 1-2-2Z" fill="#046A38"/><circle cx="8" cy="7" r="2.4" fill="#FFE900"/></svg>`,
+};
 ---
 
-<div class="lang" role="group" aria-label={t(lang, 'lang.label')}>
-  <a href={paths.en} hreflang="en" aria-current={lang === 'en' ? 'true' : 'false'}>EN</a>
-  <a href={paths.es} hreflang="es" aria-current={lang === 'es' ? 'true' : 'false'}>ES</a>
-</div>
+<details class="lang-dd" data-lang-dd>
+  <summary aria-label={t(lang, 'lang.label')}>
+    <span class="lang-dd__flag" set:html={flags[lang]} />
+    <span class="lang-dd__code">{lang.toUpperCase()}</span>
+    <span class="lang-dd__chev" aria-hidden="true"></span>
+  </summary>
+  <ul class="lang-dd__menu">
+    {codes.map((code) => (
+      <li>
+        <a
+          href={paths[code]}
+          hreflang={code}
+          aria-current={code === lang ? 'true' : 'false'}
+        >
+          <span class="lang-dd__flag" set:html={flags[code]} />
+          <span class="lang-dd__code">{code.toUpperCase()}</span>
+          <span class="lang-dd__name">{languages[code]}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</details>
+
+<style>
+  .lang-dd {
+    position: relative;
+  }
+  .lang-dd summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    list-style: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .lang-dd summary::-webkit-details-marker {
+    display: none;
+  }
+  .lang-dd summary:hover {
+    border-color: var(--blue);
+  }
+  .lang-dd summary:focus-visible {
+    outline: 3px solid var(--gold-soft);
+    outline-offset: 2px;
+  }
+  .lang-dd__flag :global(svg) {
+    width: 20px;
+    height: 14px;
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(12, 27, 41, 0.12);
+  }
+  .lang-dd__chev {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-1px);
+    transition: transform 0.2s ease;
+  }
+  .lang-dd[open] .lang-dd__chev {
+    transform: rotate(225deg) translateY(-1px);
+  }
+  .lang-dd__menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 80;
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    min-width: 168px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 2px;
+  }
+  .lang-dd__menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .lang-dd__menu a:hover {
+    background: var(--sky);
+  }
+  .lang-dd__menu a:focus-visible {
+    outline: 3px solid var(--gold-soft);
+    outline-offset: -3px;
+  }
+  .lang-dd__menu a[aria-current='true'] {
+    background: var(--blue);
+    color: #fff;
+  }
+  .lang-dd__name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-left: auto;
+  }
+  .lang-dd__menu a[aria-current='true'] .lang-dd__name {
+    color: #dce8f4;
+  }
+</style>
+
+<script>
+  // Close the language dropdown on outside click or Escape.
+  document.querySelectorAll('[data-lang-dd]').forEach((dd) => {
+    const details = dd as HTMLDetailsElement;
+    document.addEventListener('click', (e) => {
+      if (details.open && !details.contains(e.target as Node)) details.open = false;
+    });
+    details.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Escape') details.open = false;
+    });
+  });
+</script>

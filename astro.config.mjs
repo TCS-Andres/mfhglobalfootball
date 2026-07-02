@@ -10,7 +10,7 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'es'],
+    locales: ['en', 'es', 'fr', 'it', 'pt'],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -20,7 +20,7 @@ export default defineConfig({
     sitemap({
       i18n: {
         defaultLocale: 'en',
-        locales: { en: 'en', es: 'es' },
+        locales: { en: 'en', es: 'es', fr: 'fr', it: 'it', pt: 'pt-PT' },
       },
     }),
   ],
