@@ -36,8 +36,11 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Carlos Bernal, CPA, MAcc is an INDEPENDENT "Accounting & Tax Support Partner" (CEO of
   BM Accountax LLC), per his official bio of July 2026. Do not call him CFO. His card carries the
   independence disclaimer; keep it.
-- The bilingual Player Intake Questionnaire PDF is hosted at
-  /docs/mfh-player-intake-questionnaire.pdf and linked from the Contact page.
+- The Player Intake Questionnaire is INTERNAL / by invitation only (client decision,
+  July 2026). It is NOT published on the website: the public PDF and its Contact-page
+  download were removed. Do not re-add a public download link. It will move behind a
+  locked intake form later (see the intake automation plan). The master PDF lives in the
+  parent Files/ folder, not in the web build.
 - Official social profiles (provided July 2026): Instagram
   https://www.instagram.com/mfhglobalfootball/, company LinkedIn
   https://www.linkedin.com/company/mfh-global-football, and Bert's personal LinkedIn
