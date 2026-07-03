@@ -208,18 +208,18 @@ const stats = [
 </section>
 
 <script>
-  // Hero ambient video: load and play only on larger screens, when motion is
-  // allowed, and not on a data-saver or slow connection. Everywhere else the
-  // still poster stays and the video is never downloaded.
+  // Hero ambient video: plays on phones and desktop alike. Phones get a lighter
+  // 720p file so they stay fast. Skipped only when the visitor asks for reduced
+  // motion or is on a data-saver / 2g connection, in which case the still stays.
   const video = document.querySelector('[data-hero-video]') as HTMLVideoElement | null;
   if (video) {
     const motionOk = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const bigScreen = matchMedia('(min-width: 768px)').matches;
     const conn = (navigator as any).connection;
     const cheapData = conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''));
-    if (motionOk && bigScreen && !cheapData) {
+    if (motionOk && !cheapData) {
+      const small = matchMedia('(max-width: 767px)').matches;
       const source = document.createElement('source');
-      source.src = '/videos/hero-ambient.mp4';
+      source.src = small ? '/videos/hero-ambient-mobile.mp4' : '/videos/hero-ambient.mp4';
       source.type = 'video/mp4';
       video.appendChild(source);
       video.load();
