@@ -24,7 +24,17 @@ const stats = [
 
 <!-- HERO (Modern Sport) -->
 <section class="hero" data-hero>
-  <img class="hero__bg" src="/photos/hero-action.jpg" alt="" width="1920" height="1072" fetchpriority="high" />
+  <img class="hero__bg" src="/videos/hero-still.jpg" alt="" width="1920" height="1080" fetchpriority="high" />
+  <video
+    class="hero__video"
+    data-hero-video
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster="/videos/hero-still.jpg"
+    aria-hidden="true"
+  ></video>
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="hero__inner">
     <span class="eyebrow hero-in" style="--i:0"><i class="pent"></i><span>{t(lang, 'hero.eyebrow')}</span></span>
@@ -196,3 +206,27 @@ const stats = [
     <a href={contact} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
   </div>
 </section>
+
+<script>
+  // Hero ambient video: load and play only on larger screens, when motion is
+  // allowed, and not on a data-saver or slow connection. Everywhere else the
+  // still poster stays and the video is never downloaded.
+  const video = document.querySelector('[data-hero-video]') as HTMLVideoElement | null;
+  if (video) {
+    const motionOk = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const bigScreen = matchMedia('(min-width: 768px)').matches;
+    const conn = (navigator as any).connection;
+    const cheapData = conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''));
+    if (motionOk && bigScreen && !cheapData) {
+      const source = document.createElement('source');
+      source.src = '/videos/hero-ambient.mp4';
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.load();
+      const play = () => video.play().catch(() => {});
+      video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+      if (video.readyState >= 3) play();
+      else video.addEventListener('canplay', play, { once: true });
+    }
+  }
+</script>
