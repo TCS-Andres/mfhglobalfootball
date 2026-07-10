@@ -1,7 +1,11 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
-import CtaBanner from '../CtaBanner.astro';
+import PingPong from '../PingPong.astro';
+import PlanSteps from '../PlanSteps.astro';
+import StatsBand from '../StatsBand.astro';
+import MeetBert from '../MeetBert.astro';
 import FaqSection from '../FaqSection.astro';
+import CtaBanner from '../CtaBanner.astro';
 
 interface Props {
   lang: Lang;
@@ -9,18 +13,42 @@ interface Props {
 }
 const { lang, service } = Astro.props;
 
-// slug, hero image, and the two related services shown at the bottom of each page.
+// slug, hero image, and the four ping-pong images (none repeats that page's hero).
 const SERVICES = {
-  youth: { slug: 'youth-family-advisory', img: '/photos/youth-pathway.jpg', related: ['player', 'transfers'] },
-  player: { slug: 'player-representation', img: '/photos/services-players.jpg', related: ['transfers', 'eval'] },
-  transfers: { slug: 'transfers', img: '/photos/bridge-colombia.jpg', related: ['player', 'coach'] },
-  coach: { slug: 'coach-representation', img: '/photos/about-mentor.jpg', related: ['player', 'eval'] },
-  eval: { slug: 'player-evaluation', img: '/photos/services-players.jpg', related: ['youth', 'player'] },
+  youth: {
+    slug: 'youth-family-advisory',
+    img: '/photos/youth-pathway.jpg',
+    pp: ['/photos/about-mentor.jpg', '/photos/bridge-southflorida.jpg', '/photos/services-players.jpg', '/photos/about-banner.jpg'],
+  },
+  player: {
+    slug: 'player-representation',
+    img: '/photos/services-players.jpg',
+    pp: ['/photos/quote-parallax.jpg', '/photos/bridge-europe.jpg', '/photos/about-banner.jpg', '/photos/youth-pathway.jpg'],
+  },
+  transfers: {
+    slug: 'transfers',
+    img: '/photos/bridge-colombia.jpg',
+    pp: ['/photos/bridge-europe.jpg', '/photos/bridge-southflorida.jpg', '/photos/about-banner.jpg', '/photos/services-players.jpg'],
+  },
+  coach: {
+    slug: 'coach-representation',
+    img: '/photos/about-mentor.jpg',
+    pp: ['/photos/services-players.jpg', '/photos/quote-parallax.jpg', '/photos/youth-pathway.jpg', '/photos/bridge-southflorida.jpg'],
+  },
+  eval: {
+    slug: 'player-evaluation',
+    img: '/photos/services-players.jpg',
+    pp: ['/photos/youth-pathway.jpg', '/photos/quote-parallax.jpg', '/photos/about-banner.jpg', '/photos/about-mentor.jpg'],
+  },
 } as const;
 
 const cfg = SERVICES[service];
 const k = (suffix: string) => t(lang, `sv.${service}.${suffix}`);
-const includes = ['i1', 'i2', 'i3', 'i4'];
+const ppItems = [0, 1, 2, 3].map((i) => ({
+  title: `sv.${service}.i${i + 1}`,
+  body: `sv.${service}.d${i + 1}`,
+  img: cfg.pp[i],
+}));
 const faqItems = [1, 2, 3].map((n) => ({ q: `sv.${service}.fq${n}`, a: `sv.${service}.fa${n}` }));
 
 const site = Astro.site ?? new URL('https://mfhglobal.football');
@@ -35,11 +63,7 @@ const serviceLd = {
   description: k('metaDesc'),
   url: pageUrl,
   areaServed: ['US', 'CO', 'Europe'],
-  provider: {
-    '@type': 'SportsOrganization',
-    name: 'MFH Global Football',
-    url: site.href,
-  },
+  provider: { '@type': 'SportsOrganization', name: 'MFH Global Football', url: site.href },
 };
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -69,112 +93,26 @@ const breadcrumbLd = {
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="svc-detail">
-      <div class="svc-detail__main reveal">
-        <h2>{t(lang, 'sv.detail.incl')}</h2>
-        <ul class="incl">
-          {includes.map((n) => (
-            <li>
-              <span class="incl__check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12.5l4.2 4.2L19 7" />
-                </svg>
-              </span>
-              <span>{k(n)}</span>
-            </li>
-          ))}
-        </ul>
-        <p class="svc-detail__close">{k('close')}</p>
-        <a class="btn btn-primary" href={localizePath('/contact', lang)}>{t(lang, 'cta.consult')}</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- What this includes, as ping-pong rows -->
+<PingPong
+  lang={lang}
+  eyebrowKey={`sv.${service}.name`}
+  headingKey="sv.detail.incl"
+  leadKey={`sv.${service}.close`}
+  items={ppItems}
+  tone="sky"
+/>
 
-<FaqSection lang={lang} items={faqItems} tone="sky" />
+<!-- How we work together (four steps) -->
+<PlanSteps lang={lang} />
 
-<section class="section">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.detail.related')}</span></span>
-    </div>
-    <div class="grid g3">
-      {cfg.related.map((r) => (
-        <a class="card card--link reveal" href={localizePath(`/services/${SERVICES[r as keyof typeof SERVICES].slug}`, lang)}>
-          <i class="pent"></i>
-          <h3>{t(lang, `sv.${r}.name`)}</h3>
-          <p>{t(lang, `sv.${r}.intro`)}</p>
-          <span class="card__go">{t(lang, 'faq.more')}</span>
-        </a>
-      ))}
-      <a class="card card--link reveal" href={localizePath('/faq', lang)}>
-        <i class="pent"></i>
-        <h3>{t(lang, 'nav.faq')}</h3>
-        <p>{t(lang, 'faq.intro')}</p>
-        <span class="card__go">{t(lang, 'faq.more')}</span>
-      </a>
-    </div>
-  </div>
-</section>
+<!-- The experience you can count on (counter) -->
+<StatsBand lang={lang} />
+
+<!-- The person in your corner (Bert) -->
+<MeetBert lang={lang} />
+
+<!-- FAQs -->
+<FaqSection lang={lang} items={faqItems} tone="plain" />
 
 <CtaBanner lang={lang} />
-
-<style>
-  .svc-detail__main {
-    max-width: 760px;
-  }
-  .svc-detail__main > h2 {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 900;
-    letter-spacing: -0.01em;
-  }
-  .incl {
-    list-style: none;
-    margin: 24px 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 28px;
-  }
-  .incl li {
-    display: flex;
-    gap: 13px;
-    align-items: flex-start;
-    font-size: 1.04rem;
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .incl__check {
-    flex: none;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--sky);
-    color: var(--blue);
-    display: grid;
-    place-items: center;
-    margin-top: 1px;
-  }
-  .incl__check svg {
-    width: 15px;
-    height: 15px;
-  }
-  .svc-detail__close {
-    margin-top: 28px;
-    font-size: 1.1rem;
-    color: var(--ink-soft);
-    line-height: 1.6;
-  }
-  .svc-detail__main .btn {
-    margin-top: 26px;
-  }
-
-  @media (max-width: 620px) {
-    .incl {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

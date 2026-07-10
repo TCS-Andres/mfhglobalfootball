@@ -1,6 +1,9 @@
 ---
 import { t, localizePath, type Lang } from '../i18n/ui';
 import QuoteBand from './QuoteBand.astro';
+import MeetBert from './MeetBert.astro';
+import StatsBand from './StatsBand.astro';
+import PlanSteps from './PlanSteps.astro';
 
 interface Props {
   lang: Lang;
@@ -8,18 +11,11 @@ interface Props {
 const { lang } = Astro.props;
 const contact = localizePath('/contact', lang);
 const plan = localizePath('/the-mfh-plan', lang);
-const about = localizePath('/about', lang);
 const services = localizePath('/services', lang);
 
 const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5', 'strip.6'];
 const problems = ['p1', 'p2', 'p3', 'p4'];
 const who = ['w1', 'w2', 'w3'];
-// The "5 sides of the game" stat lives on the About page, not here.
-const stats = [
-  { n: 'stat2.n', l: 'stat2.l', count: true },
-  { n: 'stat3.n', l: 'stat3.l', count: true },
-  { n: 'stat4.n', l: 'stat4.l', count: false },
-];
 ---
 
 <!-- HERO (Modern Sport) -->
@@ -70,60 +66,13 @@ const stats = [
 </section>
 
 <!-- MEET BERT -->
-<section class="section sky" id="guide">
-  <div class="wrap">
-    <div class="guide has-media">
-      <div class="media-slot media-tall reveal-l">
-        <img src="/photos/bert.jpg" alt={t(lang, 'media.altBert')} width="800" height="872" loading="lazy" />
-      </div>
-      <div class="body reveal-r">
-        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'guide.eyebrow')}</span></span>
-        <h2>{t(lang, 'guide.h2')}</h2>
-        <p>{t(lang, 'guide.body')}</p>
-        <div class="panel">
-          <h3>{t(lang, 'guide.panel')}</h3>
-          <ul>
-            <li><i class="pent"></i><span>{t(lang, 'guide.l1')}</span></li>
-            <li><i class="pent"></i><span>{t(lang, 'guide.l2')}</span></li>
-            <li><i class="pent"></i><span>{t(lang, 'guide.l3')}</span></li>
-            <li><i class="pent"></i><span>{t(lang, 'guide.l4')}</span></li>
-          </ul>
-        </div>
-        <a href={about} class="btn btn-outline">{t(lang, 'guide.cta')}</a>
-      </div>
-    </div>
-  </div>
-</section>
+<MeetBert lang={lang} />
 
 <!-- STATS BAND -->
-<section class="section stats">
-  <div class="wrap">
-    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'stats.eyebrow')}</span></span>
-    <div class="stat-grid">
-      {stats.map((s, i) => (
-        <div class="stat reveal-scale" style={`--d:${i * 110}ms`}>
-          <div class="n" class:list={[{ count: s.count }]} data-count={s.count ? t(lang, s.n) : undefined}>{t(lang, s.n)}</div>
-          <div class="l">{t(lang, s.l)}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+<StatsBand lang={lang} />
 
 <!-- HOW IT WORKS -->
-<section class="section" id="plan">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'plan.eyebrow')}</span></span>
-      <h2>{t(lang, 'plan.h2')}</h2>
-    </div>
-    <div class="plan-grid">
-      {[1, 2, 3, 4].map((n, i) => (
-        <div class="step reveal" style={`--d:${i * 110}ms`}><div class="num">{n}</div><h3>{t(lang, `s${n}.t`)}</h3><p>{t(lang, `s${n}.d`)}</p></div>
-      ))}
-    </div>
-  </div>
-</section>
+<PlanSteps lang={lang} />
 
 <!-- PROMISE (bold band) -->
 <QuoteBand

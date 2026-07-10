@@ -1,0 +1,22 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<section class="section" id="plan">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'plan.eyebrow')}</span></span>
+      <h2>{t(lang, 'plan.h2')}</h2>
+    </div>
+    <div class="plan-grid">
+      {[1, 2, 3, 4].map((n, i) => (
+        <div class="step reveal" style={`--d:${i * 110}ms`}><div class="num">{n}</div><h3>{t(lang, `s${n}.t`)}</h3><p>{t(lang, `s${n}.d`)}</p></div>
+      ))}
+    </div>
+  </div>
+</section>

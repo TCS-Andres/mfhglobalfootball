@@ -1,0 +1,29 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// Honest facts only (the "5 sides of the game" stat lives on the About page).
+const stats = [
+  { n: 'stat2.n', l: 'stat2.l', count: true },
+  { n: 'stat3.n', l: 'stat3.l', count: true },
+  { n: 'stat4.n', l: 'stat4.l', count: false },
+];
+---
+
+<section class="section stats">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'stats.eyebrow')}</span></span>
+    <div class="stat-grid">
+      {stats.map((s, i) => (
+        <div class="stat reveal-scale" style={`--d:${i * 110}ms`}>
+          <div class="n" class:list={[{ count: s.count }]} data-count={s.count ? t(lang, s.n) : undefined}>{t(lang, s.n)}</div>
+          <div class="l">{t(lang, s.l)}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
