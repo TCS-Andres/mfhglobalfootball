@@ -1,0 +1,181 @@
+---
+import { t, localizePath, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const checks = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+
+const site = Astro.site ?? new URL('https://mfhglobal.football');
+const pageUrl = new URL(localizePath('/how-to-choose-an-agent', lang), site).href;
+
+// Article schema: an educational guide, not a sales page.
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t(lang, 'hca.h1'),
+  description: t(lang, 'hca.metaDesc'),
+  inLanguage: lang,
+  url: pageUrl,
+  author: { '@type': 'Organization', name: 'MFH Global Football', url: site.href },
+  publisher: {
+    '@type': 'Organization',
+    name: 'MFH Global Football',
+    logo: { '@type': 'ImageObject', url: new URL('/logos/header.png', site).href },
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+
+<section class="page-hero page-hero--plain">
+  <div class="page-hero__scrim"></div>
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'hca.eyebrow')}</span></span>
+    <h1>{t(lang, 'hca.h1')}</h1>
+    <p>{t(lang, 'hca.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'hca.check.eyebrow')}</span></span>
+      <h2>{t(lang, 'hca.check.h2')}</h2>
+    </div>
+    <div class="checklist">
+      {checks.map((c, i) => (
+        <div class="check reveal" style={`--d:${i * 70}ms`}>
+          <span class="check__num" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h3>{t(lang, `hca.${c}.t`)}</h3>
+            <p>{t(lang, `hca.${c}.d`)}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="verify reveal">
+      <h2>{t(lang, 'hca.verify.h2')}</h2>
+      <p>{t(lang, 'hca.verify.body')}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section sky">
+  <div class="wrap">
+    <div class="mfh-meets reveal">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'hca.mfh.eyebrow')}</span></span>
+      <h2>{t(lang, 'hca.mfh.h2')}</h2>
+      <p>{t(lang, 'hca.mfh.body')}</p>
+      <div class="mfh-meets__actions">
+        <a class="btn btn-primary" href={localizePath('/contact', lang)}>{t(lang, 'cta.consult')}</a>
+        <a class="btn btn-outline" href={localizePath('/services/youth-family-advisory', lang)}>{t(lang, 'sv.youth.name')}</a>
+        <a class="btn btn-outline" href={localizePath('/about', lang)}>{t(lang, 'nav.about')}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .page-hero--plain {
+    background: radial-gradient(120% 120% at 85% 0%, #0a4f86 0%, var(--blue) 32%, var(--blue-deep) 100%);
+  }
+  .page-hero--plain .page-hero__scrim {
+    background: none;
+  }
+  .checklist {
+    display: grid;
+    gap: 16px;
+    max-width: 880px;
+  }
+  .check {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 28px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .check:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .check__num {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.2rem;
+  }
+  .check h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .check p {
+    margin-top: 8px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .verify {
+    margin-top: 40px;
+    max-width: 820px;
+    border-left: 4px solid var(--gold);
+    padding: 6px 0 6px 24px;
+  }
+  .verify h2 {
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+  .verify p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .mfh-meets {
+    max-width: 820px;
+  }
+  .mfh-meets h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+  }
+  .mfh-meets p {
+    margin-top: 16px;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .mfh-meets__actions {
+    margin-top: 26px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .check {
+      transition: none;
+    }
+  }
+</style>
