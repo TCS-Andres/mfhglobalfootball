@@ -24,6 +24,7 @@ export const ui = {
     // nav + global CTA
     'nav.services': 'Services',
     'nav.about': 'About',
+    'nav.journey': "Bert's Journey",
     'nav.plan': 'How It Works',
     'nav.contact': 'Contact',
     'cta.consult': 'Book a Free Consultation',
@@ -376,6 +377,7 @@ export const ui = {
     // nav + global CTA
     'nav.services': 'Servicios',
     'nav.about': 'Quiénes Somos',
+    'nav.journey': 'Recorrido de Bert',
     'nav.plan': 'Cómo Funciona',
     'nav.contact': 'Contacto',
     'cta.consult': 'Agenda una Consulta Gratis',
@@ -726,6 +728,7 @@ export const ui = {
   fr: {
     'nav.services': "Services",
     'nav.about': "À propos",
+    'nav.journey': "Parcours de Bert",
     'nav.plan': "Comment ça marche",
     'nav.contact': "Contact",
     'nav.staff': "Équipe",
@@ -1055,6 +1058,7 @@ export const ui = {
   it: {
     'nav.services': "Servizi",
     'nav.about': "Chi siamo",
+    'nav.journey': "Percorso di Bert",
     'nav.plan': "Come funziona",
     'nav.contact': "Contatti",
     'nav.staff': "Team",
@@ -1384,6 +1388,7 @@ export const ui = {
   pt: {
     'nav.services': "Serviços",
     'nav.about': "Sobre nós",
+    'nav.journey': "Percurso de Bert",
     'nav.plan': "Como funciona",
     'nav.contact': "Contacto",
     'nav.staff': "Equipa",

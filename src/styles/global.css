@@ -51,7 +51,7 @@ header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
 header.site.scrolled{box-shadow:0 8px 30px -22px rgba(0,53,92,.5);border-color:var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
 .brand img{height:42px;width:auto}
-.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links{display:flex;align-items:center;gap:26px}
 .nav-links a{font-weight:600;font-size:.98rem;color:var(--ink);position:relative;padding:6px 0}
 .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--gold);transition:right .25s ease}
 .nav-links a:hover::after,.nav-links a:focus-visible::after{right:0}
@@ -309,13 +309,16 @@ html.preloading:has(.preloader--done){overflow:auto}
   .bridge-line{height:2px;width:auto}
   footer.site .top{grid-template-columns:1fr 1fr}
 }
-@media(max-width:680px){
-  .section{padding:64px 0}
+/* Nav collapses to the burger early enough that six links never crowd the bar */
+@media(max-width:1024px){
   .nav-links{display:none}
   .burger{display:block}
   header.site .btn-outline{display:none}
   .nav-links.open{display:flex;position:absolute;top:78px;left:0;right:0;flex-direction:column;
     background:#fff;border-bottom:1px solid var(--line);padding:18px 28px;gap:18px;box-shadow:var(--shadow)}
+}
+@media(max-width:680px){
+  .section{padding:64px 0}
   .g4,.g2{grid-template-columns:1fr}
   .plan-grid{grid-template-columns:1fr}
   footer.site .top{grid-template-columns:1fr}
