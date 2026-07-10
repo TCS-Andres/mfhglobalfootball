@@ -81,18 +81,7 @@ const personLd = {
         </ul>
         <div class="founder__actions">
           <a class="btn btn-primary" href={localizePath('/bert-mahecha', lang)}>{t(lang, 'jr.link')}</a>
-          <a class="btn btn-outline" href={localizePath('/about', lang)}>{t(lang, 'guide.cta')}</a>
-          <a
-            class="btn btn-outline founder__linkedin"
-            href="https://www.linkedin.com/in/berts"
-            target="_blank"
-            rel="noopener"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6 1.11 6 0 4.88 0 3.5 0 2.12 1.11 1 2.49 1c1.38 0 2.49 1.12 2.49 2.5zM.4 8.2h4.18V23H.4V8.2zm7.1 0h4v2.02h.06c.56-1.06 1.93-2.18 3.97-2.18 4.24 0 5.02 2.8 5.02 6.43V23h-4.17v-7.36c0-1.76-.03-4.02-2.45-4.02-2.45 0-2.83 1.91-2.83 3.89V23H7.5V8.2z" />
-            </svg>
-            LinkedIn
-          </a>
+          <a class="btn btn-outline" href={localizePath('/about', lang)}>{t(lang, 'st.aboutBtn')}</a>
         </div>
       </div>
     </div>
@@ -200,11 +189,6 @@ const personLd = {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-  }
-  .founder__linkedin {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
   }
   @media (max-width: 920px) {
     .founder {

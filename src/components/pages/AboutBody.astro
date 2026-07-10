@@ -7,7 +7,6 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-const blocks = ['ab.traj', 'ab.lic', 'ab.bil', 'ab.fam'];
 const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
 ---
 
@@ -26,20 +25,64 @@ const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
     <div class="media-slot reveal-scale" style="aspect-ratio:21/9;margin-bottom:48px">
       <img src="/photos/about-banner.jpg" alt={t(lang, 'media.altStadium')} width="1600" height="686" loading="lazy" />
     </div>
-    <div class="prose-grid">
-      {blocks.map((k, i) => (
-        <div class="prose-block reveal" style={`--d:${i * 90}ms`}>
-          <h2>{t(lang, `${k}.h2`)}</h2>
-          <p>{t(lang, `${k}.body`)}</p>
-        </div>
-      ))}
-      <div class="prose-block reveal">
-        <h2>{t(lang, 'ab.faith.h2')}</h2>
-        <p>{t(lang, 'ab.faith.body')}</p>
-        <p class="about-verse">{t(lang, 'ab.verse')}</p>
-      </div>
+
+    <div class="pillars">
+      <article class="pillar reveal" style="--d:0ms">
+        <span class="pillar__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8.2l3.3 2.4-1.26 3.9H9.96L8.7 10.6z" />
+            <path d="M12 3.2v5M20.3 9.6l-4.75 3.4M17.1 19.7l-3.1-4.2M6.9 19.7l3.1-4.2M3.7 9.6l4.75 3.4" />
+          </svg>
+        </span>
+        <h2>{t(lang, 'ab.traj.h2')}</h2>
+        <p>{t(lang, 'ab.traj.body')}</p>
+      </article>
+
+      <article class="pillar reveal" style="--d:90ms">
+        <span class="pillar__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3l7 2.5v5.2c0 4.3-3 7.6-7 8.8-4-1.2-7-4.5-7-8.8V5.5L12 3z" />
+            <path d="M8.8 12.2l2.2 2.1 4.2-4.4" />
+          </svg>
+        </span>
+        <h2>{t(lang, 'ab.lic.h2')}</h2>
+        <p>{t(lang, 'ab.lic.body')}</p>
+      </article>
+
+      <article class="pillar reveal" style="--d:180ms">
+        <span class="pillar__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3.2 12h17.6" />
+            <path d="M12 3.2c2.6 2.4 2.6 15.2 0 17.6M12 3.2c-2.6 2.4-2.6 15.2 0 17.6" />
+          </svg>
+        </span>
+        <h2>{t(lang, 'ab.bil.h2')}</h2>
+        <p>{t(lang, 'ab.bil.body')}</p>
+      </article>
+
+      <article class="pillar reveal" style="--d:270ms">
+        <span class="pillar__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8.5" cy="8" r="3" />
+            <circle cx="16.5" cy="9" r="2.4" />
+            <path d="M3 19c0-3 2.5-5.2 5.5-5.2S14 16 14 19" />
+            <path d="M15 13.9c2.5.1 4.5 2 4.5 5.1" />
+          </svg>
+        </span>
+        <h2>{t(lang, 'ab.fam.h2')}</h2>
+        <p>{t(lang, 'ab.fam.body')}</p>
+      </article>
     </div>
-    <div class="reveal" style="text-align:center;margin-top:40px">
+
+    <div class="faith-note reveal">
+      <h2>{t(lang, 'ab.faith.h2')}</h2>
+      <p>{t(lang, 'ab.faith.body')}</p>
+      <p class="about-verse">{t(lang, 'ab.verse')}</p>
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-top:44px">
       <a class="btn btn-outline" href={localizePath('/bert-mahecha', lang)}>{t(lang, 'jr.link')}</a>
     </div>
   </div>
@@ -63,3 +106,112 @@ const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
 </section>
 
 <CtaBanner lang={lang} />
+
+<style>
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .pillar {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 34px 30px;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+  /* Gold accent bar sweeps across the top on hover */
+  .pillar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    transition: width 0.45s ease;
+  }
+  .pillar:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .pillar:hover::before {
+    width: 100%;
+  }
+  .pillar__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: var(--sky);
+    color: var(--blue);
+    transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
+  }
+  .pillar:hover .pillar__icon {
+    transform: scale(1.05) rotate(-4deg);
+    background: var(--blue);
+    color: #fff;
+  }
+  .pillar__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .pillar h2 {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+  }
+  .pillar p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+
+  .faith-note {
+    margin-top: 46px;
+    border-top: 1px solid var(--line);
+    padding-top: 38px;
+    max-width: 70ch;
+  }
+  .faith-note h2 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+  .faith-note p {
+    margin-top: 14px;
+    color: var(--ink-soft);
+  }
+  .faith-note .about-verse {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--blue-deep);
+  }
+
+  @media (max-width: 720px) {
+    .pillars {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pillar,
+    .pillar__icon {
+      transition: none;
+    }
+    .pillar:hover {
+      transform: none;
+    }
+    .pillar:hover .pillar__icon {
+      transform: none;
+    }
+  }
+</style>
