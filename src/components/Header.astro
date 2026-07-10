@@ -6,6 +6,28 @@ interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
+
+// Grouped navigation: Services and Learn and About are dropdowns, the rest are direct links.
+const services = [
+  { href: '/services', key: 'nav.overview' },
+  { href: '/services/youth-family-advisory', key: 'sv.youth.name' },
+  { href: '/services/player-representation', key: 'sv.player.name' },
+  { href: '/services/transfers', key: 'sv.transfers.name' },
+  { href: '/services/coach-representation', key: 'sv.coach.name' },
+  { href: '/services/player-evaluation', key: 'sv.eval.name' },
+];
+const about = [
+  { href: '/about', key: 'nav.about' },
+  { href: '/bert-mahecha', key: 'nav.journey' },
+  { href: '/team', key: 'nav.staff' },
+];
+const learn = [
+  { href: '/how-to-choose-an-agent', key: 'nav.hca' },
+  { href: '/faq', key: 'nav.faq' },
+  { href: '/insights', key: 'nav.insights' },
+];
+const caret =
+  '<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 ---
 
 <header class="site" id="top">
@@ -13,13 +35,37 @@ const { lang } = Astro.props;
     <a class="brand" href={localizePath('/', lang)} aria-label="MFH Global Football home">
       <img src="/logos/header.png" alt="MFH Global Football" width="120" height="42" />
     </a>
-    <nav class="nav-links" id="navlinks">
-      <a href={localizePath('/services', lang)}>{t(lang, 'nav.services')}</a>
-      <a href={localizePath('/about', lang)}>{t(lang, 'nav.about')}</a>
-      <a href={localizePath('/bert-mahecha', lang)}>{t(lang, 'nav.journey')}</a>
-      <a href={localizePath('/team', lang)}>{t(lang, 'nav.staff')}</a>
-      <a href={localizePath('/the-mfh-plan', lang)}>{t(lang, 'nav.plan')}</a>
-      <a href={localizePath('/contact', lang)}>{t(lang, 'nav.contact')}</a>
+    <nav class="nav-links" id="navlinks" aria-label="Main">
+      <div class="nav-group" data-nav-group>
+        <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{t(lang, 'nav.services')}</span><Fragment set:html={caret} />
+        </button>
+        <div class="nav-menu">
+          {services.map((i) => <a href={localizePath(i.href, lang)}>{t(lang, i.key)}</a>)}
+        </div>
+      </div>
+
+      <div class="nav-group" data-nav-group>
+        <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{t(lang, 'nav.about')}</span><Fragment set:html={caret} />
+        </button>
+        <div class="nav-menu">
+          {about.map((i) => <a href={localizePath(i.href, lang)}>{t(lang, i.key)}</a>)}
+        </div>
+      </div>
+
+      <a class="nav-solo" href={localizePath('/the-mfh-plan', lang)}>{t(lang, 'nav.plan')}</a>
+
+      <div class="nav-group" data-nav-group>
+        <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
+          <span>{t(lang, 'nav.learn')}</span><Fragment set:html={caret} />
+        </button>
+        <div class="nav-menu">
+          {learn.map((i) => <a href={localizePath(i.href, lang)}>{t(lang, i.key)}</a>)}
+        </div>
+      </div>
+
+      <a class="nav-solo" href={localizePath('/contact', lang)}>{t(lang, 'nav.contact')}</a>
     </nav>
     <div class="nav-right">
       <LangSwitch lang={lang} />
@@ -48,6 +94,7 @@ const { lang } = Astro.props;
       const open = links.classList.toggle('open');
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+    // Navigating (an actual link, not a dropdown trigger) closes the mobile menu
     links.querySelectorAll('a').forEach((a) =>
       a.addEventListener('click', () => {
         links.classList.remove('open');
@@ -55,4 +102,48 @@ const { lang } = Astro.props;
       })
     );
   }
+
+  // Dropdown groups: hover on desktop, click/tap everywhere, Escape and outside-click close.
+  const groups = Array.from(document.querySelectorAll('[data-nav-group]'));
+  const hoverDesktop = () => matchMedia('(hover: hover) and (min-width: 1025px)').matches;
+  const closeGroups = (except) =>
+    groups.forEach((g) => {
+      if (g !== except) {
+        g.classList.remove('is-open');
+        g.querySelector('.nav-trigger')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  groups.forEach((g) => {
+    const btn = g.querySelector('.nav-trigger');
+    btn?.addEventListener('click', () => {
+      const open = !g.classList.contains('is-open');
+      closeGroups(g);
+      g.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    g.addEventListener('mouseenter', () => {
+      if (!hoverDesktop()) return;
+      closeGroups(g);
+      g.classList.add('is-open');
+      btn?.setAttribute('aria-expanded', 'true');
+    });
+    g.addEventListener('mouseleave', () => {
+      if (!hoverDesktop()) return;
+      g.classList.remove('is-open');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+    // Close when keyboard focus leaves the group
+    g.addEventListener('focusout', (e) => {
+      if (!g.contains(e.relatedTarget)) {
+        g.classList.remove('is-open');
+        btn?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target instanceof Element) || !e.target.closest('[data-nav-group]')) closeGroups();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeGroups();
+  });
 </script>
