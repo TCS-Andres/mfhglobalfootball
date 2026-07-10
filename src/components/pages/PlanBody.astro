@@ -1,6 +1,7 @@
 ---
 import { t, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
+import FaqSection from '../FaqSection.astro';
 
 interface Props {
   lang: Lang;
@@ -8,6 +9,7 @@ interface Props {
 const { lang } = Astro.props;
 
 const stories = ['pl.story1', 'pl.story2', 'pl.story3'];
+const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
 ---
 
 <section class="page-hero">
@@ -55,5 +57,7 @@ const stories = ['pl.story1', 'pl.story2', 'pl.story3'];
     </div>
   </div>
 </section>
+
+<FaqSection lang={lang} items={faqItems} tone="plain" />
 
 <CtaBanner lang={lang} />

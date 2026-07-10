@@ -1,0 +1,40 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  items: { q: string; a: string }[];
+  tone?: 'sky' | 'plain';
+}
+const { lang, items, tone = 'sky' } = Astro.props;
+
+// Embedded FAQPage schema for this page's own sub-questions.
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((it) => ({
+    '@type': 'Question',
+    name: t(lang, it.q),
+    acceptedAnswer: { '@type': 'Answer', text: t(lang, it.a) },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+<section class:list={['section', tone === 'sky' && 'sky']}>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'faq.eyebrow')}</span></span>
+      <h2>{t(lang, 'faq.h1')}</h2>
+    </div>
+    <div class="faq-list">
+      {items.map((it, i) => (
+        <details class="faq-item reveal" style={`--d:${i * 60}ms`}>
+          <summary>{t(lang, it.q)}</summary>
+          <div class="faq-answer"><p>{t(lang, it.a)}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

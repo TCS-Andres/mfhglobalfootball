@@ -1,6 +1,7 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
+import FaqSection from '../FaqSection.astro';
 
 interface Props {
   lang: Lang;
@@ -20,6 +21,7 @@ const SERVICES = {
 const cfg = SERVICES[service];
 const k = (suffix: string) => t(lang, `sv.${service}.${suffix}`);
 const includes = ['i1', 'i2', 'i3', 'i4'];
+const faqItems = [1, 2, 3].map((n) => ({ q: `sv.${service}.fq${n}`, a: `sv.${service}.fa${n}` }));
 
 const site = Astro.site ?? new URL('https://mfhglobal.football');
 const pageUrl = new URL(localizePath(`/services/${cfg.slug}`, lang), site).href;
@@ -91,7 +93,9 @@ const breadcrumbLd = {
   </div>
 </section>
 
-<section class="section sky">
+<FaqSection lang={lang} items={faqItems} tone="sky" />
+
+<section class="section">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.detail.related')}</span></span>
