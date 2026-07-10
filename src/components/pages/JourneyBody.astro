@@ -7,12 +7,14 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// The three photographs, in journey order. The World Cup clip is featured on its
-// own above the grid because the moment is in the audio, not a still frame.
-const photos = [
-  { key: 'valderrama', src: '/photos/journey/valderrama.jpg', w: 408, h: 630 },
-  { key: 'coaching', src: '/photos/journey/coaching-sffc.jpg', w: 1280, h: 853 },
-  { key: 'opencup', src: '/photos/journey/open-cup.jpg', w: 1080, h: 1162 },
+// The story told in alternating (ping-pong) rows, roughly chronological, with the
+// World Cup broadcast moment as the closing chapter. Images render at their natural
+// proportions so the whole photograph is always visible.
+const items = [
+  { key: 'valderrama', type: 'img', src: '/photos/journey/valderrama.jpg', w: 408, h: 630 },
+  { key: 'coaching', type: 'img', src: '/photos/journey/coaching-sffc.jpg', w: 1280, h: 853 },
+  { key: 'opencup', type: 'img', src: '/photos/journey/open-cup.jpg', w: 1080, h: 1162 },
+  { key: 'video', type: 'video' },
 ];
 ---
 
@@ -44,44 +46,32 @@ const photos = [
       <h2>{t(lang, 'jr.gallery.h2')}</h2>
     </div>
 
-    <!-- Featured clip: the commentary moment (keeps audio, plays on click) -->
-    <figure class="video-feature reveal">
-      <div class="frame">
-        <video
-          controls
-          preload="none"
-          playsinline
-          poster="/videos/bert-worldcup-poster.jpg"
-          aria-label={t(lang, 'jr.c.video.aria')}
-          width="854"
-          height="480"
-        >
-          <source src="/videos/bert-worldcup.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <figcaption class="figcap">
-        <span class="lbl">{t(lang, 'jr.c.video.label')}</span>
-        <span class="txt">{t(lang, 'jr.c.video.cap')}</span>
-      </figcaption>
-    </figure>
-
-    <div class="journey-figs">
-      {photos.map((ph, i) => (
-        <figure class="jf reveal" style={`--d:${i * 90}ms`}>
-          <div class="jf__media">
-            <img
-              src={ph.src}
-              alt={t(lang, `jr.c.${ph.key}.cap`)}
-              width={ph.w}
-              height={ph.h}
-              loading="lazy"
-            />
+    <div class="journey-rows">
+      {items.map((it, i) => (
+        <div class="jrow reveal" class:list={[{ 'jrow--flip': i % 2 === 1 }]}>
+          <div class="jrow__media">
+            {it.type === 'video' ? (
+              <video
+                controls
+                preload="none"
+                playsinline
+                poster="/videos/bert-worldcup-poster.jpg"
+                aria-label={t(lang, 'jr.c.video.aria')}
+                width="854"
+                height="480"
+              >
+                <source src="/videos/bert-worldcup.mp4" type="video/mp4" />
+              </video>
+            ) : (
+              <img src={it.src} alt={t(lang, `jr.c.${it.key}.cap`)} width={it.w} height={it.h} loading="lazy" />
+            )}
           </div>
-          <figcaption class="figcap">
-            <span class="lbl">{t(lang, `jr.c.${ph.key}.label`)}</span>
-            <span class="txt">{t(lang, `jr.c.${ph.key}.cap`)}</span>
-          </figcaption>
-        </figure>
+          <div class="jrow__body">
+            <span class="eyebrow"><i class="pent"></i><span>{t(lang, `jr.c.${it.key}.label`)}</span></span>
+            <h3>{t(lang, `jr.c.${it.key}.head`)}</h3>
+            <p>{t(lang, `jr.c.${it.key}.body`)}</p>
+          </div>
+        </div>
       ))}
     </div>
   </div>
@@ -112,75 +102,77 @@ const photos = [
     font-size: 1.06rem;
   }
 
-  .video-feature {
-    max-width: 820px;
-    margin: 8px auto 52px;
+  .journey-rows {
+    display: grid;
+    gap: clamp(44px, 6vw, 78px);
+    margin-top: 8px;
   }
-  .video-feature .frame {
-    aspect-ratio: 16 / 9;
+  .jrow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 4.5vw, 60px);
+    align-items: center;
+  }
+  .jrow__media {
+    display: flex;
+    justify-content: center;
+  }
+  .jrow__media img {
+    max-width: 100%;
+    max-height: 540px;
+    width: auto;
+    height: auto;
+    display: block;
     border-radius: 14px;
-    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .jrow__media video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    border-radius: 14px;
     box-shadow: var(--shadow);
     background: #000;
   }
-  .video-feature video {
-    width: 100%;
-    height: 100%;
-    display: block;
+  /* Ping-pong: even rows keep media left, odd rows move it to the right */
+  .jrow--flip .jrow__media {
+    order: 2;
   }
 
-  .journey-figs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin-top: 8px;
-  }
-  .jf {
-    margin: 0;
-  }
-  .jf__media {
-    height: clamp(260px, 32vw, 360px);
-    display: grid;
-    place-items: center;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-  .jf__media img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
-  .figcap {
-    margin-top: 14px;
-    text-align: center;
-  }
-  .figcap .lbl {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: 800;
+  .jrow__body h3 {
+    margin-top: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.72rem;
-    color: var(--blue);
+    font-weight: 900;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
   }
-  .figcap .txt {
+  .jrow__body h3::after {
+    content: '';
     display: block;
-    margin: 6px auto 0;
+    width: 52px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--gold);
+    margin-top: 16px;
+  }
+  .jrow__body p {
+    margin-top: 20px;
     color: var(--ink-soft);
-    font-size: 0.98rem;
-    max-width: 46ch;
+    font-size: 1.05rem;
+    max-width: 54ch;
   }
 
   @media (max-width: 820px) {
-    .journey-figs {
+    .jrow {
       grid-template-columns: 1fr;
-      max-width: 460px;
-      margin-inline: auto;
+      gap: 22px;
+    }
+    .jrow--flip .jrow__media {
+      order: 0;
+    }
+    .jrow__media img {
+      max-height: 440px;
     }
   }
 </style>
