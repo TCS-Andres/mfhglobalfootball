@@ -1,0 +1,126 @@
+---
+import { t, localizePath, type Lang } from '../../i18n/ui';
+import { posts } from '../../data/posts';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<section class="page-hero page-hero--plain">
+  <div class="page-hero__scrim"></div>
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'bl.eyebrow')}</span></span>
+    <h1>{t(lang, 'bl.h1')}</h1>
+    <p>{t(lang, 'bl.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="posts">
+      {posts.map((post, i) => (
+        <a class="post-card reveal" href={localizePath(`/insights/${post.slug}`, lang)} style={`--d:${i * 70}ms`}>
+          <div class="post-card__img">
+            <img src={post.img} alt="" width="600" height="360" loading="lazy" />
+          </div>
+          <div class="post-card__body">
+            <span class="post-card__tag">{t(lang, 'bl.tag')}</span>
+            <h2>{t(lang, `bl.${post.key}.title`)}</h2>
+            <p>{t(lang, `bl.${post.key}.excerpt`)}</p>
+            <span class="card__go">{t(lang, 'bl.readmore')}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .page-hero--plain {
+    background: radial-gradient(120% 120% at 85% 0%, #0a4f86 0%, var(--blue) 32%, var(--blue-deep) 100%);
+  }
+  .page-hero--plain .page-hero__scrim {
+    background: none;
+  }
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .post-card__img {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+  .post-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .post-card:hover .post-card__img img {
+    transform: scale(1.05);
+  }
+  .post-card__body {
+    padding: 24px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .post-card__tag {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .post-card__body h2 {
+    margin-top: 12px;
+    font-size: 1.24rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+  }
+  .post-card__body p {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .post-card .card__go {
+    margin-top: 16px;
+  }
+  @media (max-width: 900px) {
+    .posts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 620px) {
+    .posts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

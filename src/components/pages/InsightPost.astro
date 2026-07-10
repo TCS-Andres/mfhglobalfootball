@@ -1,0 +1,95 @@
+---
+import { t, localizePath, type Lang } from '../../i18n/ui';
+import { posts, type PostKey } from '../../data/posts';
+import CtaBanner from '../CtaBanner.astro';
+
+interface Props {
+  lang: Lang;
+  post: PostKey;
+}
+const { lang, post } = Astro.props;
+const meta = posts.find((p) => p.key === post)!;
+const paras = ['b1', 'b2', 'b3', 'b4'];
+
+const site = Astro.site ?? new URL('https://mfhglobal.football');
+const pageUrl = new URL(localizePath(`/insights/${meta.slug}`, lang), site).href;
+const insightsUrl = new URL(localizePath('/insights', lang), site).href;
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t(lang, `bl.${post}.title`),
+  description: t(lang, `bl.${post}.metaDesc`),
+  inLanguage: lang,
+  url: pageUrl,
+  image: new URL(meta.img, site).href,
+  author: { '@type': 'Organization', name: 'MFH Global Football', url: site.href },
+  publisher: {
+    '@type': 'Organization',
+    name: 'MFH Global Football',
+    logo: { '@type': 'ImageObject', url: new URL('/logos/header.png', site).href },
+  },
+};
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: t(lang, 'nav.insights'), item: insightsUrl },
+    { '@type': 'ListItem', position: 2, name: t(lang, `bl.${post}.title`), item: pageUrl },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+<section class="page-hero">
+  <img class="page-hero__bg" src={meta.img} alt="" width="1600" height="686" fetchpriority="high" />
+  <div class="page-hero__scrim"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={localizePath('/insights', lang)}>{t(lang, 'nav.insights')}</a>
+      <span aria-hidden="true">/</span>
+      <span>{t(lang, 'bl.tag')}</span>
+    </nav>
+    <h1>{t(lang, `bl.${post}.title`)}</h1>
+    <p>{t(lang, `bl.${post}.excerpt`)}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <article class="post-body reveal">
+      {paras.map((b) => <p>{t(lang, `bl.${post}.${b}`)}</p>)}
+      <div class="post-cta">
+        <a class="btn btn-primary" href={localizePath('/contact', lang)}>{t(lang, 'cta.consult')}</a>
+        <a class="btn btn-outline" href={localizePath('/insights', lang)}>{t(lang, 'bl.h1')}</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .post-body {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .post-body p {
+    font-size: 1.14rem;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .post-body p + p {
+    margin-top: 22px;
+  }
+  .post-cta {
+    margin-top: 36px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>

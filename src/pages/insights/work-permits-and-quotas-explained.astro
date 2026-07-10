@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InsightPost from '../../components/pages/InsightPost.astro';
+import { t } from '../../i18n/ui';
+const lang = 'en';
+---
+
+<BaseLayout lang={lang} title={t(lang, 'bl.p1.title')} description={t(lang, 'bl.p1.metaDesc')}>
+  <InsightPost lang={lang} post="p1" />
+</BaseLayout>

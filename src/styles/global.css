@@ -102,6 +102,12 @@ header.site.scrolled{box-shadow:0 8px 30px -22px rgba(0,53,92,.5);border-color:v
 .card .pent{margin-bottom:16px}
 .card h3{font-size:1.18rem;font-weight:800;margin-bottom:8px}
 .card p{color:var(--ink-soft);font-size:.98rem}
+/* breadcrumb on dark page heroes (service + insight pages) */
+.crumbs{display:flex;gap:10px;align-items:center;font-family:var(--font-display);font-weight:700;
+  font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#cddcec;margin-bottom:18px;flex-wrap:wrap}
+.crumbs a{color:var(--gold-soft)}
+.crumbs a:hover{color:#fff}
+.crumbs span[aria-hidden]{opacity:.5}
 /* clickable card (service hub + related links) */
 .card--link{display:flex;flex-direction:column;text-decoration:none;color:inherit}
 .card--link .card__go{margin-top:14px;font-family:var(--font-display);font-weight:700;font-size:.8rem;
