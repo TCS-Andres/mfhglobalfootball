@@ -1,5 +1,5 @@
 ---
-import { t, type Lang } from '../../i18n/ui';
+import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
 
 interface Props {
@@ -38,6 +38,9 @@ const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
         <p>{t(lang, 'ab.faith.body')}</p>
         <p class="about-verse">{t(lang, 'ab.verse')}</p>
       </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:40px">
+      <a class="btn btn-outline" href={localizePath('/bert-mahecha', lang)}>{t(lang, 'jr.link')}</a>
     </div>
   </div>
 </section>

@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JourneyBody from '../../components/pages/JourneyBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'pt';
+---
+
+<BaseLayout lang={lang} title={t(lang, 'jr.title')} description={t(lang, 'jr.metaDesc')}>
+  <JourneyBody lang={lang} />
+</BaseLayout>
