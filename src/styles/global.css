@@ -102,6 +102,12 @@ header.site.scrolled{box-shadow:0 8px 30px -22px rgba(0,53,92,.5);border-color:v
 .card .pent{margin-bottom:16px}
 .card h3{font-size:1.18rem;font-weight:800;margin-bottom:8px}
 .card p{color:var(--ink-soft);font-size:.98rem}
+/* clickable card (service hub + related links) */
+.card--link{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.card--link .card__go{margin-top:14px;font-family:var(--font-display);font-weight:700;font-size:.8rem;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--blue)}
+.card--link .card__go::after{content:" \2192"}
+.card--link:hover .card__go{color:var(--gold)}
 
 /* guide */
 .guide{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}

@@ -1,5 +1,5 @@
 ---
-import { t, type Lang } from '../../i18n/ui';
+import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
 
 interface Props {
@@ -10,6 +10,15 @@ const { lang } = Astro.props;
 const players = ['sv.p1', 'sv.p2', 'sv.p3', 'sv.p4', 'sv.p5'];
 const coaches = ['sv.c1', 'sv.c2', 'sv.c3'];
 const families = ['sv.f1', 'sv.f2', 'sv.f3'];
+
+// Dedicated service pages, linked from this hub.
+const detailPages = [
+  { key: 'youth', slug: 'youth-family-advisory' },
+  { key: 'player', slug: 'player-representation' },
+  { key: 'transfers', slug: 'transfers' },
+  { key: 'coach', slug: 'coach-representation' },
+  { key: 'eval', slug: 'player-evaluation' },
+];
 
 // Official FIFA example lists, collapsed by default to keep the page scannable.
 const cat1Examples = Array.from({ length: 13 }, (_, i) => `sv.cat1.e${i + 1}`);
@@ -94,6 +103,25 @@ const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
 </section>
 
 <section class="section sky">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'sv.hub.eyebrow')}</span></span>
+      <h2>{t(lang, 'sv.hub.h2')}</h2>
+    </div>
+    <div class="grid g3">
+      {detailPages.map((s, i) => (
+        <a class="card card--link reveal" href={localizePath(`/services/${s.slug}`, lang)} style={`--d:${i * 70}ms`}>
+          <i class="pent"></i>
+          <h3>{t(lang, `sv.${s.key}.name`)}</h3>
+          <p>{t(lang, `sv.${s.key}.intro`)}</p>
+          <span class="card__go">{t(lang, 'faq.more')}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
   <div class="wrap">
     <div class="split">
       <div class="media-slot media-tall reveal-l">

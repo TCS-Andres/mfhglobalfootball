@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ServiceDetail from '../../../components/pages/ServiceDetail.astro';
+import { t } from '../../../i18n/ui';
+const lang = 'fr';
+---
+
+<BaseLayout lang={lang} title={`${t(lang, 'sv.transfers.title')} | MFH Global Football`} description={t(lang, 'sv.transfers.metaDesc')}>
+  <ServiceDetail lang={lang} service="transfers" />
+</BaseLayout>
