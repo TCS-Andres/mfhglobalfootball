@@ -28,6 +28,8 @@ export const ui = {
     'nav.plan': 'How It Works',
     'nav.contact': 'Contact',
     'cta.consult': 'Book a Free Consultation',
+    'cta.questionnaire': "Start the Player Questionnaire",
+    'cta.qshort': "Start the Questionnaire",
     'lang.label': 'Language',
     'skip.link': 'Skip to content',
 
@@ -593,6 +595,8 @@ export const ui = {
     'nav.plan': 'Cómo Funciona',
     'nav.contact': 'Contacto',
     'cta.consult': 'Agenda una Consulta Gratis',
+    'cta.questionnaire': "Comienza el cuestionario del jugador",
+    'cta.qshort': "Comienza el cuestionario",
     'lang.label': 'Idioma',
     'skip.link': 'Saltar al contenido',
 
@@ -1157,6 +1161,8 @@ export const ui = {
     'nav.contact': "Contact",
     'nav.staff': "Équipe",
     'cta.consult': "Réservez une consultation gratuite",
+    'cta.questionnaire': "Commencer le questionnaire du joueur",
+    'cta.qshort': "Commencer le questionnaire",
     'lang.label': "Langue",
     'skip.link': "Aller au contenu",
 
@@ -1699,6 +1705,8 @@ export const ui = {
     'nav.contact': "Contatti",
     'nav.staff': "Team",
     'cta.consult': "Prenota una consulenza gratuita",
+    'cta.questionnaire': "Inizia il questionario del giocatore",
+    'cta.qshort': "Inizia il questionario",
     'lang.label': "Lingua",
     'skip.link': "Vai al contenuto",
 
@@ -2241,6 +2249,8 @@ export const ui = {
     'nav.contact': "Contacto",
     'nav.staff': "Equipa",
     'cta.consult': "Marque uma consulta gratuita",
+    'cta.questionnaire': "Iniciar o questionário do jogador",
+    'cta.qshort': "Iniciar o questionário",
     'lang.label': "Idioma",
     'skip.link': "Saltar para o conteúdo",
 

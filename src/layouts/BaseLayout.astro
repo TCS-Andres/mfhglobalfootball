@@ -8,8 +8,9 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
+  noindex?: boolean;
 }
-const { lang, title, description } = Astro.props;
+const { lang, title, description, noindex = false } = Astro.props;
 
 const site = Astro.site ?? new URL('https://mfhglobal.football');
 const paths = localePaths(Astro.url.pathname);
@@ -59,6 +60,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Preloader gate: first visit per session only, never under reduced motion.
          Runs synchronously so returning visitors never see a flash. -->

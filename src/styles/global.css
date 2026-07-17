@@ -1,3 +1,4 @@
+[hidden]{display:none!important}
 /* MFH Global Football, global stylesheet
    Ported verbatim from the approved prototype at /reference/mfh_home.html.
    Brand palette literals are replaced with the tokens in tokens.css.
@@ -630,3 +631,5 @@ html.preloading:has(.preloader--done){overflow:auto}
 /* Bolder card surfaces and hover */
 .card,.cat,.story,.bridge-card,.panel-card{border-width:1px}
 .card:hover{transform:translateY(-5px)}
+
+.cta-banner__actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}

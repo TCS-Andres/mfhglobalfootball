@@ -1,0 +1,540 @@
+---
+import { type Lang } from '../../i18n/ui';
+import { SECTIONS as QS, toQLang } from '../../data/questionnaire';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const ql = toQLang(lang);
+const isEs = ql === 'es';
+
+// Compact schema for the client script (pdf mapping + conditional logic).
+const clientSchema = QS.map((s) => ({
+  id: s.id,
+  fields: s.fields.map((f) => ({
+    id: f.id,
+    type: f.type,
+    pdf: f.pdf ?? null,
+    computed: f.computed ?? null,
+    required: !!f.required,
+    cond: f.cond ?? null,
+    opts: (f.opts ?? []).map((o) => ({ v: o.v, pdf: o.pdf })),
+  })),
+}));
+
+const T = {
+  eyebrow: isEs ? 'El primer paso' : 'The first step',
+  h1: isEs ? 'Cuestionario del jugador' : 'Player questionnaire',
+  intro: isEs
+    ? 'Este cuestionario es el punto de partida. Nos da el panorama completo del jugador para que la primera conversación sea honesta y útil. Puedes guardarlo como PDF al terminar. Toma unos 10 minutos.'
+    : 'This questionnaire is the starting point. It gives us the full picture of the player so the first conversation is honest and useful. You can save it as a PDF at the end. It takes about 10 minutes.',
+  who: isEs ? '¿Eres jugador o entrenador?' : 'Are you a player or a coach?',
+  player: isEs ? 'Jugador' : 'Player',
+  coach: isEs ? 'Entrenador' : 'Coach',
+  coachNote: isEs
+    ? 'El cuestionario para entrenadores estará disponible pronto. Mientras tanto, escríbenos y coordinamos una conversación.'
+    : 'The coach questionnaire is coming soon. In the meantime, reach out and we will set up a conversation.',
+  begin: isEs ? 'Comenzar' : 'Begin',
+  back: isEs ? 'Atrás' : 'Back',
+  cont: isEs ? 'Continuar' : 'Continue',
+  toReview: isEs ? 'Revisar respuestas' : 'Review answers',
+  reviewH: isEs ? 'Revisa tus respuestas' : 'Review your answers',
+  edit: isEs ? 'Editar' : 'Edit',
+  submit: isEs ? 'Finalizar y descargar PDF' : 'Finish and download PDF',
+  contact: isEs ? 'Contáctanos' : 'Contact us',
+  required: isEs ? 'obligatorio' : 'required',
+  empty: isEs ? '(sin responder)' : '(not answered)',
+  done: isEs ? '¡Listo!' : 'All done!',
+  doneMsg: isEs
+    ? 'Tu PDF se ha descargado y hemos recibido tus respuestas. Bert revisará el envío y te contactará para agendar tu consulta.'
+    : 'Your PDF has downloaded and we have received your answers. Bert will review the submission and reach out to schedule your consultation.',
+  saving: isEs ? 'Generando tu PDF...' : 'Building your PDF...',
+  step: isEs ? 'Paso' : 'Step',
+  of: isEs ? 'de' : 'of',
+};
+---
+
+<section class="page-hero page-hero--plain">
+  <div class="page-hero__scrim"></div>
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{T.eyebrow}</span></span>
+    <h1>{T.h1}</h1>
+    <p>{T.intro}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap wrap--q">
+    <form id="q-form" novalidate data-lang={ql}>
+      <!-- Progress -->
+      <div class="q-progress" data-q-progress hidden>
+        <span data-q-progress-label></span>
+        <div class="q-bar"><span data-q-bar></span></div>
+      </div>
+
+      <!-- Intro / who -->
+      <div class="q-panel" data-step="intro">
+        <div class="panel-card">
+          <h2>{T.who}</h2>
+          <div class="q-choice" role="radiogroup">
+            <label class="q-pick"><input type="radio" name="who" value="player" /> <span>{T.player}</span></label>
+            <label class="q-pick"><input type="radio" name="who" value="coach" /> <span>{T.coach}</span></label>
+          </div>
+          <p class="q-coachnote" data-coachnote hidden>{T.coachNote}</p>
+          <div class="q-nav">
+            <a class="btn btn-outline" href="#" data-coach-contact hidden>{T.contact}</a>
+            <button type="button" class="btn btn-primary" data-begin disabled>{T.begin}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sections -->
+      {QS.map((s, si) => (
+        <div class="q-panel" data-step={`s${si}`} hidden>
+          <div class="panel-card">
+            <span class="q-kicker">{T.step} {si + 1} {T.of} {QS.length}</span>
+            <h2>{isEs ? s.es : s.en}</h2>
+            <div class="q-fields">
+              {s.fields.map((f) => (
+                <div class="field q-field" data-field={f.id} data-cond={f.cond ? JSON.stringify(f.cond) : undefined}>
+                  <label for={`f-${f.id}`}>
+                    {isEs ? f.es : f.en}
+                    {f.required && <span class="req"> ({T.required})</span>}
+                  </label>
+                  {f.type === 'radio' ? (
+                    <div class="q-opts" role="radiogroup" data-radio={f.id}>
+                      {f.opts!.map((o) => (
+                        <label class="q-pick q-pick--sm">
+                          <input type="radio" name={f.id} value={o.v} /> <span>{isEs ? o.es : o.en}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : f.type === 'textarea' ? (
+                    <textarea id={`f-${f.id}`} name={f.id} rows="3" readonly={f.computed ? true : undefined}></textarea>
+                  ) : (
+                    <input
+                      id={`f-${f.id}`}
+                      name={f.id}
+                      type={f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : f.type === 'url' ? 'url' : 'text'}
+                      readonly={f.computed ? true : undefined}
+                      inputmode={f.type === 'url' ? 'url' : undefined}
+                      placeholder={f.type === 'url' ? 'https://' : undefined}
+                    />
+                  )}
+                  {f.help && <small>{isEs ? f.help.es : f.help.en}</small>}
+                </div>
+              ))}
+            </div>
+            <div class="q-nav">
+              <button type="button" class="btn btn-ghost" data-back>{T.back}</button>
+              <button type="button" class="btn btn-primary" data-next>{si === QS.length - 1 ? T.toReview : T.cont}</button>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <!-- Review -->
+      <div class="q-panel" data-step="review" hidden>
+        <div class="panel-card">
+          <h2>{T.reviewH}</h2>
+          <div class="q-review" data-review></div>
+          <div class="q-nav">
+            <button type="button" class="btn btn-ghost" data-back>{T.back}</button>
+            <button type="submit" class="btn btn-primary" data-submit>{T.submit}</button>
+          </div>
+          <p class="q-saving" data-saving hidden>{T.saving}</p>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="q-panel" data-step="done" hidden>
+        <div class="panel-card q-done">
+          <h2>{T.done}</h2>
+          <p>{T.doneMsg}</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script type="application/json" id="q-schema" set:html={JSON.stringify(clientSchema)}></script>
+<script define:vars={{ endpoint: import.meta.env.PUBLIC_QUESTIONNAIRE_ENDPOINT ?? '' }}>
+  window.__Q_ENDPOINT__ = endpoint;
+</script>
+
+<script>
+  import { PDFDocument } from 'pdf-lib';
+
+  const form = document.getElementById('q-form');
+  if (form) {
+    const schema = JSON.parse(document.getElementById('q-schema').textContent || '[]');
+    const fieldById = {};
+    schema.forEach((s) => s.fields.forEach((f) => (fieldById[f.id] = f)));
+    const stepOrder = ['intro', ...schema.map((_, i) => `s${i}`), 'review', 'done'];
+    const panels = new Map();
+    form.querySelectorAll('.q-panel').forEach((p) => panels.set(p.dataset.step, p));
+    const progress = form.querySelector('[data-q-progress]');
+    const progLabel = form.querySelector('[data-q-progress-label]');
+    const progBar = form.querySelector('[data-q-bar]');
+    let idx = 0;
+
+    const val = (id) => {
+      const f = fieldById[id];
+      if (f && f.type === 'radio') {
+        const c = form.querySelector(`input[name="${id}"]:checked`);
+        return c ? c.value : '';
+      }
+      const el = form.querySelector(`[name="${id}"]`);
+      return el ? el.value.trim() : '';
+    };
+
+    // Age from DOB (q2) -> q3, and a synthetic "minor" flag for the guardian block.
+    const computeAge = () => {
+      const dob = val('q2');
+      let age = '';
+      if (dob) {
+        const d = new Date(dob);
+        if (!isNaN(d)) {
+          const now = new Date('2026-07-17');
+          age = now.getFullYear() - d.getFullYear();
+          const m = now.getMonth() - d.getMonth();
+          if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
+        }
+      }
+      const q3 = form.querySelector('[name="q3"]');
+      if (q3) q3.value = age === '' ? '' : String(age);
+      return age;
+    };
+    const minor = () => {
+      const a = computeAge();
+      return a !== '' && a < 18 ? 'yes' : 'no';
+    };
+
+    const condValue = (name) => (name === 'minor' ? minor() : val(name));
+
+    const applyConds = (panel) => {
+      panel.querySelectorAll('[data-cond]').forEach((el) => {
+        const c = JSON.parse(el.dataset.cond);
+        el.hidden = !c.in.includes(condValue(c.field));
+      });
+    };
+
+    const show = (i) => {
+      idx = Math.max(0, Math.min(i, stepOrder.length - 1));
+      const key = stepOrder[idx];
+      panels.forEach((p, k) => (p.hidden = k !== key));
+      const isSection = key.startsWith('s');
+      progress.hidden = !isSection;
+      if (isSection) {
+        const n = Number(key.slice(1)) + 1;
+        progLabel.textContent = `${n} / ${schema.length}`;
+        progBar.style.width = `${(n / schema.length) * 100}%`;
+        applyConds(panels.get(key));
+      }
+      if (key === 'review') buildReview();
+      window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+    };
+
+    // Intro: enable Begin, handle coach branch
+    const beginBtn = form.querySelector('[data-begin]');
+    const coachNote = form.querySelector('[data-coachnote]');
+    const coachContact = form.querySelector('[data-coach-contact]');
+    const contactHref = document.querySelector('a[href*="contact"]')?.getAttribute('href') || '/contact';
+    form.querySelectorAll('input[name="who"]').forEach((r) =>
+      r.addEventListener('change', () => {
+        const coach = val_who() === 'coach';
+        coachNote.hidden = !coach;
+        coachContact.hidden = !coach;
+        coachContact.setAttribute('href', contactHref);
+        beginBtn.hidden = coach;
+        beginBtn.disabled = val_who() !== 'player';
+      })
+    );
+    function val_who() {
+      const c = form.querySelector('input[name="who"]:checked');
+      return c ? c.value : '';
+    }
+    beginBtn.addEventListener('click', () => show(idx + 1));
+
+    // Validate required visible fields in the current section
+    const validateSection = (panel) => {
+      let ok = true;
+      panel.querySelectorAll('.q-field').forEach((fd) => {
+        if (fd.hidden) return;
+        const f = fieldById[fd.dataset.field];
+        if (!f || !f.required) return;
+        if (!val(f.id)) {
+          fd.classList.add('q-invalid');
+          ok = false;
+        } else fd.classList.remove('q-invalid');
+      });
+      return ok;
+    };
+
+    form.querySelectorAll('[data-next]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const panel = panels.get(stepOrder[idx]);
+        if (!validateSection(panel)) {
+          panel.querySelector('.q-invalid')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          return;
+        }
+        show(idx + 1);
+      })
+    );
+    form.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => show(idx - 1)));
+
+    // Recompute conditional visibility live when driver fields change
+    form.addEventListener('input', () => {
+      const key = stepOrder[idx];
+      if (key.startsWith('s')) applyConds(panels.get(key));
+    });
+    form.addEventListener('change', () => {
+      const key = stepOrder[idx];
+      if (key.startsWith('s')) applyConds(panels.get(key));
+    });
+
+    // Build review list
+    const buildReview = () => {
+      const box = form.querySelector('[data-review]');
+      box.innerHTML = '';
+      schema.forEach((s, si) => {
+        const rows = [];
+        s.fields.forEach((f) => {
+          const fd = form.querySelector(`[data-field="${f.id}"]`);
+          if (fd && fd.hidden) return;
+          const label = fd?.querySelector('label')?.childNodes[0]?.textContent?.trim() || f.id;
+          const v = val(f.id);
+          rows.push(
+            `<div class="q-rrow"><span class="q-rlabel">${label}</span><span class="q-rval">${v ? escapeHtml(v) : '<em>—</em>'}</span></div>`
+          );
+        });
+        const secEl = form.querySelector(`[data-step="s${si}"] h2`);
+        box.insertAdjacentHTML(
+          'beforeend',
+          `<div class="q-rgroup"><div class="q-rhead"><h3>${secEl ? secEl.textContent : ''}</h3><button type="button" class="q-editlink" data-goto="${si}">Edit</button></div>${rows.join('')}</div>`
+        );
+      });
+      box.querySelectorAll('[data-goto]').forEach((b) =>
+        b.addEventListener('click', () => show(stepOrder.indexOf(`s${b.dataset.goto}`)))
+      );
+    };
+    const escapeHtml = (s) =>
+      s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    // Submit: fill PDF client-side, download, POST answers
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const saving = form.querySelector('[data-saving]');
+      saving.hidden = false;
+      computeAge();
+      const answers = {};
+      schema.forEach((s) => s.fields.forEach((f) => (answers[f.id] = val(f.id))));
+      answers.who = val_who();
+      answers.age = val('q3');
+      try {
+        const bytes = await fetch('/docs/player-intake-template.pdf').then((r) => r.arrayBuffer());
+        const pdf = await PDFDocument.load(bytes);
+        const fm = pdf.getForm();
+        schema.forEach((s) =>
+          s.fields.forEach((f) => {
+            const v = answers[f.id];
+            if (!v) return;
+            try {
+              if (f.type === 'radio') {
+                const opt = f.opts.find((o) => o.v === v);
+                if (opt && opt.pdf) fm.getCheckBox(opt.pdf).check();
+                else if (f.pdf) fm.getTextField(f.pdf).setText(v); // radios stored as text (e.g. q13)
+              } else if (f.pdf) {
+                fm.getTextField(f.pdf).setText(String(v));
+              }
+            } catch (err) {
+              /* field may not exist in template; skip */
+            }
+          })
+        );
+        const out = await pdf.save();
+        const blob = new Blob([out], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `MFH-Player-Intake-${(answers.q1 || 'player').replace(/\s+/g, '-')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error('PDF generation failed', err);
+      }
+      // Send answers to the intake endpoint if configured (backend handles Airtable/email).
+      const endpoint = window.__Q_ENDPOINT__;
+      if (endpoint) {
+        try {
+          await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(answers),
+          });
+        } catch (err) {
+          /* non-blocking */
+        }
+      }
+      saving.hidden = true;
+      show(stepOrder.indexOf('done'));
+    });
+
+    show(0);
+  }
+</script>
+
+<style>
+  .wrap--q {
+    max-width: 760px;
+  }
+  .page-hero--plain {
+    background: radial-gradient(120% 120% at 85% 0%, #0a4f86 0%, var(--blue) 32%, var(--blue-deep) 100%);
+  }
+  .page-hero--plain .page-hero__scrim {
+    background: none;
+  }
+  .q-progress {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--blue);
+  }
+  .q-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .q-bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    transition: width 0.35s ease;
+  }
+  .q-kicker {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .panel-card > h2 {
+    margin-top: 6px;
+  }
+  .q-fields {
+    margin-top: 22px;
+    display: grid;
+    gap: 20px;
+  }
+  .q-choice {
+    display: flex;
+    gap: 14px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .q-pick {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .q-pick:has(input:checked) {
+    border-color: var(--blue);
+    background: var(--sky);
+  }
+  .q-pick--sm {
+    padding: 10px 16px;
+  }
+  .q-opts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .q-coachnote {
+    margin-top: 16px;
+    color: var(--ink-soft);
+  }
+  .q-nav {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .q-invalid label {
+    color: #b3261e;
+  }
+  .q-invalid input,
+  .q-invalid textarea {
+    border-color: #b3261e;
+  }
+  .q-rgroup {
+    border-top: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .q-rhead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .q-rhead h3 {
+    font-size: 1.05rem;
+  }
+  .q-editlink {
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+  .q-rrow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 7px 0;
+    font-size: 0.95rem;
+  }
+  .q-rlabel {
+    color: var(--ink-soft);
+  }
+  .q-rval {
+    font-weight: 600;
+  }
+  .q-saving {
+    margin-top: 14px;
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .q-done {
+    text-align: center;
+    padding: 44px 30px;
+  }
+  @media (max-width: 560px) {
+    .q-rrow {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>

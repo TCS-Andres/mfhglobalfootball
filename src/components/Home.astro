@@ -12,6 +12,7 @@ const { lang } = Astro.props;
 const contact = localizePath('/contact', lang);
 const plan = localizePath('/the-mfh-plan', lang);
 const services = localizePath('/services', lang);
+const questionnaire = localizePath('/questionnaire', lang);
 
 const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5', 'strip.6'];
 const problems = ['p1', 'p2', 'p3', 'p4'];
@@ -37,7 +38,7 @@ const who = ['w1', 'w2', 'w3'];
     <h1 class="hero__title hero-in" style="--i:1" set:html={t(lang, 'hero.h1')} />
     <p class="hero__sub hero-in" style="--i:2">{t(lang, 'hero.sub')}</p>
     <div class="actions hero-in" style="--i:3">
-      <a href={contact} class="btn btn-primary">{t(lang, 'hero.cta1')}</a>
+      <a href={questionnaire} class="btn btn-primary">{t(lang, 'cta.questionnaire')}</a>
       <a href={plan} class="btn btn-ghost">{t(lang, 'hero.cta2')}</a>
     </div>
     <div class="hero__creds hero-in" style="--i:4">
@@ -152,7 +153,10 @@ const who = ['w1', 'w2', 'w3'];
       <h2>{t(lang, 'cta.h2')}</h2>
       <p>{t(lang, 'cta.sub')}</p>
     </div>
-    <a href={contact} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
+    <div class="cta-banner__actions">
+      <a href={questionnaire} class="btn btn-primary">{t(lang, 'cta.questionnaire')}</a>
+      <a href={contact} class="btn btn-ghost">{t(lang, 'cta.consult')}</a>
+    </div>
   </div>
 </section>
 

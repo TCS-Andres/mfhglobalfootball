@@ -13,6 +13,9 @@ const { lang } = Astro.props;
       <h2>{t(lang, 'cta.h2')}</h2>
       <p>{t(lang, 'cta.sub')}</p>
     </div>
-    <a href={localizePath('/contact', lang)} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
+    <div class="cta-banner__actions">
+      <a href={localizePath('/questionnaire', lang)} class="btn btn-primary">{t(lang, 'cta.questionnaire')}</a>
+      <a href={localizePath('/contact', lang)} class="btn btn-ghost">{t(lang, 'cta.consult')}</a>
+    </div>
   </div>
 </section>

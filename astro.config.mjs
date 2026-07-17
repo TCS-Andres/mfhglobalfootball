@@ -27,6 +27,8 @@ export default defineConfig({
 
   integrations: [
     sitemap({
+      // The player questionnaire is unlisted/noindex, keep it out of the sitemap.
+      filter: (page) => !page.includes('/questionnaire'),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', es: 'es', fr: 'fr', it: 'it', pt: 'pt-PT' },
