@@ -498,7 +498,8 @@ html.preloading:has(.preloader--done){overflow:auto}
   background:radial-gradient(circle,rgba(201,162,39,.14),transparent 60%)}
 .stats .wrap{position:relative;z-index:1}
 .stats .eyebrow{color:var(--gold-soft);justify-content:center;display:flex;margin-bottom:36px}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+@media(max-width:860px){.stat-grid{grid-template-columns:repeat(2,1fr);gap:32px}}
 .stat{text-align:center;padding:0 8px}
 .stat .n{font-family:var(--font-display);font-weight:900;font-size:clamp(2.8rem,5vw,4rem);color:var(--gold-soft);
   line-height:1;letter-spacing:-.02em}

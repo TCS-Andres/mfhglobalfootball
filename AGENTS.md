@@ -22,13 +22,18 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 (`.media-slot`) are designed placeholders ready for real `<img>` swaps.
 
 ## Client-confirmed facts (July 2026, do not contradict)
-- The company is called "MFH Global Football". Use the full name when copy names the company;
-  never spell out the family holdings name.
+- The company is called "MFH Global Football Agency" (July 2026 call, rule 4: keep "Agency"
+  everywhere, never drop it). Use the full name when copy names the company; never spell out the
+  family holdings name.
 - Bert earned his FIFA agent license in 2026, under the modern framework FIFA introduced in 2023.
 - Bert owned local and national leagues under the Florida State Soccer Association (part of
   US Soccer). Do not say he "ran a league" or was "president of the APSL".
 - Bert also holds a US Soccer National C coaching license.
-- Target markets: South Florida, Colombia, AND Europe. Always include Europe.
+- When regions are listed together, order them Europe, USA, Colombia (client priority, July 2026).
+  "South Florida" stays only in biographical/home-base lines and the "South Florida FC" club name;
+  widen any sole "South Florida" reach-framing to the full Europe/USA/Colombia footprint. The
+  bridge is framed USA + Colombia core, with connections reaching into Europe (not Europe first).
+  League: "Liga BetPlay" (never "La Liga BetPlay"); corridor order MLS, Liga BetPlay, Europe.
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
 - Staff page at /staff lists the team (Bert, Phil Zayas, Sebastian Mahecha, John Mahecha,
@@ -48,14 +53,14 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   sameAs. There is no YouTube channel yet, do not link one.
 
 ## Non negotiable brand rules
-- Use "MFH" or "MFH Global Football" only. Never spell out the family holdings name.
+- Use "MFH" or "MFH Global Football Agency" only. Never spell out the family holdings name.
 - Never guarantee placements, contracts, signings, or results. Use the core promise framing:
   open doors, protect, educate.
 - Faith stays quiet. It belongs in the footer (the Jeremiah 29:11 line), never as a headline or
   banner, never at the top of a page.
 - The site ships in five languages: English at /, Spanish /es/, French /fr/, Italian /it/,
-  Portuguese (Portugal) /pt/. English and Spanish are the agency's working languages (consultations
-  are EN/ES); FR/IT/PT are site translations for the European market. Every string lives in all
+  Portuguese (Portugal) /pt/. Copy describes the agency as "multilingual" for market reach (Bert is personally bilingual EN/ES
+  and consultations are EN/ES); FR/IT/PT are site translations for the European market. Every string lives in all
   five dictionaries in src/i18n/ui.ts (289 keys each). The language switch is an SVG-flag dropdown
   (LangSwitch.astro), route-based as always. FR/IT/PT are AI translations pending native review.
 - Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype, no aggressive

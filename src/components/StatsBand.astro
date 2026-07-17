@@ -7,9 +7,11 @@ interface Props {
 const { lang } = Astro.props;
 
 // Honest facts only (the "5 sides of the game" stat lives on the About page).
+// 38 years and 1,000+ players confirmed on the July 2026 review call.
 const stats = [
+  { n: 'stat5.n', l: 'stat5.l', count: true },
+  { n: 'stat6.n', l: 'stat6.l', count: false },
   { n: 'stat2.n', l: 'stat2.l', count: true },
-  { n: 'stat3.n', l: 'stat3.l', count: true },
   { n: 'stat4.n', l: 'stat4.l', count: false },
 ];
 ---
