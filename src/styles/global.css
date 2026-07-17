@@ -1,10 +1,13 @@
-[hidden]{display:none!important}
 /* MFH Global Football, global stylesheet
    Ported verbatim from the approved prototype at /reference/mfh_home.html.
    Brand palette literals are replaced with the tokens in tokens.css.
    One off tints used only in the prototype (hero text, dark section text) have no
    token equivalent and are kept as literals here, the single source of truth. */
+/* @import MUST stay first: any style rule before it makes the browser/bundler
+   drop the import (which previously wiped out every design token). */
 @import "./tokens.css";
+
+[hidden]{display:none!important}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
