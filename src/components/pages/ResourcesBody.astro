@@ -1,0 +1,120 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+import { RESOURCES } from '../../data/resources';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// Only public links are rendered. Private / personal links stay hidden until the
+// gating decision is made (see src/data/resources.ts).
+const links = RESOURCES.filter((r) => r.visibility === 'public');
+const host = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<section class="res-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'res.eyebrow')}</span></span>
+    <h1>{t(lang, 'res.h1')}</h1>
+    <p>{t(lang, 'res.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="res-grid">
+      {links.map((l, i) => (
+        <a
+          class="card res-card reveal"
+          href={l.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={`--d:${i * 80}ms`}
+        >
+          <i class="pent"></i>
+          <h3>{l.title}</h3>
+          <p>{t(lang, l.descKey)}</p>
+          <span class="res-card__go">
+            {host(l.url)}
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .res-hero {
+    background: linear-gradient(160deg, var(--blue-deep), var(--blue));
+    color: #fff;
+    padding: clamp(72px, 12vw, 128px) 0 clamp(48px, 7vw, 72px);
+  }
+  .res-hero h1 {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.015em;
+    line-height: 1.03;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    margin: 14px 0 0;
+  }
+  .res-hero p {
+    color: rgba(255, 255, 255, 0.86);
+    margin-top: 16px;
+    max-width: 56ch;
+    font-size: 1.08rem;
+  }
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .res-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 26px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .res-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: #c4d4e4;
+  }
+  .res-card h3 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin: 12px 0 8px;
+  }
+  .res-card p {
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    flex: 1;
+  }
+  .res-card__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--blue);
+  }
+  @media (max-width: 900px) {
+    .res-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .res-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

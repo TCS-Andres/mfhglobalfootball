@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourcesBody from '../../components/pages/ResourcesBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'it';
+---
+
+<BaseLayout lang={lang} title={`${t(lang, 'res.eyebrow')} | MFH Global Football Agency`} description={t(lang, 'res.metaDesc')}>
+  <ResourcesBody lang={lang} />
+</BaseLayout>
