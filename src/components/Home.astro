@@ -4,6 +4,7 @@ import QuoteBand from './QuoteBand.astro';
 import MeetBert from './MeetBert.astro';
 import StatsBand from './StatsBand.astro';
 import PlanSteps from './PlanSteps.astro';
+import Pathway from './Pathway.astro';
 
 interface Props {
   lang: Lang;
@@ -74,6 +75,9 @@ const who = ['w1', 'w2', 'w3'];
 
 <!-- HOW IT WORKS -->
 <PlanSteps lang={lang} />
+
+<!-- THE MFH PATHWAY (system view, below How It Works) -->
+<Pathway lang={lang} />
 
 <!-- PROMISE (bold band) -->
 <QuoteBand

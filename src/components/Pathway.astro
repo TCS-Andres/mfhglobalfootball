@@ -1,0 +1,156 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+// The MFH Pathway: the system view of how MFH moves a player from first
+// contact to a club opportunity. Distinct from "How It Works" (the client
+// action list). Five stages, gold pentagon nodes, one continuous MFH process.
+// No third party company is named here (brand rule 0.8).
+const stages = [1, 2, 3, 4, 5];
+---
+
+<section class="section pathway">
+  <div class="wrap">
+    <h2 class="pathway__title">{t(lang, 'pw.title')}</h2>
+    <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
+    <ol class="pathway__list">
+      {stages.map((n, i) => (
+        <li class="pathway__step reveal" style={`--d:${i * 80}ms`}>
+          <span class="pathway__badge" aria-hidden="true">{n}</span>
+          <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
+          <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .pathway {
+    background: var(--paper);
+  }
+  .pathway__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--blue);
+    text-align: center;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .pathway__sub {
+    font-family: var(--font-body);
+    color: var(--ink-soft);
+    text-align: center;
+    margin: 0 auto 3rem;
+    max-width: 46ch;
+    font-size: 1.05rem;
+  }
+  .pathway__list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+    position: relative;
+  }
+  /* connector rule running behind the pentagons */
+  .pathway__list::before {
+    content: '';
+    position: absolute;
+    top: 34px;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: var(--blue);
+    opacity: 0.25;
+    z-index: 0;
+  }
+  .pathway__step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  /* small gold chevron in the gap between stages (desktop only) */
+  .pathway__step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 27px;
+    right: -0.75rem;
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+    transform: translateX(50%) rotate(45deg);
+    z-index: 2;
+  }
+  .pathway__badge {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 1rem;
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+  .pathway__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--blue);
+    margin: 0 0 0.5rem;
+  }
+  .pathway__copy {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* tablet: two rows (three then two), connector and chevrons hidden */
+  @media (max-width: 899px) {
+    .pathway__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 1.25rem;
+    }
+    .pathway__list::before,
+    .pathway__step::after {
+      display: none;
+    }
+  }
+  /* mobile: vertical stack, pentagon left, text right */
+  @media (max-width: 599px) {
+    .pathway__list {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .pathway__step {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      column-gap: 1rem;
+      text-align: left;
+      align-items: start;
+    }
+    .pathway__badge {
+      margin: 0;
+    }
+    .pathway__name,
+    .pathway__copy {
+      grid-column: 2;
+    }
+    .pathway__name {
+      align-self: center;
+    }
+  }
+</style>

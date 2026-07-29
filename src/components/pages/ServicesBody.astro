@@ -1,6 +1,7 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
+import Pathway from '../Pathway.astro';
 
 interface Props {
   lang: Lang;
@@ -34,6 +35,9 @@ const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
     <p>{t(lang, 'sv.intro')}</p>
   </div>
 </section>
+
+<!-- The MFH Pathway: context for how the services connect -->
+<Pathway lang={lang} />
 
 <section class="section">
   <div class="wrap">
