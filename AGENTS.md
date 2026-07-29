@@ -26,8 +26,12 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   everywhere, never drop it). Use the full name when copy names the company; never spell out the
   family holdings name.
 - Bert earned his FIFA agent license in 2026, under the modern framework FIFA introduced in 2023.
-- Bert owned local and national leagues under the Florida State Soccer Association (part of
-  US Soccer). Do not say he "ran a league" or was "president of the APSL".
+- Bert ran his own league: he was President and Commissioner of the American Premier Soccer
+  League (APSL), a USASA-sanctioned competition at level four of the US soccer pyramid, based in
+  South Florida (2015-2018), with member clubs including Boca Raton FC and South Florida FC.
+  This is on the Bert's Journey page and is confirmed by the APSL Wikipedia article. (Updated
+  July 29 2026 per Andres, superseding the earlier caution against the "ran a league / president
+  of the APSL" framing.) Do not inflate beyond the sourced facts.
 - Bert also holds a US Soccer National C coaching license.
 - When regions are listed together, order them Europe, USA, Colombia (client priority, July 2026).
   "South Florida" stays only in biographical/home-base lines and the "South Florida FC" club name;

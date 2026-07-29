@@ -33,15 +33,19 @@ const spokes = nodes.map((nd) => {
   const [x2, y2] = pt(nd.deg, R - 5.5);
   return { x1, y1, x2, y2 };
 });
-const gap = 15; // degree gap so arcs don't touch the pentagons
+const gap = 17; // degree gap so arcs clear the pentagons and their labels
 const arcs = nodes.map((nd) => {
   const s = nd.deg + gap;
   const e = nd.deg + 72 - gap;
   const [x1, y1] = pt(s, R);
   const [x2, y2] = pt(e, R);
-  const a = ((e - 90) * Math.PI) / 180;
-  const rot = (Math.atan2(Math.cos(a), -Math.sin(a)) * 180) / Math.PI; // clockwise tangent
-  return { d: `M ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`, hx: x2, hy: y2, rot };
+  // arrowhead sits at the arc midpoint (the open gap between two nodes), not on
+  // top of a node's label, and points clockwise.
+  const mid = nd.deg + 36;
+  const [mx, my] = pt(mid, R);
+  const a = ((mid - 90) * Math.PI) / 180;
+  const rot = (Math.atan2(Math.cos(a), -Math.sin(a)) * 180) / Math.PI;
+  return { d: `M ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`, hx: mx, hy: my, rot };
 });
 ---
 
@@ -61,7 +65,7 @@ const arcs = nodes.map((nd) => {
         {arcs.map((arc) => (
           <>
             <path d={arc.d} fill="none" stroke="var(--gold)" stroke-opacity="0.55" stroke-width="0.7" stroke-linecap="round" />
-            <path d="M -2 -1.5 L 1.4 0 L -2 1.5 Z" fill="var(--gold)" transform={`translate(${arc.hx} ${arc.hy}) rotate(${arc.rot})`} />
+            <path d="M -1.6 -1.25 L 1.3 0 L -1.6 1.25 Z" fill="var(--gold)" transform={`translate(${arc.hx} ${arc.hy}) rotate(${arc.rot})`} />
           </>
         ))}
         <circle cx={cx} cy={cy} r={HUB} fill="url(#pw-hub)" stroke="var(--blue)" stroke-opacity="0.16" stroke-width="0.5" />
