@@ -95,6 +95,14 @@ const T = {
           <div class="panel-card">
             <span class="q-kicker">{T.step} {si + 1} {T.of} {QS.length}</span>
             <h2>{isEs ? s.es : s.en}</h2>
+            {s.intro && <p class="q-sec-intro">{isEs ? s.intro.es : s.intro.en}</p>}
+            {s.video && (
+              <div class="q-video">
+                <video controls preload="none" playsinline poster={s.video.poster}>
+                  <source src={s.video.src} type="video/mp4" />
+                </video>
+              </div>
+            )}
             <div class="q-fields">
               {s.fields.map((f) => (
                 <div class="field q-field" data-field={f.id} data-cond={f.cond ? JSON.stringify(f.cond) : undefined}>
@@ -159,8 +167,9 @@ const T = {
 </section>
 
 <script type="application/json" id="q-schema" set:html={JSON.stringify(clientSchema)}></script>
-<script define:vars={{ endpoint: import.meta.env.PUBLIC_QUESTIONNAIRE_ENDPOINT ?? '' }}>
+<script define:vars={{ endpoint: import.meta.env.PUBLIC_QUESTIONNAIRE_ENDPOINT ?? '', emptyLabel: T.empty }}>
   window.__Q_ENDPOINT__ = endpoint;
+  window.__Q_EMPTY__ = emptyLabel;
 </script>
 
 <script>
@@ -196,7 +205,7 @@ const T = {
       if (dob) {
         const d = new Date(dob);
         if (!isNaN(d)) {
-          const now = new Date('2026-07-17');
+          const now = new Date();
           age = now.getFullYear() - d.getFullYear();
           const m = now.getMonth() - d.getMonth();
           if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
@@ -211,7 +220,17 @@ const T = {
       return a !== '' && a < 18 ? 'yes' : 'no';
     };
 
-    const condValue = (name) => (name === 'minor' ? minor() : val(name));
+    // Virtual field for edu5: ask about college intent when the player is in
+    // high school, or is in college but does not currently play college soccer.
+    const eduAskCollege = () => {
+      const lvl = val('edu1');
+      if (lvl === 'highschool') return 'yes';
+      if (lvl === 'college' && val('edu4') === 'no') return 'yes';
+      return 'no';
+    };
+
+    const condValue = (name) =>
+      name === 'minor' ? minor() : name === 'eduAskCollege' ? eduAskCollege() : val(name);
 
     const applyConds = (panel) => {
       panel.querySelectorAll('[data-cond]').forEach((el) => {
@@ -284,12 +303,17 @@ const T = {
     );
     form.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => show(idx - 1)));
 
-    // Recompute conditional visibility live when driver fields change
+    // Recompute conditional visibility live when driver fields change.
+    // computeAge() runs on every change so the age field (q3) populates from the
+    // date of birth on the Personal info step itself, not only once the guardian
+    // block (a later section) triggers it.
     form.addEventListener('input', () => {
+      computeAge();
       const key = stepOrder[idx];
       if (key.startsWith('s')) applyConds(panels.get(key));
     });
     form.addEventListener('change', () => {
+      computeAge();
       const key = stepOrder[idx];
       if (key.startsWith('s')) applyConds(panels.get(key));
     });
@@ -306,7 +330,7 @@ const T = {
           const label = fd?.querySelector('label')?.childNodes[0]?.textContent?.trim() || f.id;
           const v = val(f.id);
           rows.push(
-            `<div class="q-rrow"><span class="q-rlabel">${label}</span><span class="q-rval">${v ? escapeHtml(v) : '<em class="q-empty">' + escapeHtml(T.empty) + '</em>'}</span></div>`
+            `<div class="q-rrow"><span class="q-rlabel">${label}</span><span class="q-rval">${v ? escapeHtml(v) : '<em class="q-empty">' + escapeHtml(window.__Q_EMPTY__ || '') + '</em>'}</span></div>`
           );
         });
         const secEl = form.querySelector(`[data-step="s${si}"] h2`);
@@ -431,6 +455,24 @@ const T = {
   }
   .panel-card > h2 {
     margin-top: 6px;
+  }
+  .q-sec-intro {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+  .q-video {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+  }
+  .q-video video {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
   }
   .q-fields {
     margin-top: 22px;

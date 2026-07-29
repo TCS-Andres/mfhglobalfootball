@@ -31,6 +31,8 @@ export interface QSection {
   en: string;
   es: string;
   guardianBlock?: boolean; // whole section (or its guardian fields) gated on age < 18 handled per-field via cond too
+  intro?: { en: string; es: string }; // optional lead paragraph under the section title
+  video?: { src: string; poster?: string }; // optional step intro video; slot renders only when set
   fields: QField[];
 }
 
@@ -113,6 +115,43 @@ export const SECTIONS: QSection[] = [
       { id: 'q32', type: 'text', pdf: 'q32', en: 'Goals/Assists (if applicable)', es: 'Goles/Asistencias (si aplica)' },
       { id: 'q33', type: 'text', pdf: 'q33', en: 'Current or last salary received (monthly or annual)', es: 'Salario actual o último recibido (mensual o anual)' },
       { id: 'q34', type: 'text', pdf: 'q34', en: 'Currency of salary paid', es: 'Moneda en que se paga el salario' },
+    ],
+  },
+  {
+    // Education section (added July 2026). Bert advises at least one year of
+    // college soccer as a US pathway to pro, so we capture school status and
+    // college intent. NOTE: the fillable PDF template (q1..q51) has no fields
+    // for these, so edu* fields intentionally carry NO `pdf` mapping: they are
+    // collected in the submission POST but skipped in the pre-filled PDF until
+    // the master template gains matching fields (q52+). An EN/ES step intro
+    // video for this section is also pending Bert's recordings.
+    id: 'edu',
+    en: 'Education',
+    es: 'Educación',
+    intro: {
+      en: 'Your school situation affects which doors stay open. Signing professionally as a minor can close college eligibility permanently, so we ask before anything else moves.',
+      es: 'Tu situación académica afecta cuáles puertas siguen abiertas. Firmar como profesional siendo menor de edad puede cerrar la elegibilidad universitaria de forma permanente, por eso preguntamos antes de que algo más avance.',
+    },
+    fields: [
+      { id: 'edu1', type: 'radio', required: true, en: 'Current education level', es: 'Nivel educativo actual', opts: [
+        { v: 'highschool', en: 'High school', es: 'Escuela secundaria', pdf: '' },
+        { v: 'college', en: 'College or university', es: 'Universidad', pdf: '' },
+        { v: 'neither', en: 'Neither', es: 'Ninguno', pdf: '' },
+        { v: 'other', en: 'Other', es: 'Otro', pdf: '' },
+      ] },
+      { id: 'edu2', type: 'text', cond: { field: 'edu1', in: ['highschool', 'college'] }, en: 'School or institution name', es: 'Nombre de la escuela o institución' },
+      { id: 'edu3', type: 'number', cond: { field: 'edu1', in: ['highschool', 'college'] }, en: 'Expected graduation year', es: 'Año de graduación previsto' },
+      { id: 'edu4', type: 'radio', cond: { field: 'edu1', in: ['highschool', 'college'] }, en: 'Do you currently play for your school team?', es: '¿Juegas actualmente para el equipo de tu escuela?', opts: [
+        { v: 'yes', en: 'Yes', es: 'Sí', pdf: '' },
+        { v: 'no', en: 'No', es: 'No', pdf: '' },
+      ] },
+      // Shown when High school is selected, or College is selected and the
+      // player does not currently play college soccer (virtual "eduAskCollege").
+      { id: 'edu5', type: 'radio', cond: { field: 'eduAskCollege', in: ['yes'] }, en: 'Do you want to play college soccer?', es: '¿Quieres jugar fútbol universitario?', opts: [
+        { v: 'yes', en: 'Yes', es: 'Sí', pdf: '' },
+        { v: 'no', en: 'No', es: 'No', pdf: '' },
+        { v: 'notsure', en: 'Not sure', es: 'No estoy seguro', pdf: '' },
+      ] },
     ],
   },
   {
