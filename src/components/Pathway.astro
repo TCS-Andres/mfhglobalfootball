@@ -6,47 +6,72 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// The MFH Global Football Agency Pathway: the system view of how a player moves
-// from first contact to a club opportunity, shown as one continuous circular
-// ecosystem. Center hub carries the heading; five gold pentagon nodes ring it,
-// their info radiating outward. Distinct from "How It Works" (the action list).
-// No third party company is named here (brand rule 0.8). Circular on desktop,
-// a clean vertical list on smaller screens.
+// The MFH Global Football Agency Pathway: one continuous circular ecosystem.
+// Center hub carries the heading + body; five gold pentagon nodes ring it, each
+// linked to the hub by a thin spoke, with gold flow-arcs showing the clockwise
+// 1 to 5 process. Distinct from "How It Works" (the action list). No third party
+// company is named (brand rule 0.8). Circular on desktop, vertical list below.
+
 const stages = [1, 2, 3, 4, 5];
+
+// SVG geometry (viewBox 0..100). Kept in sync with the CSS node positions below.
+const R = 39; // ring radius (pentagon centers)
+const HUB = 22; // hub circle radius
+const cx = 50;
+const cy = 50;
+const pt = (deg: number, r: number): [number, number] => {
+  const a = ((deg - 90) * Math.PI) / 180;
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+};
+const nodes = stages.map((n, i) => {
+  const deg = i * 72;
+  const [x, y] = pt(deg, R);
+  return { n, deg, x, y };
+});
+const spokes = nodes.map((nd) => {
+  const [x1, y1] = pt(nd.deg, HUB + 1.5);
+  const [x2, y2] = pt(nd.deg, R - 5.5);
+  return { x1, y1, x2, y2 };
+});
+const gap = 15; // degree gap so arcs don't touch the pentagons
+const arcs = nodes.map((nd) => {
+  const s = nd.deg + gap;
+  const e = nd.deg + 72 - gap;
+  const [x1, y1] = pt(s, R);
+  const [x2, y2] = pt(e, R);
+  const a = ((e - 90) * Math.PI) / 180;
+  const rot = (Math.atan2(Math.cos(a), -Math.sin(a)) * 180) / Math.PI; // clockwise tangent
+  return { d: `M ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`, hx: x2, hy: y2, rot };
+});
 ---
 
 <section class="section pathway">
   <div class="wrap">
     <div class="pathway__ring">
-      <!-- connecting ring + clockwise flow arrows (desktop only) -->
-      <svg class="pathway__circle" viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-        <circle cx="50" cy="50" r="37" fill="none" stroke="var(--blue)" stroke-opacity="0.22" stroke-width="0.5" />
-        {stages.map((_, i) => {
-          const a = ((i * 72 + 36) - 90) * (Math.PI / 180);
-          const x = 50 + 37 * Math.cos(a);
-          const y = 50 + 37 * Math.sin(a);
-          const rot = i * 72 + 36 + 90;
-          return (
-            <path
-              d="M -1.5 -1.4 L 1.5 0 L -1.5 1.4"
-              fill="none"
-              stroke="var(--gold)"
-              stroke-width="0.7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              transform={`translate(${x} ${y}) rotate(${rot})`}
-            />
-          );
-        })}
+      <svg class="pathway__svg" viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="pw-hub" cx="50%" cy="42%" r="60%">
+            <stop offset="0%" stop-color="var(--sky)" />
+            <stop offset="100%" stop-color="var(--paper)" />
+          </radialGradient>
+        </defs>
+        {spokes.map((s) => (
+          <line x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2} stroke="var(--blue)" stroke-opacity="0.14" stroke-width="0.4" />
+        ))}
+        {arcs.map((arc) => (
+          <>
+            <path d={arc.d} fill="none" stroke="var(--gold)" stroke-opacity="0.55" stroke-width="0.7" stroke-linecap="round" />
+            <path d="M -2 -1.5 L 1.4 0 L -2 1.5 Z" fill="var(--gold)" transform={`translate(${arc.hx} ${arc.hy}) rotate(${arc.rot})`} />
+          </>
+        ))}
+        <circle cx={cx} cy={cy} r={HUB} fill="url(#pw-hub)" stroke="var(--blue)" stroke-opacity="0.16" stroke-width="0.5" />
       </svg>
 
-      <!-- center hub -->
       <div class="pathway__hub">
         <h2 class="pathway__title">{t(lang, 'pw.title')}</h2>
         <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
       </div>
 
-      <!-- five stages around the ring -->
       <ol class="pathway__list">
         {stages.map((n, i) => (
           <li class={`pathway__step pathway__step--${n} reveal`} style={`--d:${i * 80}ms`}>
@@ -67,15 +92,15 @@ const stages = [1, 2, 3, 4, 5];
     background: var(--paper);
   }
 
-  /* ---------- Circular layout (desktop, >= 880px) ---------- */
+  /* ---------- Circular ecosystem (desktop, >= 880px) ---------- */
   @media (min-width: 880px) {
     .pathway__ring {
       position: relative;
-      width: min(100%, 900px);
+      width: min(100%, 860px);
       margin: 0 auto;
       aspect-ratio: 1 / 1;
     }
-    .pathway__circle {
+    .pathway__svg {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -87,7 +112,7 @@ const stages = [1, 2, 3, 4, 5];
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(40%, 320px);
+      width: min(40%, 330px);
       text-align: center;
       z-index: 2;
     }
@@ -98,7 +123,7 @@ const stages = [1, 2, 3, 4, 5];
     }
     .pathway__step {
       position: absolute;
-      width: 200px;
+      width: 176px;
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
@@ -106,69 +131,71 @@ const stages = [1, 2, 3, 4, 5];
       text-align: center;
       z-index: 1;
     }
-    /* pentagons sit on the ring (r = 37% of the box) */
-    .pathway__step--1 { top: 13%; left: 50%; }
-    .pathway__step--2 { top: 38.6%; left: 85.2%; }
-    .pathway__step--3 { top: 79.9%; left: 71.7%; }
-    .pathway__step--4 { top: 79.9%; left: 28.3%; }
-    .pathway__step--5 { top: 38.6%; left: 14.8%; }
+    /* pentagon centers on the ring (r = 39%); labels sit just below each node */
+    .pathway__step--1 { top: 11%; left: 50%; }
+    .pathway__step--2 { top: 38%; left: 87.1%; }
+    .pathway__step--3 { top: 81.6%; left: 72.9%; }
+    .pathway__step--4 { top: 81.6%; left: 27.1%; }
+    .pathway__step--5 { top: 38%; left: 12.9%; }
     .pathway__badge {
       margin-bottom: 12px;
     }
   }
 
-  /* Shared node styling */
+  /* Shared styling */
   .pathway__title {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    font-size: clamp(1.45rem, 2.3vw, 2rem);
     color: var(--blue);
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.6rem;
     letter-spacing: -0.01em;
-    line-height: 1.1;
+    line-height: 1.12;
   }
   .pathway__sub {
     font-family: var(--font-body);
     color: var(--ink-soft);
     margin: 0;
-    font-size: 0.98rem;
+    font-size: 0.92rem;
     line-height: 1.5;
   }
   .pathway__badge {
     display: grid;
     place-items: center;
-    width: 62px;
-    height: 62px;
+    width: 58px;
+    height: 58px;
     flex: none;
     background: var(--gold);
     color: #fff;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.4rem;
+    font-size: 1.32rem;
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    box-shadow: 0 6px 16px rgba(201, 162, 39, 0.28);
   }
   .pathway__name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.08rem;
+    font-size: 1.02rem;
     color: var(--blue);
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.3rem;
+    letter-spacing: 0.01em;
   }
   .pathway__copy {
     font-family: var(--font-body);
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     line-height: 1.45;
     color: var(--ink-soft);
     margin: 0;
   }
 
-  /* ---------- Vertical layout (mobile / tablet, < 880px) ---------- */
+  /* ---------- Vertical layout (< 880px) ---------- */
   @media (max-width: 879px) {
     .pathway__ring {
-      max-width: 640px;
+      max-width: 620px;
       margin: 0 auto;
     }
-    .pathway__circle {
+    .pathway__svg {
       display: none;
     }
     .pathway__hub {
@@ -192,13 +219,17 @@ const stages = [1, 2, 3, 4, 5];
     }
     .pathway__step {
       display: grid;
-      grid-template-columns: 62px 1fr;
+      grid-template-columns: 58px 1fr;
       column-gap: 1rem;
       align-items: start;
       text-align: left;
     }
     .pathway__name {
       margin-top: 4px;
+      font-size: 1.08rem;
+    }
+    .pathway__copy {
+      font-size: 0.92rem;
     }
   }
 
