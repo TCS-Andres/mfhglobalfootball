@@ -356,6 +356,8 @@ const T = {
       schema.forEach((s) => s.fields.forEach((f) => (answers[f.id] = val(f.id))));
       answers.who = val_who();
       answers.age = val('q3');
+      let pdfBase64 = '';
+      const pdfFilename = `MFH-Player-Intake-${(answers.q1 || 'player').replace(/\s+/g, '-')}.pdf`;
       try {
         const bytes = await fetch('/docs/player-intake-template.pdf').then((r) => r.arrayBuffer());
         const pdf = await PDFDocument.load(bytes);
@@ -378,11 +380,18 @@ const T = {
           })
         );
         const out = await pdf.save();
+        // base64 copy of the filled PDF, for the intake email attachment
+        const outBytes = new Uint8Array(out);
+        let bin = '';
+        const CH = 0x8000;
+        for (let i = 0; i < outBytes.length; i += CH) bin += String.fromCharCode.apply(null, outBytes.subarray(i, i + CH));
+        pdfBase64 = btoa(bin);
+        // download a copy for the player
         const blob = new Blob([out], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `MFH-Player-Intake-${(answers.q1 || 'player').replace(/\s+/g, '-')}.pdf`;
+        a.download = pdfFilename;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -390,18 +399,18 @@ const T = {
       } catch (err) {
         console.error('PDF generation failed', err);
       }
-      // Send answers to the intake endpoint if configured (backend handles Airtable/email).
-      const endpoint = window.__Q_ENDPOINT__;
-      if (endpoint) {
-        try {
-          await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(answers),
-          });
-        } catch (err) {
-          /* non-blocking */
-        }
+      // Email the submission and the filled PDF to the intake inbox.
+      // Defaults to our own /api/intake serverless function (Resend); can be
+      // overridden with PUBLIC_QUESTIONNAIRE_ENDPOINT if a different backend is used.
+      const endpoint = window.__Q_ENDPOINT__ || '/api/intake';
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answers, pdfBase64, filename: pdfFilename, lang: form.dataset.lang }),
+        });
+      } catch (err) {
+        /* non-blocking: the player already has the downloaded PDF */
       }
       saving.hidden = true;
       show(stepOrder.indexOf('done'));
