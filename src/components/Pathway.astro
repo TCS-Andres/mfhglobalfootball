@@ -6,26 +6,59 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// The MFH Pathway: the system view of how MFH moves a player from first
-// contact to a club opportunity. Distinct from "How It Works" (the client
-// action list). Five stages, gold pentagon nodes, one continuous MFH process.
-// No third party company is named here (brand rule 0.8).
+// The MFH Global Football Agency Pathway: the system view of how a player moves
+// from first contact to a club opportunity, shown as one continuous circular
+// ecosystem. Center hub carries the heading; five gold pentagon nodes ring it,
+// their info radiating outward. Distinct from "How It Works" (the action list).
+// No third party company is named here (brand rule 0.8). Circular on desktop,
+// a clean vertical list on smaller screens.
 const stages = [1, 2, 3, 4, 5];
 ---
 
 <section class="section pathway">
   <div class="wrap">
-    <h2 class="pathway__title">{t(lang, 'pw.title')}</h2>
-    <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
-    <ol class="pathway__list">
-      {stages.map((n, i) => (
-        <li class="pathway__step reveal" style={`--d:${i * 80}ms`}>
-          <span class="pathway__badge" aria-hidden="true">{n}</span>
-          <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
-          <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
-        </li>
-      ))}
-    </ol>
+    <div class="pathway__ring">
+      <!-- connecting ring + clockwise flow arrows (desktop only) -->
+      <svg class="pathway__circle" viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <circle cx="50" cy="50" r="37" fill="none" stroke="var(--blue)" stroke-opacity="0.22" stroke-width="0.5" />
+        {stages.map((_, i) => {
+          const a = ((i * 72 + 36) - 90) * (Math.PI / 180);
+          const x = 50 + 37 * Math.cos(a);
+          const y = 50 + 37 * Math.sin(a);
+          const rot = i * 72 + 36 + 90;
+          return (
+            <path
+              d="M -1.5 -1.4 L 1.5 0 L -1.5 1.4"
+              fill="none"
+              stroke="var(--gold)"
+              stroke-width="0.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              transform={`translate(${x} ${y}) rotate(${rot})`}
+            />
+          );
+        })}
+      </svg>
+
+      <!-- center hub -->
+      <div class="pathway__hub">
+        <h2 class="pathway__title">{t(lang, 'pw.title')}</h2>
+        <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
+      </div>
+
+      <!-- five stages around the ring -->
+      <ol class="pathway__list">
+        {stages.map((n, i) => (
+          <li class={`pathway__step pathway__step--${n} reveal`} style={`--d:${i * 80}ms`}>
+            <span class="pathway__badge" aria-hidden="true">{n}</span>
+            <div class="pathway__label">
+              <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
+              <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -33,124 +66,146 @@ const stages = [1, 2, 3, 4, 5];
   .pathway {
     background: var(--paper);
   }
+
+  /* ---------- Circular layout (desktop, >= 880px) ---------- */
+  @media (min-width: 880px) {
+    .pathway__ring {
+      position: relative;
+      width: min(100%, 900px);
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
+    }
+    .pathway__circle {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .pathway__hub {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(40%, 320px);
+      text-align: center;
+      z-index: 2;
+    }
+    .pathway__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .pathway__step {
+      position: absolute;
+      width: 200px;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 1;
+    }
+    /* pentagons sit on the ring (r = 37% of the box) */
+    .pathway__step--1 { top: 13%; left: 50%; }
+    .pathway__step--2 { top: 38.6%; left: 85.2%; }
+    .pathway__step--3 { top: 79.9%; left: 71.7%; }
+    .pathway__step--4 { top: 79.9%; left: 28.3%; }
+    .pathway__step--5 { top: 38.6%; left: 14.8%; }
+    .pathway__badge {
+      margin-bottom: 12px;
+    }
+  }
+
+  /* Shared node styling */
   .pathway__title {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
     color: var(--blue);
-    text-align: center;
     margin: 0 0 0.5rem;
     letter-spacing: -0.01em;
+    line-height: 1.1;
   }
   .pathway__sub {
     font-family: var(--font-body);
     color: var(--ink-soft);
-    text-align: center;
-    margin: 0 auto 3rem;
-    max-width: 46ch;
-    font-size: 1.05rem;
-  }
-  .pathway__list {
-    list-style: none;
-    margin: 0 auto;
-    padding: 0;
-    max-width: 1100px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.25rem;
-    position: relative;
-  }
-  /* connector rule running behind the pentagons */
-  .pathway__list::before {
-    content: '';
-    position: absolute;
-    top: 34px;
-    left: 8%;
-    right: 8%;
-    height: 2px;
-    background: var(--blue);
-    opacity: 0.25;
-    z-index: 0;
-  }
-  .pathway__step {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-  /* small gold chevron in the gap between stages (desktop only) */
-  .pathway__step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 27px;
-    right: -0.75rem;
-    width: 9px;
-    height: 9px;
-    border-top: 2px solid var(--gold);
-    border-right: 2px solid var(--gold);
-    transform: translateX(50%) rotate(45deg);
-    z-index: 2;
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.5;
   }
   .pathway__badge {
     display: grid;
     place-items: center;
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 1rem;
+    width: 62px;
+    height: 62px;
+    flex: none;
     background: var(--gold);
     color: #fff;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
   }
   .pathway__name {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
+    font-weight: 700;
+    font-size: 1.08rem;
     color: var(--blue);
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.35rem;
   }
   .pathway__copy {
     font-family: var(--font-body);
-    font-size: 0.9375rem;
-    line-height: 1.5;
+    font-size: 0.86rem;
+    line-height: 1.45;
     color: var(--ink-soft);
     margin: 0;
   }
 
-  /* tablet: two rows (three then two), connector and chevrons hidden */
-  @media (max-width: 899px) {
-    .pathway__list {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem 1.25rem;
+  /* ---------- Vertical layout (mobile / tablet, < 880px) ---------- */
+  @media (max-width: 879px) {
+    .pathway__ring {
+      max-width: 640px;
+      margin: 0 auto;
     }
-    .pathway__list::before,
-    .pathway__step::after {
+    .pathway__circle {
       display: none;
     }
-  }
-  /* mobile: vertical stack, pentagon left, text right */
-  @media (max-width: 599px) {
+    .pathway__hub {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .pathway__title {
+      font-size: clamp(1.75rem, 5vw, 2.3rem);
+    }
+    .pathway__sub {
+      max-width: 46ch;
+      margin: 0 auto;
+      font-size: 1.02rem;
+    }
     .pathway__list {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 1.5rem;
     }
     .pathway__step {
       display: grid;
-      grid-template-columns: 68px 1fr;
+      grid-template-columns: 62px 1fr;
       column-gap: 1rem;
-      text-align: left;
       align-items: start;
-    }
-    .pathway__badge {
-      margin: 0;
-    }
-    .pathway__name,
-    .pathway__copy {
-      grid-column: 2;
+      text-align: left;
     }
     .pathway__name {
-      align-self: center;
+      margin-top: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pathway__step {
+      animation: none !important;
+      transition: none !important;
     }
   }
 </style>
