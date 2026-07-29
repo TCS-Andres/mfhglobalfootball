@@ -23,23 +23,22 @@ export interface ResourceLink {
 
 export const RESOURCES: ResourceLink[] = [
   {
+    title: 'Analytic Soccer', // singular, not "Analytics Soccer"; client wants it first
+    url: 'https://analyticsoccer.com/',
+    descKey: 'res.c.analytic',
+    visibility: 'public',
+  },
+  {
     title: 'Transfermarkt',
     url: 'https://www.transfermarkt.com/',
     descKey: 'res.c.transfermarkt',
     visibility: 'public',
   },
   {
-    // Bert refers to this verbally as "11 Lex"; the domain is elevenlex.com.
-    // OPEN: confirm whether the display label should be "11 Lex" or "Eleven Lex".
-    title: '11 Lex',
+    // Display label confirmed by Bert as "Eleven Lex"; domain is elevenlex.com.
+    title: 'Eleven Lex',
     url: 'https://elevenlex.com/',
     descKey: 'res.c.11lex',
-    visibility: 'public',
-  },
-  {
-    title: 'Analytic Soccer', // singular, not "Analytics Soccer"
-    url: 'https://analyticsoccer.com/',
-    descKey: 'res.c.analytic',
     visibility: 'public',
   },
 ];

@@ -11,17 +11,18 @@ const { lang } = Astro.props;
 // Team members get an initials mark until photos arrive.
 //
 // NEEDS INPUT (spec 3.2): Miguel Benito (st.p9) uses the initials placeholder
-// until Bert supplies a headshot, and has no bio yet (do not write one from
-// inference). Provisional division: Football Operations & Scouting, since his
-// analytics/evaluation role maps to the Player Profile and Evaluation stages.
-// NEEDS INPUT (spec 3.3): short `blurb` per person. The field renders below the
-// title when a person has `blurb: true` and an `st.pN.blurb` key exists. No
-// blurbs are written yet, so none render. Add per-member copy when approved.
+// until Bert supplies a headshot. Provisional division: Football Operations &
+// Scouting, since his analytics/evaluation role maps to the Player Profile and
+// Evaluation stages.
+// Each member carries a short `blurb` (rendered below the title). Andres has a
+// real blurb; Sebastian, John, Fabian, Maria, Ezzy, and Miguel use lorem ipsum
+// placeholders pending approved copy. Carlos keeps his fuller independent-partner
+// bio + disclaimer instead of a blurb.
 const divisions = [
-  { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg' }, { key: 'st.p3' }, { key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p9' }] },
-  { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg' }] },
-  { key: 'st.div4', people: [{ key: 'st.p6' }] },
-  { key: 'st.div5', people: [{ key: 'st.p7' }] },
+  { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true }, { key: 'st.p3', blurb: true }, { key: 'st.p4', photo: '/photos/john.jpg', blurb: true }, { key: 'st.p9', blurb: true }] },
+  { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg', blurb: true }] },
+  { key: 'st.div4', people: [{ key: 'st.p6', blurb: true }] },
+  { key: 'st.div5', people: [{ key: 'st.p7', blurb: true }] },
   // Carlos is an independent partner (BM Accountax LLC); bio + disclaimer per his official one-pager.
   { key: 'st.div6', people: [{ key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true }] },
 ];
