@@ -9,8 +9,16 @@ const { lang } = Astro.props;
 
 // Bert leads the page in a featured founder section; the divisions follow.
 // Team members get an initials mark until photos arrive.
+//
+// NEEDS INPUT (spec 3.2): Miguel Benito (st.p9) uses the initials placeholder
+// until Bert supplies a headshot, and has no bio yet (do not write one from
+// inference). Provisional division: Football Operations & Scouting, since his
+// analytics/evaluation role maps to the Player Profile and Evaluation stages.
+// NEEDS INPUT (spec 3.3): short `blurb` per person. The field renders below the
+// title when a person has `blurb: true` and an `st.pN.blurb` key exists. No
+// blurbs are written yet, so none render. Add per-member copy when approved.
 const divisions = [
-  { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg' }, { key: 'st.p3' }, { key: 'st.p4', photo: '/photos/john.jpg' }] },
+  { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg' }, { key: 'st.p3' }, { key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p9' }] },
   { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg' }] },
   { key: 'st.div4', people: [{ key: 'st.p6' }] },
   { key: 'st.div5', people: [{ key: 'st.p7' }] },
@@ -106,6 +114,7 @@ const personLd = {
               )}
               <h3>{t(lang, `${person.key}.n`)}</h3>
               <p>{t(lang, `${person.key}.t`)}</p>
+              {'blurb' in person && person.blurb && <p class="person__blurb">{t(lang, `${person.key}.blurb`)}</p>}
               {'bio' in person && person.bio && <p class="person__bio">{t(lang, `${person.key}.bio`)}</p>}
               {'note' in person && person.note && <p class="person__note">{t(lang, `${person.key}.note`)}</p>}
             </div>
@@ -238,6 +247,12 @@ const personLd = {
   .person p {
     margin-top: 6px;
     font-size: 0.92rem;
+  }
+  .person__blurb {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
   .person--wide {
     grid-column: span 2;

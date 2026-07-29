@@ -37,9 +37,13 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
 - Staff page at /staff lists the team (Bert, Ezzy Ihekoronye, Sebastian Mahecha, John Mahecha,
-  Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal). Ezzy Ihekoronye
-  is Head Scout, United States (Men), in the Football Operations & Scouting division (added
-  July 2026, replacing Phil Zayas who was removed at the client's request).
+  Miguel Benito, Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal).
+  Ezzy Ihekoronye is Head Scout, United States (Men), in the Football Operations & Scouting
+  division (added July 2026, replacing Phil Zayas who was removed at the client's request).
+  Miguel Benito is Analytics and Evaluation Expert (added July 2026), placed provisionally in
+  Football Operations & Scouting; his headshot and approved bio are still pending from Bert, so
+  he shows the initials placeholder and no bio. Every team member also has an optional short
+  `blurb` field under the title, rendered only when copy is supplied (all pending Bert).
 - Carlos Bernal, CPA, MAcc is an INDEPENDENT "Accounting & Tax Support Partner" (CEO of
   BM Accountax LLC), per his official bio of July 2026. Do not call him CFO. His card carries the
   independence disclaimer; keep it.

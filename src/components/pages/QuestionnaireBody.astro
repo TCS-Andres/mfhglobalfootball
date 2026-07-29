@@ -306,7 +306,7 @@ const T = {
           const label = fd?.querySelector('label')?.childNodes[0]?.textContent?.trim() || f.id;
           const v = val(f.id);
           rows.push(
-            `<div class="q-rrow"><span class="q-rlabel">${label}</span><span class="q-rval">${v ? escapeHtml(v) : '<em>—</em>'}</span></div>`
+            `<div class="q-rrow"><span class="q-rlabel">${label}</span><span class="q-rval">${v ? escapeHtml(v) : '<em class="q-empty">' + escapeHtml(T.empty) + '</em>'}</span></div>`
           );
         });
         const secEl = form.querySelector(`[data-step="s${si}"] h2`);
