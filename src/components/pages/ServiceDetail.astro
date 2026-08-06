@@ -1,7 +1,7 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
 import PingPong from '../PingPong.astro';
-import PlanSteps from '../PlanSteps.astro';
+import Pathway from '../Pathway.astro';
 import StatsBand from '../StatsBand.astro';
 import MeetBert from '../MeetBert.astro';
 import FaqSection from '../FaqSection.astro';
@@ -103,8 +103,8 @@ const breadcrumbLd = {
   tone="sky"
 />
 
-<!-- How we work together (four steps) -->
-<PlanSteps lang={lang} />
+<!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
+<Pathway lang={lang} />
 
 <!-- The experience you can count on (counter) -->
 <StatsBand lang={lang} />
