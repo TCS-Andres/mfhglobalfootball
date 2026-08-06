@@ -1,5 +1,6 @@
 ---
 import { t, type Lang } from '../../i18n/ui';
+import Pathway from '../Pathway.astro';
 import CtaBanner from '../CtaBanner.astro';
 import FaqSection from '../FaqSection.astro';
 
@@ -22,16 +23,8 @@ const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
   </div>
 </section>
 
-<!-- Four step plan, expanded -->
-<section class="section">
-  <div class="wrap">
-    <div class="plan-grid">
-      {[1, 2, 3, 4].map((n, i) => (
-        <div class="step reveal" style={`--d:${i * 110}ms`}><div class="num">{n}</div><h3>{t(lang, `pl.s${n}.t`)}</h3><p>{t(lang, `pl.s${n}.d`)}</p></div>
-      ))}
-    </div>
-  </div>
-</section>
+<!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
+<Pathway lang={lang} />
 
 <!-- Image break -->
 <section class="section" style="padding-top:0">
