@@ -1,10 +1,24 @@
 ---
-import { t, type Lang } from '../i18n/ui';
+import { t, localizePath, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
+
+// Each ecosystem step links to its next action. Player Profile + Evaluation both
+// point to the Analytic Soccer platform (analyticsoccer.com). "Book Agent Call"
+// opens the consultation booking (Calendly). Opportunity has no link. External
+// links open in a new tab. The booking URL mirrors the contact page's env var.
+const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL || 'https://calendly.com/mfhglobal-football';
+const analyticSoccer = 'https://analyticsoccer.com/';
+const links: Record<number, { href: string; external: boolean; cta?: string }> = {
+  1: { href: localizePath('/questionnaire', lang), external: false },
+  2: { href: analyticSoccer, external: true, cta: 'pw.s2.cta' },
+  3: { href: analyticSoccer, external: true, cta: 'pw.s3.cta' },
+  4: { href: bookingUrl, external: true },
+  5: { href: '', external: false },
+};
 
 // The MFH Global Football Agency Pathway: one continuous circular ecosystem.
 // Center hub carries the heading + body; five gold pentagon nodes ring it, each
@@ -77,15 +91,29 @@ const arcs = nodes.map((nd) => {
       </div>
 
       <ol class="pathway__list">
-        {stages.map((n, i) => (
-          <li class={`pathway__step pathway__step--${n} reveal`} style={`--d:${i * 80}ms`}>
-            <span class="pathway__badge" aria-hidden="true">{n}</span>
-            <div class="pathway__label">
-              <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
-              <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
-            </div>
-          </li>
-        ))}
+        {stages.map((n, i) => {
+          const link = links[n];
+          const linked = Boolean(link && link.href);
+          return (
+            <li class:list={['pathway__step', `pathway__step--${n}`, 'reveal', { 'pathway__step--link': linked }]} style={`--d:${i * 80}ms`}>
+              <span class="pathway__badge" aria-hidden="true">{n}</span>
+              <div class="pathway__label">
+                <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
+                <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
+                {link && link.cta && <span class="pathway__cta">{t(lang, link.cta)}</span>}
+              </div>
+              {linked && (
+                <a
+                  class="pathway__stretch"
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  aria-label={t(lang, `pw.s${n}.n`)}
+                ></a>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </div>
   </div>
@@ -192,6 +220,48 @@ const arcs = nodes.map((nd) => {
     color: var(--ink-soft);
     margin: 0;
   }
+  /* Clickable steps: whole card links via a stretched anchor */
+  .pathway__cta {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+    color: var(--blue);
+  }
+  .pathway__cta::after {
+    content: ' \203A';
+    font-weight: 800;
+  }
+  .pathway__step--link {
+    cursor: pointer;
+  }
+  .pathway__badge {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .pathway__stretch {
+    position: absolute;
+    inset: -8px;
+    z-index: 3;
+    border-radius: 14px;
+  }
+  .pathway__step--link:hover .pathway__name,
+  .pathway__step--link:focus-within .pathway__name {
+    color: var(--blue-deep);
+  }
+  .pathway__step--link:hover .pathway__cta,
+  .pathway__step--link:focus-within .pathway__cta {
+    text-decoration: underline;
+  }
+  .pathway__step--link:hover .pathway__badge,
+  .pathway__step--link:focus-within .pathway__badge {
+    transform: scale(1.06);
+  }
+  .pathway__stretch:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+  }
 
   /* ---------- Vertical layout (< 880px) ---------- */
   @media (max-width: 879px) {
@@ -222,6 +292,7 @@ const arcs = nodes.map((nd) => {
       gap: 1.5rem;
     }
     .pathway__step {
+      position: relative;
       display: grid;
       grid-template-columns: 58px 1fr;
       column-gap: 1rem;

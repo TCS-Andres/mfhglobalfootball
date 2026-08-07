@@ -24,8 +24,10 @@ const mailSubjects: Record<string, string> = {
   pt: 'Pedido de consulta gratuita',
 };
 const mailSubject = encodeURIComponent(mailSubjects[lang] ?? mailSubjects.en);
-// Client rule: age categories start at U12.
-const ages = ['U12', 'U14', 'U16', 'U18', 'U21', 'Senior'];
+// Client rule (Aug 2026): footage-form age brackets are U16, U18, U21, U23, Other.
+const ageCodes = ['U16', 'U18', 'U21', 'U23'];
+const otherByLang: Record<string, string> = { en: 'Other', es: 'Otro', fr: 'Autre', it: 'Altro', pt: 'Outro' };
+const ages = [...ageCodes, otherByLang[lang] ?? otherByLang.en];
 const positionsByLang: Record<string, string[]> = {
   en: ['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Other'],
   es: ['Portero', 'Defensa', 'Mediocampista', 'Delantero', 'Otra'],
