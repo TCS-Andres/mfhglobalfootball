@@ -3,8 +3,8 @@ import { t, localizePath, type Lang } from '../i18n/ui';
 import QuoteBand from './QuoteBand.astro';
 import MeetBert from './MeetBert.astro';
 import StatsBand from './StatsBand.astro';
-import PlanSteps from './PlanSteps.astro';
 import Pathway from './Pathway.astro';
+import AnalyticSoccer from './AnalyticSoccer.astro';
 
 interface Props {
   lang: Lang;
@@ -73,11 +73,11 @@ const who = ['w1', 'w2', 'w3'];
 <!-- STATS BAND -->
 <StatsBand lang={lang} />
 
-<!-- HOW IT WORKS -->
-<PlanSteps lang={lang} />
-
-<!-- THE MFH PATHWAY (system view, below How It Works) -->
+<!-- HOW WE WORK TOGETHER (five step cards + circular ecosystem) -->
 <Pathway lang={lang} />
+
+<!-- ANALYTIC SOCCER (evaluation partner) -->
+<AnalyticSoccer lang={lang} />
 
 <!-- PROMISE (bold band) -->
 <QuoteBand

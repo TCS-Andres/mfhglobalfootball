@@ -6,31 +6,24 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// Each ecosystem step links to its next action. Player Profile + Evaluation both
-// point to the Analytic Soccer platform (analyticsoccer.com). "Book Agent Call"
-// opens the consultation booking (Calendly). Opportunity has no link. External
-// links open in a new tab. The booking URL mirrors the contact page's env var.
+// "How We Work Together": one section. Five step CARDS carry the copy and the
+// calls to action; below them the same five steps are drawn as a circular
+// ecosystem (headings only, the fancier visual). Player Profile + Evaluation
+// link to Analytic Soccer, Book A Call opens the Calendly booking, the
+// Questionnaire card opens the intake form, Opportunity has no action.
 const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL || 'https://calendly.com/mfhglobal-football';
 const analyticSoccer = 'https://analyticsoccer.com/';
-const links: Record<number, { href: string; external: boolean; cta?: string }> = {
-  1: { href: localizePath('/questionnaire', lang), external: false },
-  2: { href: analyticSoccer, external: true, cta: 'pw.s2.cta' },
-  3: { href: analyticSoccer, external: true, cta: 'pw.s3.cta' },
-  4: { href: bookingUrl, external: true },
-  5: { href: '', external: false },
+const stages = [1, 2, 3, 4, 5];
+const cardCta: Record<number, { key: string; href: string; external: boolean }> = {
+  1: { key: 'pw.s1.cta', href: localizePath('/questionnaire', lang), external: false },
+  2: { key: 'pw.s2.cta', href: analyticSoccer, external: true },
+  3: { key: 'pw.s3.cta', href: analyticSoccer, external: true },
+  4: { key: 'pw.s4.cta', href: bookingUrl, external: true },
 };
 
-// The MFH Global Football Agency Pathway: one continuous circular ecosystem.
-// Center hub carries the heading + body; five gold pentagon nodes ring it, each
-// linked to the hub by a thin spoke, with gold flow-arcs showing the clockwise
-// 1 to 5 process. Distinct from "How It Works" (the action list). No third party
-// company is named (brand rule 0.8). Circular on desktop, vertical list below.
-
-const stages = [1, 2, 3, 4, 5];
-
-// SVG geometry (viewBox 0..100). Kept in sync with the CSS node positions below.
-const R = 39; // ring radius (pentagon centers)
-const HUB = 22; // hub circle radius
+// Circular ecosystem geometry (viewBox 0..100), kept in sync with the CSS positions.
+const R = 39;
+const HUB = 22;
 const cx = 50;
 const cy = 50;
 const pt = (deg: number, r: number): [number, number] => {
@@ -47,14 +40,12 @@ const spokes = nodes.map((nd) => {
   const [x2, y2] = pt(nd.deg, R - 5.5);
   return { x1, y1, x2, y2 };
 });
-const gap = 17; // degree gap so arcs clear the pentagons and their labels
+const gap = 17;
 const arcs = nodes.map((nd) => {
   const s = nd.deg + gap;
   const e = nd.deg + 72 - gap;
   const [x1, y1] = pt(s, R);
   const [x2, y2] = pt(e, R);
-  // arrowhead sits at the arc midpoint (the open gap between two nodes), not on
-  // top of a node's label, and points clockwise.
   const mid = nd.deg + 36;
   const [mx, my] = pt(mid, R);
   const a = ((mid - 90) * Math.PI) / 180;
@@ -65,8 +56,38 @@ const arcs = nodes.map((nd) => {
 
 <section class="section pathway">
   <div class="wrap">
-    <div class="pathway__ring">
-      <svg class="pathway__svg" viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+    <div class="head">
+      <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'plan.eyebrow')}</span></span>
+      <h2>{t(lang, 'pw.headline')}</h2>
+    </div>
+
+    <!-- Five step cards (the copy + the actions) -->
+    <ol class="pw-cards">
+      {stages.map((n, i) => {
+        const c = cardCta[n];
+        return (
+          <li class="pw-card reveal" style={`--d:${i * 70}ms`}>
+            <span class="pw-card__num" aria-hidden="true">{n}</span>
+            <h3 class="pw-card__name">{t(lang, `pw.s${n}.n`)}</h3>
+            <p class="pw-card__copy">{t(lang, `pw.s${n}.d`)}</p>
+            {c && (
+              <a
+                class="pw-card__cta"
+                href={c.href}
+                target={c.external ? '_blank' : undefined}
+                rel={c.external ? 'noopener noreferrer' : undefined}
+              >
+                {t(lang, c.key)}
+              </a>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+
+    <!-- The same five steps as a circular ecosystem (decorative, headings only) -->
+    <div class="pathway__ring reveal" aria-hidden="true">
+      <svg class="pathway__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         <defs>
           <radialGradient id="pw-hub" cx="50%" cy="42%" r="60%">
             <stop offset="0%" stop-color="var(--sky)" />
@@ -86,34 +107,17 @@ const arcs = nodes.map((nd) => {
       </svg>
 
       <div class="pathway__hub">
-        <h2 class="pathway__title">{t(lang, 'pw.title')}</h2>
+        <h3 class="pathway__title">{t(lang, 'pw.hub')}</h3>
         <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
       </div>
 
       <ol class="pathway__list">
-        {stages.map((n, i) => {
-          const link = links[n];
-          const linked = Boolean(link && link.href);
-          return (
-            <li class:list={['pathway__step', `pathway__step--${n}`, 'reveal', { 'pathway__step--link': linked }]} style={`--d:${i * 80}ms`}>
-              <span class="pathway__badge" aria-hidden="true">{n}</span>
-              <div class="pathway__label">
-                <h3 class="pathway__name">{t(lang, `pw.s${n}.n`)}</h3>
-                <p class="pathway__copy">{t(lang, `pw.s${n}.d`)}</p>
-                {link && link.cta && <span class="pathway__cta">{t(lang, link.cta)}</span>}
-              </div>
-              {linked && (
-                <a
-                  class="pathway__stretch"
-                  href={link.href}
-                  target={link.external ? '_blank' : undefined}
-                  rel={link.external ? 'noopener noreferrer' : undefined}
-                  aria-label={t(lang, `pw.s${n}.n`)}
-                ></a>
-              )}
-            </li>
-          );
-        })}
+        {stages.map((n) => (
+          <li class={`pathway__step pathway__step--${n}`}>
+            <span class="pathway__badge">{n}</span>
+            <span class="pathway__name">{t(lang, `pw.s${n}.n`)}</span>
+          </li>
+        ))}
       </ol>
     </div>
   </div>
@@ -124,12 +128,95 @@ const arcs = nodes.map((nd) => {
     background: var(--paper);
   }
 
-  /* ---------- Circular ecosystem (desktop, >= 880px) ---------- */
-  @media (min-width: 880px) {
+  /* ---------- Cards ---------- */
+  .pw-cards {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+  }
+  .pw-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 22px;
+    overflow: hidden;
+  }
+  .pw-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gold);
+  }
+  .pw-card__num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .pw-card__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.08rem;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -0.005em;
+  }
+  .pw-card__copy {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1 1 auto;
+  }
+  .pw-card__cta {
+    margin-top: 18px;
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--blue);
+  }
+  .pw-card__cta::after {
+    content: ' \203A';
+    font-weight: 800;
+  }
+  .pw-card__cta:hover,
+  .pw-card__cta:focus-visible {
+    color: var(--blue-deep);
+    text-decoration: underline;
+  }
+  @media (max-width: 1024px) {
+    .pw-cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 680px) {
+    .pw-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- Circular ecosystem (desktop only, decorative) ---------- */
+  .pathway__ring {
+    display: none;
+  }
+  @media (min-width: 900px) {
     .pathway__ring {
+      display: block;
       position: relative;
-      width: min(100%, 860px);
-      margin: 0 auto;
+      width: min(100%, 820px);
+      margin: 3.5rem auto 0;
       aspect-ratio: 1 / 1;
     }
     .pathway__svg {
@@ -144,9 +231,25 @@ const arcs = nodes.map((nd) => {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(40%, 330px);
+      width: min(42%, 340px);
       text-align: center;
       z-index: 2;
+    }
+    .pathway__title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+      color: var(--blue);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .pathway__sub {
+      font-family: var(--font-body);
+      color: var(--ink-soft);
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
     }
     .pathway__list {
       list-style: none;
@@ -155,163 +258,39 @@ const arcs = nodes.map((nd) => {
     }
     .pathway__step {
       position: absolute;
-      width: 176px;
+      width: 168px;
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      z-index: 1;
     }
-    /* pentagon centers on the ring (r = 39%); labels sit just below each node */
-    .pathway__step--1 { top: 11%; left: 50%; }
-    .pathway__step--2 { top: 38%; left: 87.1%; }
-    .pathway__step--3 { top: 81.6%; left: 72.9%; }
-    .pathway__step--4 { top: 81.6%; left: 27.1%; }
-    .pathway__step--5 { top: 38%; left: 12.9%; }
+    .pathway__step--1 { top: 10%; left: 50%; }
+    .pathway__step--2 { top: 37%; left: 88%; }
+    .pathway__step--3 { top: 82%; left: 73%; }
+    .pathway__step--4 { top: 82%; left: 27%; }
+    .pathway__step--5 { top: 37%; left: 12%; }
     .pathway__badge {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
       margin-bottom: 12px;
-    }
-  }
-
-  /* Shared styling */
-  .pathway__title {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(1.45rem, 2.3vw, 2rem);
-    color: var(--blue);
-    margin: 0 0 0.6rem;
-    letter-spacing: -0.01em;
-    line-height: 1.12;
-  }
-  .pathway__sub {
-    font-family: var(--font-body);
-    color: var(--ink-soft);
-    margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.5;
-  }
-  .pathway__badge {
-    display: grid;
-    place-items: center;
-    width: 58px;
-    height: 58px;
-    flex: none;
-    background: var(--gold);
-    color: #fff;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.32rem;
-    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    box-shadow: 0 6px 16px rgba(201, 162, 39, 0.28);
-  }
-  .pathway__name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.02rem;
-    color: var(--blue);
-    margin: 0 0 0.3rem;
-    letter-spacing: 0.01em;
-  }
-  .pathway__copy {
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    line-height: 1.45;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-  /* Clickable steps: whole card links via a stretched anchor */
-  .pathway__cta {
-    display: inline-block;
-    margin-top: 8px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.01em;
-    color: var(--blue);
-  }
-  .pathway__cta::after {
-    content: ' \203A';
-    font-weight: 800;
-  }
-  .pathway__step--link {
-    cursor: pointer;
-  }
-  .pathway__badge {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .pathway__stretch {
-    position: absolute;
-    inset: -8px;
-    z-index: 3;
-    border-radius: 14px;
-  }
-  .pathway__step--link:hover .pathway__name,
-  .pathway__step--link:focus-within .pathway__name {
-    color: var(--blue-deep);
-  }
-  .pathway__step--link:hover .pathway__cta,
-  .pathway__step--link:focus-within .pathway__cta {
-    text-decoration: underline;
-  }
-  .pathway__step--link:hover .pathway__badge,
-  .pathway__step--link:focus-within .pathway__badge {
-    transform: scale(1.06);
-  }
-  .pathway__stretch:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 2px;
-  }
-
-  /* ---------- Vertical layout (< 880px) ---------- */
-  @media (max-width: 879px) {
-    .pathway__ring {
-      max-width: 620px;
-      margin: 0 auto;
-    }
-    .pathway__svg {
-      display: none;
-    }
-    .pathway__hub {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-    .pathway__title {
-      font-size: clamp(1.75rem, 5vw, 2.3rem);
-    }
-    .pathway__sub {
-      max-width: 46ch;
-      margin: 0 auto;
-      font-size: 1.02rem;
-    }
-    .pathway__list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 1.5rem;
-    }
-    .pathway__step {
-      position: relative;
-      display: grid;
-      grid-template-columns: 58px 1fr;
-      column-gap: 1rem;
-      align-items: start;
-      text-align: left;
+      background: var(--gold);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.36rem;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      box-shadow: 0 6px 16px rgba(201, 162, 39, 0.28);
     }
     .pathway__name {
-      margin-top: 4px;
-      font-size: 1.08rem;
-    }
-    .pathway__copy {
-      font-size: 0.92rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pathway__step {
-      animation: none !important;
-      transition: none !important;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.18rem;
+      color: var(--blue);
+      letter-spacing: -0.005em;
+      line-height: 1.15;
     }
   }
 </style>
