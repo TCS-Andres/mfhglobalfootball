@@ -88,6 +88,19 @@ header.site.scrolled{box-shadow:0 8px 30px -22px rgba(0,53,92,.5);border-color:v
   transition:background .18s,color .18s}
 .nav-menu a::after{display:none}
 .nav-menu a:hover,.nav-menu a:focus-visible{background:var(--sky);color:var(--blue)}
+/* Nested flyout: "Player Representation" opens a second-level submenu to the right */
+.nav-sub{position:relative;display:flex;flex-direction:column}
+.nav-sub__link{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.nav-caret-r{width:13px;height:13px;color:var(--ink-soft);flex:none;transition:transform .2s ease}
+.nav-sub:hover .nav-caret-r,.nav-sub:focus-within .nav-caret-r{color:var(--blue);transform:translateX(2px)}
+.nav-submenu{position:absolute;top:-10px;left:calc(100% + 6px);
+  min-width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  padding:10px;display:flex;flex-direction:column;gap:2px;z-index:75;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateX(6px);
+  transition:opacity .2s ease,transform .2s ease,visibility 0s .2s}
+.nav-submenu::before{content:"";position:absolute;top:0;left:-12px;width:12px;height:100%}
+.nav-sub:hover .nav-submenu,.nav-sub:focus-within .nav-submenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0);
+  transition:opacity .2s ease,transform .2s ease}
 
 /* hero */
 .hero{position:relative;overflow:hidden;color:#fff;
@@ -382,6 +395,11 @@ html.preloading:has(.preloader--done){overflow:auto}
   .nav-group.is-open .nav-menu{display:flex;transform:none}
   .nav-menu::before{display:none}
   .nav-menu a{white-space:normal;padding:8px 12px}
+  /* nested submenu flattens to an indented sublist on mobile */
+  .nav-submenu{position:static;opacity:1;visibility:visible;pointer-events:auto;transform:none;
+    box-shadow:none;border:0;border-radius:0;padding:2px 0 2px 14px;min-width:0;gap:2px}
+  .nav-submenu::before{display:none}
+  .nav-caret-r{display:none}
   .nav-solo{width:100%}
 }
 @media(max-width:680px){
