@@ -76,6 +76,11 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype, no aggressive
   sales language, no profanity, no naming or criticizing competitors.
 - Zero em dashes anywhere, in code, comments, or copy. Use commas, colons, or periods.
+- Headings and calls to action use Title Case in ENGLISH: capitalize the first letter of every
+  word (Aug 2026, Andres). Spanish, French, Italian, and Portuguese keep their correct sentence
+  case (first word and proper nouns only); capitalizing every word is grammatically wrong there,
+  so do not apply Title Case to non-English copy. New English headings/CTAs already follow this;
+  a full sweep of the EXISTING English headings across the site is still pending.
 - Parents are always in the room. Never write anything that reads as approaching a minor without
   a parent present.
 
