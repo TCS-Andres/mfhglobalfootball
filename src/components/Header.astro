@@ -17,9 +17,9 @@ const about = [
 ];
 // Nested flyout under "Player Representation" (the player-side services).
 const playerSub = [
-  { href: '/services/youth-family-advisory', key: 'sv.youth.name' },
-  { href: '/services/transfers', key: 'sv.transfers.name' },
-  { href: '/services/player-evaluation', key: 'sv.eval.name' },
+  { href: '/services/youth-family-advisory', key: 'sv.youth.name', desc: 'nav.d.youth' },
+  { href: '/services/transfers', key: 'sv.transfers.name', desc: 'nav.d.transfers' },
+  { href: '/services/player-evaluation', key: 'sv.eval.name', desc: 'nav.d.eval' },
 ];
 // "Resources" dropdown (renamed from "Learn"). The /resources landing page holds
 // the external tool links; Insights (blog) stays a child item here.
@@ -61,7 +61,15 @@ const caretRight =
               <span>{t(lang, 'sv.player.name')}</span><Fragment set:html={caretRight} />
             </a>
             <div class="nav-submenu">
-              {playerSub.map((i) => <a href={localizePath(i.href, lang)}>{t(lang, i.key)}</a>)}
+              {playerSub.map((i) => (
+                <a class="nav-subitem" href={localizePath(i.href, lang)}>
+                  <i class="pent" aria-hidden="true"></i>
+                  <span class="nav-subitem__text">
+                    <span class="nav-subitem__title">{t(lang, i.key)}</span>
+                    <span class="nav-subitem__desc">{t(lang, i.desc)}</span>
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
           <a href={localizePath('/services/coach-representation', lang)}>{t(lang, 'sv.coach.name')}</a>

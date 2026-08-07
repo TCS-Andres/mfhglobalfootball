@@ -94,13 +94,20 @@ header.site.scrolled{box-shadow:0 8px 30px -22px rgba(0,53,92,.5);border-color:v
 .nav-caret-r{width:13px;height:13px;color:var(--ink-soft);flex:none;transition:transform .2s ease}
 .nav-sub:hover .nav-caret-r,.nav-sub:focus-within .nav-caret-r{color:var(--blue);transform:translateX(2px)}
 .nav-submenu{position:absolute;top:-10px;left:calc(100% + 6px);
-  min-width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  min-width:322px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
   padding:10px;display:flex;flex-direction:column;gap:2px;z-index:75;
   opacity:0;visibility:hidden;pointer-events:none;transform:translateX(6px);
   transition:opacity .2s ease,transform .2s ease,visibility 0s .2s}
 .nav-submenu::before{content:"";position:absolute;top:0;left:-12px;width:12px;height:100%}
 .nav-sub:hover .nav-submenu,.nav-sub:focus-within .nav-submenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0);
   transition:opacity .2s ease,transform .2s ease}
+/* Rich two-line submenu items: pentagon marker + title + one-line description */
+.nav-submenu a.nav-subitem{display:flex;gap:11px;align-items:flex-start;white-space:normal;padding:9px 12px}
+.nav-submenu a.nav-subitem .pent{margin-top:5px;flex:none}
+.nav-subitem__text{display:flex;flex-direction:column;gap:2px}
+.nav-subitem__title{font-family:var(--font-display);font-weight:700;font-size:.96rem;color:var(--ink);line-height:1.2;white-space:nowrap}
+.nav-subitem__desc{font-weight:500;font-size:.8rem;color:var(--ink-soft);line-height:1.35}
+.nav-submenu a.nav-subitem:hover .nav-subitem__title,.nav-submenu a.nav-subitem:focus-visible .nav-subitem__title{color:var(--blue)}
 
 /* hero */
 .hero{position:relative;overflow:hidden;color:#fff;
