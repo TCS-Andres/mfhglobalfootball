@@ -11,11 +11,15 @@ const { lang } = Astro.props;
 // World Cup broadcast moment as the closing chapter. Images render at their natural
 // proportions so the whole photograph is always visible.
 const items = [
+  // Roughly chronological: playing days, then refereeing, coaching, league
+  // leadership (APSL + FSSA), running his club, and the World Cup broadcast close.
+  { key: 'mdc', type: 'img', src: '/photos/journey/mdc.jpg', w: 828, h: 638 },
+  { key: 'asl', type: 'img', src: '/photos/journey/asl-u23.jpg', w: 828, h: 585 },
   { key: 'valderrama', type: 'img', src: '/photos/journey/valderrama.jpg', w: 408, h: 630 },
-  { key: 'coaching', type: 'img', src: '/photos/journey/coaching-sffc.jpg', w: 1280, h: 853 },
-  // APSL: Bert as President/Commissioner of the league he ran (2015-2018), placed
-  // between his South Florida FC coaching and the Lamar Hunt US Open Cup run.
+  { key: 'coaching', type: 'img', src: '/photos/journey/coaching-walk.jpg', w: 750, h: 503 },
+  // APSL: Bert as President/Commissioner of the league he ran (2015-2018).
   { key: 'apsl', type: 'img', src: '/photos/journey/apsl.jpg', w: 1040, h: 1040 },
+  { key: 'fssa', type: 'img', src: '/photos/journey/fssa.jpg', w: 1600, h: 1200 },
   { key: 'opencup', type: 'img', src: '/photos/journey/open-cup.jpg', w: 1080, h: 1162 },
   { key: 'video', type: 'video' },
 ];
