@@ -9,12 +9,18 @@ const { lang } = Astro.props;
 // Booking and form sources come from environment variables with sensible defaults.
 // PUBLIC_BOOKING_URL : a Calendly (or similar) scheduling URL for the consultation block.
 //   Defaults to the client's live Calendly, a public link that is safe to ship in the build.
-// PUBLIC_FORM_ENDPOINT : a Formspree or Web3Forms style endpoint for the footage form.
-// PUBLIC_CONTACT_EMAIL : address used for the graceful mailto fallback.
+// PUBLIC_FORM_ENDPOINT : an explicit Formspree/Web3Forms POST URL (optional; overrides the key).
+// PUBLIC_WEB3FORMS_KEY : a Web3Forms access key. Submissions email to the address the key is
+//   registered to (set it up for info@mfhglobal.football). Preferred zero-backend option.
+// PUBLIC_CONTACT_EMAIL : address for the pre-filled mailto fallback (defaults to the club inbox).
 const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL || 'https://calendly.com/mfhglobal-football';
 const isCalendly = /calendly\.com/i.test(bookingUrl);
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const web3Key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? 'info@mfhglobal.football';
+// POST target: explicit endpoint wins; otherwise Web3Forms when a key is configured.
+const formAction = formEndpoint || (web3Key ? 'https://api.web3forms.com/submit' : '');
+const useWeb3 = !formEndpoint && Boolean(web3Key);
 
 const mailSubjects: Record<string, string> = {
   en: 'Free consultation request',
@@ -95,9 +101,21 @@ const positions = positionsByLang[lang] ?? positionsByLang.en;
         <form
           id="footage-form"
           method="POST"
-          action={formEndpoint || undefined}
+          action={formAction || undefined}
+          data-fallback-email={contactEmail}
+          data-msg-sending={t(lang, 'ct.f.sending')}
+          data-msg-success={t(lang, 'ct.f.success')}
+          data-msg-error={t(lang, 'ct.f.error')}
           novalidate
         >
+          {useWeb3 && (
+            <>
+              <input type="hidden" name="access_key" value={web3Key} />
+              <input type="hidden" name="subject" value="New footage submission from the MFH Global Football website" />
+              <input type="hidden" name="from_name" value="MFH Global Football website" />
+              <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            </>
+          )}
           <div class="field">
             <label for="f-name">{t(lang, 'ct.f.name')} <span class="req">({t(lang, 'ct.f.required')})</span></label>
             <input id="f-name" name="name" type="text" autocomplete="name" required />
@@ -130,6 +148,7 @@ const positions = positionsByLang[lang] ?? positionsByLang.en;
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">{t(lang, 'ct.f.submit')}</button>
           </div>
+          <p class="form-status" id="footage-status" role="status" aria-live="polite" hidden></p>
         </form>
         <div class="contact-details">
           <h2 style="font-size:1.1rem;margin-top:8px">{t(lang, 'ct.details.h2')}</h2>
@@ -154,6 +173,20 @@ const positions = positionsByLang[lang] ?? positionsByLang.en;
     color: var(--blue);
     font-weight: 600;
   }
+  .form-status {
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .form-status[data-kind='ok'] {
+    color: var(--blue);
+  }
+  .form-status[data-kind='err'] {
+    color: #b00020;
+  }
+  .form-status[data-kind='sending'] {
+    color: var(--ink-soft);
+  }
 </style>
 
 <section class="section sky">
@@ -175,10 +208,19 @@ const positions = positionsByLang[lang] ?? positionsByLang.en;
 </section>
 
 <script>
-  // Lightweight client validation. Native validation handles the rest.
+  // Footage form: validate, then submit to the configured endpoint (Web3Forms /
+  // Formspree) in the background so the submission emails to info@mfhglobal.football.
+  // With no endpoint set, fall back to a fully pre-filled email to the club inbox.
   const form = document.getElementById('footage-form') as HTMLFormElement | null;
+  const status = document.getElementById('footage-status');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    const setStatus = (msg: string, kind: string) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.dataset.kind = kind;
+      status.hidden = false;
+    };
+    form.addEventListener('submit', async (e) => {
       const link = form.querySelector<HTMLInputElement>('#f-link');
       if (link && link.value) {
         try {
@@ -194,12 +236,46 @@ const positions = positionsByLang[lang] ?? positionsByLang.en;
         form.reportValidity();
         return;
       }
-      // If no endpoint is configured, prevent a broken submit and guide the user.
-      if (!form.getAttribute('action')) {
-        e.preventDefault();
-        const email =
-          document.querySelector<HTMLAnchorElement>('.contact-details a[href^="mailto:"]')?.href;
-        if (email) window.location.href = email;
+      e.preventDefault();
+      const action = form.getAttribute('action');
+      const data = new FormData(form);
+
+      // No server endpoint: open a pre-filled email to the club inbox with every field.
+      if (!action) {
+        const email = form.dataset.fallbackEmail || 'info@mfhglobal.football';
+        const g = (k: string) => (data.get(k) || '').toString();
+        const body = [
+          'Name: ' + g('name'),
+          'Contact: ' + g('contact'),
+          'Age group: ' + g('age_group'),
+          'Position: ' + g('position'),
+          'Footage link: ' + g('footage_link'),
+          '',
+          g('message'),
+        ].join('\n');
+        window.location.href =
+          'mailto:' + email +
+          '?subject=' + encodeURIComponent('Footage submission from the MFH Global Football website') +
+          '&body=' + encodeURIComponent(body);
+        return;
+      }
+
+      // Server endpoint configured: submit in the background and report the result.
+      const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      setStatus(form.dataset.msgSending || 'Sending...', 'sending');
+      try {
+        const res = await fetch(action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        if (res.ok) {
+          form.reset();
+          setStatus(form.dataset.msgSuccess || 'Thank you.', 'ok');
+        } else {
+          setStatus(form.dataset.msgError || 'Something went wrong.', 'err');
+        }
+      } catch {
+        setStatus(form.dataset.msgError || 'Something went wrong.', 'err');
+      } finally {
+        if (btn) btn.disabled = false;
       }
     });
   }
