@@ -58,17 +58,22 @@ const items = [
         <div class="jrow reveal" class:list={[{ 'jrow--flip': i % 2 === 1 }]}>
           <div class="jrow__media">
             {it.type === 'video' ? (
-              <video
-                controls
-                preload="none"
-                playsinline
-                poster="/videos/bert-worldcup-poster.jpg"
-                aria-label={t(lang, 'jr.c.video.aria')}
-                width="854"
-                height="480"
-              >
-                <source src="/videos/bert-worldcup.mp4" type="video/mp4" />
-              </video>
+              <div class="jvideo">
+                <video
+                  controls
+                  preload="none"
+                  playsinline
+                  poster="/videos/bert-worldcup-poster.jpg"
+                  aria-label={t(lang, 'jr.c.video.aria')}
+                  width="854"
+                  height="480"
+                >
+                  <source src="/videos/bert-worldcup.mp4" type="video/mp4" />
+                </video>
+                <button class="jvideo__play" type="button" aria-label={t(lang, 'jr.c.video.play')}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </button>
+              </div>
             ) : (
               <img src={it.src} alt={t(lang, `jr.c.${it.key}.cap`)} width={it.w} height={it.h} loading="lazy" />
             )}
@@ -85,6 +90,18 @@ const items = [
 </section>
 
 <CtaBanner lang={lang} />
+
+<script>
+  // Overlay play button: start the video and hide the button; restore it when the clip ends.
+  document.querySelectorAll('.jvideo').forEach((wrap) => {
+    const video = wrap.querySelector('video');
+    const btn = wrap.querySelector('.jvideo__play');
+    if (!video || !btn) return;
+    btn.addEventListener('click', () => video.play());
+    video.addEventListener('play', () => btn.classList.add('is-hidden'));
+    video.addEventListener('ended', () => btn.classList.remove('is-hidden'));
+  });
+</script>
 
 <style>
   .journey-story {
@@ -140,6 +157,47 @@ const items = [
     border-radius: 14px;
     box-shadow: var(--shadow);
     background: #000;
+  }
+  /* Video wrapper + prominent play button so it reads as a video, not an image */
+  .jvideo {
+    position: relative;
+    width: 100%;
+  }
+  .jvideo__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: var(--gold);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 2;
+  }
+  .jvideo__play svg {
+    width: 34px;
+    height: 34px;
+    margin-left: 5px;
+    fill: var(--blue-deep);
+  }
+  .jvideo__play:hover,
+  .jvideo__play:focus-visible {
+    transform: translate(-50%, -50%) scale(1.08);
+    background: var(--gold-soft);
+  }
+  .jvideo__play.is-hidden {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .jvideo__play {
+      transition: none;
+    }
   }
   /* Ping-pong: even rows keep media left, odd rows move it to the right */
   .jrow--flip .jrow__media {
