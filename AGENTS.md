@@ -56,6 +56,14 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   download were removed. Do not re-add a public download link. It will move behind a
   locked intake form later (see the intake automation plan). The master PDF lives in the
   parent Files/ folder, not in the web build.
+- Player Profile (CV), Oct 2026: when the questionnaire is submitted, the intake function
+  (`src/pages/api/intake.ts`) builds a one-page bilingual Player Profile PDF with
+  `src/lib/playerProfile.ts` and attaches it to the email to Bert, with the player photo. It is
+  for MFH ONLY: never return it to the browser, never email it to the player, never link it
+  publicly. Bert shares it himself once a player signs. The questionnaire asks every player for
+  a photo; under-18s need the guardian consent checkbox. The summary paragraph slot is empty
+  until the Claude API key is supplied. Transfer fee and salary asks are Bert's call: the profile
+  prints only what the player reported (release clause, last salary).
 - Official social profiles (provided July 2026): Instagram
   https://www.instagram.com/mfhglobalfootball/, company LinkedIn
   https://www.linkedin.com/company/mfh-global-football, and Bert's personal LinkedIn

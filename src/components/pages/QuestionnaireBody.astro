@@ -52,6 +52,10 @@ const T = {
   saving: isEs ? 'Generando tu PDF...' : 'Building your PDF...',
   step: isEs ? 'Paso' : 'Step',
   of: isEs ? 'de' : 'of',
+  agree: isEs ? 'Sí, autorizo' : 'Yes, I agree',
+  photoError: isEs
+    ? 'No pudimos leer esa imagen. Prueba con un archivo JPG o PNG.'
+    : 'We could not read that image. Please try a JPG or PNG file.',
 };
 ---
 
@@ -117,6 +121,18 @@ const T = {
                           <input type="radio" name={f.id} value={o.v} /> <span>{isEs ? o.es : o.en}</span>
                         </label>
                       ))}
+                    </div>
+                  ) : f.type === 'checkbox' ? (
+                    <div class="q-opts">
+                      <label class="q-pick q-pick--sm">
+                        <input id={`f-${f.id}`} type="checkbox" name={f.id} value="yes" /> <span>{T.agree}</span>
+                      </label>
+                    </div>
+                  ) : f.type === 'photo' ? (
+                    <div class="q-photo">
+                      <input id={`f-${f.id}`} type="file" name={f.id} accept="image/*" data-photo />
+                      <img class="q-photo__preview" data-photo-preview alt="" hidden />
+                      <p class="q-photo__error" data-photo-error role="alert" hidden>{T.photoError}</p>
                     </div>
                   ) : f.type === 'textarea' ? (
                     <textarea id={`f-${f.id}`} name={f.id} rows="3" readonly={f.computed ? true : undefined}></textarea>
@@ -188,12 +204,21 @@ const T = {
     const progBar = form.querySelector('[data-q-bar]');
     let idx = 0;
 
+    // Player photo: resized in the browser and sent with the submission. Only the
+    // file name is kept as the field's "answer" (shown on the review step).
+    const photo = { name: '', data: '' };
+
     const val = (id) => {
       const f = fieldById[id];
       if (f && f.type === 'radio') {
         const c = form.querySelector(`input[name="${id}"]:checked`);
         return c ? c.value : '';
       }
+      if (f && f.type === 'checkbox') {
+        const c = form.querySelector(`input[name="${id}"]`);
+        return c && c.checked ? 'yes' : '';
+      }
+      if (f && f.type === 'photo') return photo.name;
       const el = form.querySelector(`[name="${id}"]`);
       return el ? el.value.trim() : '';
     };
@@ -229,8 +254,18 @@ const T = {
       return 'no';
     };
 
+    // Virtual field for photoConsent: a guardian confirms the photo when the
+    // player is under 18 and a photo has been added.
+    const minorPhoto = () => (minor() === 'yes' && photo.data ? 'yes' : 'no');
+
     const condValue = (name) =>
-      name === 'minor' ? minor() : name === 'eduAskCollege' ? eduAskCollege() : val(name);
+      name === 'minor'
+        ? minor()
+        : name === 'eduAskCollege'
+          ? eduAskCollege()
+          : name === 'minorPhoto'
+            ? minorPhoto()
+            : val(name);
 
     const applyConds = (panel) => {
       panel.querySelectorAll('[data-cond]').forEach((el) => {
@@ -317,6 +352,58 @@ const T = {
       const key = stepOrder[idx];
       if (key.startsWith('s')) applyConds(panels.get(key));
     });
+
+    // Photo upload: decode, scale down to at most 1200px, and keep a JPEG copy.
+    const photoInput = form.querySelector('[data-photo]');
+    if (photoInput) {
+      const preview = form.querySelector('[data-photo-preview]');
+      const photoError = form.querySelector('[data-photo-error]');
+      const loadImage = (file) =>
+        new Promise((resolve, reject) => {
+          const url = URL.createObjectURL(file);
+          const im = new Image();
+          im.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(im);
+          };
+          im.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error('decode failed'));
+          };
+          im.src = url;
+        });
+      photoInput.addEventListener('change', async () => {
+        const file = photoInput.files && photoInput.files[0];
+        photo.name = '';
+        photo.data = '';
+        preview.hidden = true;
+        photoError.hidden = true;
+        if (file) {
+          try {
+            const im = await loadImage(file);
+            const scale = Math.min(1, 1200 / Math.max(im.naturalWidth, im.naturalHeight));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(im.naturalWidth * scale);
+            canvas.height = Math.round(im.naturalHeight * scale);
+            const ctx = canvas.getContext('2d');
+            // White behind transparent PNGs, since the copy is saved as JPEG.
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(im, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.86);
+            photo.data = dataUrl.slice(dataUrl.indexOf(',') + 1);
+            photo.name = file.name;
+            preview.src = dataUrl;
+            preview.hidden = false;
+          } catch (err) {
+            photoInput.value = '';
+            photoError.hidden = false;
+          }
+        }
+        const key = stepOrder[idx];
+        if (key.startsWith('s')) applyConds(panels.get(key));
+      });
+    }
 
     // Build review list
     const buildReview = () => {
@@ -407,7 +494,13 @@ const T = {
         await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ answers, pdfBase64, filename: pdfFilename, lang: form.dataset.lang }),
+          body: JSON.stringify({
+            answers,
+            pdfBase64,
+            filename: pdfFilename,
+            lang: form.dataset.lang,
+            photoBase64: photo.data,
+          }),
         });
       } catch (err) {
         /* non-blocking: the player already has the downloaded PDF */
@@ -517,6 +610,27 @@ const T = {
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 6px;
+  }
+  .q-photo {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+  }
+  .q-photo input[type='file'] {
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .q-photo__preview {
+    width: 120px;
+    aspect-ratio: 5 / 6;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--blue);
+  }
+  .q-photo__error {
+    color: #b3261e;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
   .q-coachnote {
     margin-top: 16px;

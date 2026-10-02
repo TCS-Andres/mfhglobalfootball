@@ -3,7 +3,7 @@
 // whose AcroForm fields are named q1..q51 (text) and qN_0/qN_1/qN_2 (Off/Yes checkboxes).
 // Bilingual EN/ES per the source template. Coach version is a future addition.
 
-export type QType = 'text' | 'textarea' | 'date' | 'tel' | 'email' | 'number' | 'url' | 'radio';
+export type QType = 'text' | 'textarea' | 'date' | 'tel' | 'email' | 'number' | 'url' | 'radio' | 'photo' | 'checkbox';
 
 export interface QOption {
   v: string;
@@ -100,6 +100,14 @@ export const SECTIONS: QSection[] = [
         { v: 'Both', en: 'Both', es: 'Ambos', pdf: 'q25_2' },
       ] },
       { id: 'q26', type: 'url', pdf: 'q26', en: 'Highlight reel / player profile video link (YouTube, Hudl, Wyscout, etc.)', es: 'Enlace a video de resumen / perfil del jugador (YouTube, Hudl, Wyscout, etc.)' },
+      // Player Profile inputs (Oct 2026). These feed the MFH Player Profile PDF that the
+      // intake function builds for Bert (src/lib/playerProfile.ts). Like the edu* fields
+      // they have NO `pdf` mapping: the fillable questionnaire template has no slot for them.
+      { id: 'profileUrl', type: 'url', en: 'Transfermarkt or other scouting profile link (if any)', es: 'Enlace a Transfermarkt u otro perfil de scouting (si tienes)' },
+      { id: 'photo', type: 'photo', en: 'Player photo', es: 'Foto del jugador', help: { en: 'A clear, recent photo of the player from the shoulders up, facing the camera. JPG or PNG.', es: 'Una foto clara y reciente del jugador, de hombros hacia arriba y mirando a la cámara. JPG o PNG.' } },
+      // Guardian consent for the photo: shown only when the player is under 18 and a
+      // photo has been added (virtual "minorPhoto" flag), and required when shown.
+      { id: 'photoConsent', type: 'checkbox', required: true, cond: { field: 'minorPhoto', in: ['yes'] }, en: 'A parent or guardian agrees to MFH Global Football Agency using this photo in the player profile it prepares.', es: 'Un padre, madre o tutor autoriza a MFH Global Football Agency a usar esta foto en el perfil del jugador que prepara.' },
     ],
   },
   {
