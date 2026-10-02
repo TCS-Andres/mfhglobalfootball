@@ -37,9 +37,9 @@ const COLUMN_CLASSES = [
 
 export default function TeamShowcase({ groups }: TeamShowcaseProps) {
   const members = groups.flatMap((g) => g.members);
-  // Portraits first, so initials tiles settle on the bottom row of the grid.
-  const tiles = [...members.filter((m) => m.image), ...members.filter((m) => !m.image)];
-  const columns = [0, 1, 2].map((c) => tiles.filter((_, i) => i % 3 === c));
+  // The grid follows the roster order exactly (client request): reading across the
+  // rows gives the same sequence as the list, initials tiles included.
+  const columns = [0, 1, 2].map((c) => members.filter((_, i) => i % 3 === c));
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   // Bios start closed (client request, Oct 2026): a visitor opens one by clicking

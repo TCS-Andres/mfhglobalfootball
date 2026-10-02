@@ -8,26 +8,23 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// Bert leads the page in a featured founder section; the divisions follow in the
+// Bert leads the page in a featured founder section; the staff follow in the
 // TeamShowcase island (a 21st.dev component, see src/components/react).
-// Members without a headshot get an initials tile until photos arrive.
 //
-// NEEDS INPUT (spec 3.2): Miguel Benito (st.p9) uses the initials placeholder
-// until Bert supplies a headshot. Provisional division: Football Operations &
-// Scouting, since his analytics/evaluation role maps to the Player Profile and
-// Evaluation stages.
-// A member gets an expandable `blurb` only when they have approved copy: Ezzy
-// (p2), Andres (p5), and Fabian (p6). Sebastian, John, Maria, Miguel, Andres
-// Hernandez, and Alejandro have none yet, so they render name + title only. Carlos expands to
-// his fuller independent-partner bio, and his disclaimer `note` is always visible.
+// Order, groups, and titles are Bert's (Oct 2026) and are shown exactly as listed:
+// operations, marketing, then each scouting region with its lead first and the
+// lead's team under them. Do not reorder without the client.
+//
+// Members without a headshot (Gustavo, Maria) get an initials tile until photos
+// arrive. A member gets an expandable `blurb` only when they have approved copy:
+// Fabian (p6), Andres (p5), and Ezzy (p2). Carlos expands to his independent
+// partner bio, and his disclaimer `note` is always visible.
 const divisions = [
-  // Fabian leads the roster: he heads operations (client request, Oct 2026).
-  { key: 'st.div4', people: [{ key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true }] },
-  { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true }, { key: 'st.p3', photo: '/photos/sebastian.jpg' }, { key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p10', photo: '/photos/andres-hernandez.jpg' }, { key: 'st.p11', photo: '/photos/alejandro.jpg' }, { key: 'st.p9' }] },
-  { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg', blurb: true }] },
-  { key: 'st.div5', people: [{ key: 'st.p7' }] },
   // Carlos is an independent partner (BM Accountax LLC); bio + disclaimer per his official one-pager.
-  { key: 'st.div6', people: [{ key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true }] },
+  { key: 'st.div4', people: [{ key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true }, { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true }, { key: 'st.p12' }, { key: 'st.p7' }] },
+  { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg', blurb: true }] },
+  { key: 'st.div2', people: [{ key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p10', photo: '/photos/andres-hernandez.jpg' }, { key: 'st.p11', photo: '/photos/alejandro.jpg' }] },
+  { key: 'st.div5', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true }, { key: 'st.p3', photo: '/photos/sebastian.jpg' }] },
 ];
 
 const initials = (name: string) =>

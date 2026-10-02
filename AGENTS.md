@@ -40,17 +40,21 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   League: "Liga BetPlay" (never "La Liga BetPlay"); corridor order MLS, Liga BetPlay, Europe.
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
-- Staff page at /staff lists the team (Bert, Ezzy Ihekoronye, Sebastian Mahecha, John Mahecha,
-  Miguel Benito, Andres Eduardo Diaz, Fabian Mahecha, Maria del Pilar Alvarez, Carlos Bernal).
-  Ezzy Ihekoronye is Head Scout, United States (Men), in the Football Operations & Scouting
-  division (added July 2026, replacing Phil Zayas who was removed at the client's request).
-  Miguel Benito is Analytics and Evaluation Expert (added July 2026), placed provisionally in
-  Football Operations & Scouting; his headshot and approved bio are still pending from Bert, so
-  he shows the initials placeholder and no bio. Every team member also has an optional short
-  `blurb` field under the title, rendered only when copy is supplied (all pending Bert).
-- Carlos Bernal, CPA, MAcc is an INDEPENDENT "Accounting & Tax Support Partner" (CEO of
-  BM Accountax LLC), per his official bio of July 2026. Do not call him CFO. His card carries the
-  independence disclaimer; keep it.
+- Team page at /team: order, groups, and titles were set by Bert on Oct 2 2026 and must be shown
+  exactly in this order. Operations: Fabian Mahecha (Chief Operating Officer), Carlos Bernal
+  (Director of Accounting), Gustavo Rodriguez (Director of Counsel, Colombia), Maria del Pilar
+  Alvarez (Executive Assistant). Marketing: Andres Eduardo Diaz (Chief Marketing Officer).
+  Scouting, South America: John Mahecha (Vice President, South America), then his team, Carlos
+  Andres Hernandez (Scout, Cali, Colombia) and Alejandro Valdes (Scout, Medellín, Colombia).
+  Scouting, USA: Ezzy Ihekoronye (Head Scout, USA), Sebastian Mahecha (Scout, USA Women).
+  Miguel Benito was removed at the client's request (Oct 2026); Phil Zayas was removed earlier.
+  Gustavo and Maria have no headshot yet and show initials tiles. Bios (`blurb`) exist only
+  for Fabian, Andres, and Ezzy, and still describe their earlier roles until Bert sends new copy.
+  All staff headshots are approved by the people shown (Oct 2026). House style for any new
+  headshot: navy jacket, open-collar dress shirt, no tie, soft light grey studio backdrop.
+- Carlos Bernal, CPA, MAcc is independent (CEO of BM Accountax LLC), per his official bio of
+  July 2026. His displayed title is now "Director of Accounting" (Bert, Oct 2026). Do not call
+  him CFO. His row carries the independence disclaimer; keep it, whatever the title says.
 - The Player Intake Questionnaire is INTERNAL / by invitation only (client decision,
   July 2026). It is NOT published on the website: the public PDF and its Contact-page
   download were removed. Do not re-add a public download link. It will move behind a
