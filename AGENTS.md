@@ -104,8 +104,9 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
     them, and always honor prefers-reduced-motion.
   - Pages without an island must keep shipping zero React. Purely decorative pieces with no
     interaction are still better built natively.
-  - Current islands: `TeamShowcase` (team page) and `GlowingEffect` (card glow, via
-    `GlowCard.astro`).
+  - Current islands: `TeamShowcase` (team page), `GlowingEffect` (card glow, via
+    `GlowCard.astro`), `HoverExpand` (homepage Europe / USA / Colombia gallery), and
+    `TextBlurReveal` (word by word reveal in `QuoteBand.astro`).
 - Google Fonts: Archivo, Source Sans 3, Source Serif 4.
 - Deploy target: Vercel (preview links) or a static upload of `dist/` to Bluehost. Both must work,
   so keep everything static.

@@ -1,5 +1,6 @@
 ---
 import { t, type Lang } from '../i18n/ui';
+import TextBlurReveal from './react/TextBlurReveal';
 
 interface Props {
   lang: Lang;
@@ -15,6 +16,14 @@ const {
   smallKey = 'quote.small',
   bigKey = 'quote.big',
 } = Astro.props;
+
+// The copy may carry <br> line breaks (the promise quote). The reveal island takes
+// plain lines, so split on them and drop any other markup.
+const toLines = (html: string) =>
+  html
+    .split(/<br\s*\/?>/i)
+    .map((line) => line.replace(/<[^>]+>/g, '').trim())
+    .filter(Boolean);
 ---
 
 <section class="quote-band" data-quote-band>
@@ -25,8 +34,14 @@ const {
       </div>
       <div class="quote-band__scrim" aria-hidden="true"></div>
       <div class="quote-band__content">
-        <p class="quote-band__small">{t(lang, smallKey)}</p>
-        <p class="quote-band__big" set:html={t(lang, bigKey)} />
+        <!-- Word-by-word blur reveal (21st.dev Text Blur Reveal island). The wrappers
+             carry the type styles, the island's <p> inherits them. -->
+        <div class="quote-band__small">
+          <TextBlurReveal client:visible lines={toLines(t(lang, smallKey))} delay={45} distance={18} stepDuration={0.3} />
+        </div>
+        <div class="quote-band__big">
+          <TextBlurReveal client:visible lines={toLines(t(lang, bigKey))} delay={130} startDelay={300} direction="bottom" distance={40} />
+        </div>
       </div>
     </div>
   </div>
