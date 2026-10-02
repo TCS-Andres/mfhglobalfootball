@@ -4,7 +4,8 @@ import { cn } from '@/lib/utils';
 // Adapted from the 21st.dev "Team Showcase" component (@makviesainte): a staggered
 // portrait grid paired with an interactive member list. Portraits rest in grayscale
 // and the active one turns to full color. Changes for MFH: brand tokens, division
-// groups, an initials tile for members without a headshot, and an expandable bio.
+// groups, an initials tile for members without a headshot, the name under every
+// portrait, and a bio that stays closed until the member is clicked.
 
 export interface TeamMember {
   id: string;
@@ -41,13 +42,18 @@ export default function TeamShowcase({ groups }: TeamShowcaseProps) {
   const columns = [0, 1, 2].map((c) => tiles.filter((_, i) => i % 3 === c));
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [openId, setOpenId] = useState<string | null>(members.find((m) => m.blurb)?.id ?? null);
+  // Bios start closed (client request, Oct 2026): a visitor opens one by clicking
+  // the portrait or the name.
+  const [openId, setOpenId] = useState<string | null>(null);
   const activeId = hoveredId ?? openId;
 
   const selectFromTile = (id: string) => {
     setOpenId(id);
     // On stacked layouts the list sits below the grid, so bring the row into view.
-    document.getElementById(`team-row-${id}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document
+      .getElementById(`team-row-${id}`)
+      ?.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
   };
 
   return (
@@ -56,12 +62,12 @@ export default function TeamShowcase({ groups }: TeamShowcaseProps) {
       {/* The `reveal` classes are static strings: the site's scroll-reveal script adds
           `in` to them outside React, and React never rewrites an unchanged className. */}
       <div
-        className="reveal-l flex w-full gap-2 md:gap-3.5 lg:sticky lg:top-28 lg:w-auto lg:flex-none"
+        className="reveal-l flex w-full gap-2.5 md:gap-3.5 lg:w-auto lg:flex-none"
         aria-hidden="true"
         suppressHydrationWarning
       >
         {columns.map((column, c) => (
-          <div key={c} className={cn('flex flex-1 flex-col gap-2 md:gap-3.5 lg:flex-none', COLUMN_CLASSES[c])}>
+          <div key={c} className={cn('flex min-w-0 flex-1 flex-col gap-3.5 md:gap-5 lg:flex-none', COLUMN_CLASSES[c])}>
             {column.map((member) => (
               <PhotoTile
                 key={member.id}
@@ -117,56 +123,66 @@ function PhotoTile({
   onHover: (id: string | null) => void;
   onSelect: (id: string) => void;
 }) {
+  // Credentials after a comma ("Carlos Bernal, CPA, MAcc") stay in the list, the
+  // caption under the portrait carries the name alone.
+  const shortName = member.name.split(',')[0];
+
   return (
     <button
       type="button"
       tabIndex={-1}
       className={cn(
-        'relative m-0 block aspect-[13/14] w-full cursor-pointer appearance-none overflow-hidden rounded-xl border-0 bg-navy p-0 transition-[opacity,box-shadow] duration-500',
+        'm-0 block w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left font-[inherit] transition-opacity duration-500',
         isDimmed ? 'opacity-60' : 'opacity-100',
-        isActive && 'shadow-[0_18px_40px_-20px_rgba(0,53,92,0.65)]',
       )}
       onMouseEnter={() => onHover(member.id)}
       onMouseLeave={() => onHover(null)}
       onClick={() => onSelect(member.id)}
     >
-      {member.image ? (
-        <img
-          src={member.image}
-          alt={member.name}
-          width={400}
-          height={430}
-          loading="lazy"
-          className={cn(
-            'h-full w-full object-cover transition-[filter,transform] duration-700 ease-out motion-reduce:transition-none',
-            isActive ? 'scale-105 grayscale-0' : 'scale-100 brightness-[0.82] grayscale',
-          )}
-        />
-      ) : (
-        <span
-          className={cn(
-            'grid h-full w-full place-items-center font-display text-[clamp(1.6rem,4vw,2.4rem)] font-black tracking-wide transition-colors duration-500',
-            isActive ? 'text-gold' : 'text-white/35',
-          )}
-        >
-          {member.initials}
-        </span>
-      )}
-      {/* Name caption, so a tapped portrait is identified without scrolling to the list */}
       <span
         className={cn(
-          'pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgba(0,21,38,0.88)] to-transparent px-3 pb-2.5 pt-8 text-left font-display text-[0.72rem] font-extrabold uppercase leading-tight tracking-[0.08em] text-white transition-opacity duration-300',
-          isActive ? 'opacity-100' : 'opacity-0',
+          'relative block aspect-[13/14] w-full overflow-hidden rounded-xl bg-navy transition-shadow duration-500',
+          isActive && 'shadow-[0_18px_40px_-20px_rgba(0,53,92,0.65)]',
         )}
       >
-        {member.name}
+        {member.image ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            width={400}
+            height={430}
+            loading="lazy"
+            className={cn(
+              'h-full w-full object-cover transition-[filter,transform] duration-700 ease-out motion-reduce:transition-none',
+              isActive ? 'scale-105 grayscale-0' : 'scale-100 brightness-[0.82] grayscale',
+            )}
+          />
+        ) : (
+          <span
+            className={cn(
+              'grid h-full w-full place-items-center font-display text-[clamp(1.6rem,4vw,2.4rem)] font-black tracking-wide transition-colors duration-500',
+              isActive ? 'text-gold' : 'text-white/35',
+            )}
+          >
+            {member.initials}
+          </span>
+        )}
+        <span
+          className={cn(
+            'pointer-events-none absolute inset-x-0 bottom-0 h-[3px] origin-left bg-gold transition-transform duration-500 ease-out motion-reduce:transition-none',
+            isActive ? 'scale-x-100' : 'scale-x-0',
+          )}
+        />
       </span>
+      {/* Name under every portrait, so each face is identified without the list */}
       <span
         className={cn(
-          'pointer-events-none absolute inset-x-0 bottom-0 h-[3px] origin-left bg-gold transition-transform duration-500 ease-out motion-reduce:transition-none',
-          isActive ? 'scale-x-100' : 'scale-x-0',
+          'mt-2 block font-display text-[0.7rem] font-extrabold uppercase leading-tight tracking-[0.06em] transition-colors duration-300 md:text-[0.78rem]',
+          isActive ? 'text-brand' : 'text-ink',
         )}
-      />
+      >
+        {shortName}
+      </span>
     </button>
   );
 }
