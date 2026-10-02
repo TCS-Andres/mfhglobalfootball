@@ -661,3 +661,17 @@ html.preloading:has(.preloader--done){overflow:auto}
 .card:hover{transform:translateY(-5px)}
 
 .cta-banner__actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* ============================================================
+   Glow cards: wrapper for the 21st.dev "Glowing Effect" island
+   (GlowCard.astro). The glow ring is drawn just outside the card.
+   ============================================================ */
+.glow-wrap{position:relative;display:flex;border-radius:var(--r)}
+.glow-wrap--lg{border-radius:14px}
+.glow-wrap>.card,.glow-wrap>.step{flex:1;min-width:0}
+/* With a real pointer the glow replaces the lift and the gold top sweep, so the
+   ring and the card never drift apart. Touch devices keep the original hover. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .glow-wrap>.card:hover,.glow-wrap>.step:hover{transform:none}
+  .glow-wrap>.card::before{display:none}
+}

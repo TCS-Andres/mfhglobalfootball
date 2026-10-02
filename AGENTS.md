@@ -87,9 +87,25 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 ## Tech stack
 - Astro, static output. `astro build` must produce plain HTML, CSS, and JS with no server runtime.
 - Astro native i18n routing. English at `/`, Spanish at `/es/`.
-- Vanilla CSS ported from the prototype. No Tailwind, no CSS framework.
+- Vanilla CSS ported from the prototype is still the base for every page and section
+  (`src/styles/global.css`). Do not restyle existing sections with Tailwind.
 - Minimal client JS only for: mobile menu, sticky header shadow, and scroll reveal. Language is
   route based, not JS based.
+- React islands (Oct 2026, Andres): 21st.dev components may now be installed as React islands
+  instead of being rebuilt by hand. They live in `src/components/react/` and are mounted from
+  `.astro` files with a `client:*` directive. Rules:
+  - Tailwind is loaded for the islands only, via `src/styles/tailwind.css`. Its base reset
+    (preflight) is deliberately NOT imported, so reset buttons and lists by hand inside islands.
+  - Recolor every component to the brand tokens (`bg-navy`, `text-gold`, `text-brand`,
+    `font-display`, and so on). Never ship a component's default colors or fonts.
+  - Resolve copy with `t(lang, key)` in the `.astro` file and pass plain strings as props, so all
+    five languages keep working and the text is in the static HTML.
+  - Prefer `client:visible`. Use `client:media` for pointer-only effects so phones never download
+    them, and always honor prefers-reduced-motion.
+  - Pages without an island must keep shipping zero React. Purely decorative pieces with no
+    interaction are still better built natively.
+  - Current islands: `TeamShowcase` (team page) and `GlowingEffect` (card glow, via
+    `GlowCard.astro`).
 - Google Fonts: Archivo, Source Sans 3, Source Serif 4.
 - Deploy target: Vercel (preview links) or a static upload of `dist/` to Bluehost. Both must work,
   so keep everything static.

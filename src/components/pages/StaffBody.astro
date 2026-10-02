@@ -1,23 +1,25 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
+import TeamShowcase, { type TeamGroup } from '../react/TeamShowcase';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 
-// Bert leads the page in a featured founder section; the divisions follow.
-// Team members get an initials mark until photos arrive.
+// Bert leads the page in a featured founder section; the divisions follow in the
+// TeamShowcase island (a 21st.dev component, see src/components/react).
+// Members without a headshot get an initials tile until photos arrive.
 //
 // NEEDS INPUT (spec 3.2): Miguel Benito (st.p9) uses the initials placeholder
 // until Bert supplies a headshot. Provisional division: Football Operations &
 // Scouting, since his analytics/evaluation role maps to the Player Profile and
 // Evaluation stages.
-// A member shows a short `blurb` below the title only when they have approved
-// copy: Ezzy (p2), Andres (p5), and Fabian (p6). Sebastian, John, Maria, and
-// Miguel have no blurb yet, so they render name + title only. Carlos keeps his
-// fuller independent-partner bio + disclaimer instead of a blurb.
+// A member gets an expandable `blurb` only when they have approved copy: Ezzy
+// (p2), Andres (p5), and Fabian (p6). Sebastian, John, Maria, Miguel, and Andres
+// Hernandez have none yet, so they render name + title only. Carlos expands to
+// his fuller independent-partner bio, and his disclaimer `note` is always visible.
 const divisions = [
   { key: 'st.div2', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true }, { key: 'st.p3', photo: '/photos/sebastian.jpg' }, { key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p10', photo: '/photos/andres-hernandez.jpg' }, { key: 'st.p9' }] },
   { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg', blurb: true }] },
@@ -35,6 +37,29 @@ const initials = (name: string) =>
     .map((w) => w[0])
     .join('')
     .toUpperCase();
+
+// Resolve every string here so the island receives plain, already-translated data.
+const groups: TeamGroup[] = divisions.map((d) => ({
+  id: d.key,
+  label: t(lang, d.key),
+  members: d.people.map((person) => {
+    const name = t(lang, `${person.key}.n`);
+    return {
+      id: person.key.replace('st.', ''),
+      name,
+      role: t(lang, `${person.key}.t`),
+      initials: initials(name),
+      image: 'photo' in person ? person.photo : undefined,
+      blurb:
+        'blurb' in person && person.blurb
+          ? t(lang, `${person.key}.blurb`)
+          : 'bio' in person && person.bio
+            ? t(lang, `${person.key}.bio`)
+            : undefined,
+      note: 'note' in person && person.note ? t(lang, `${person.key}.note`) : undefined,
+    };
+  }),
+}));
 
 // Founder structured data for search engines.
 const personLd = {
@@ -98,31 +123,9 @@ const personLd = {
 </section>
 
 <!-- The rest of the team -->
-<section class="section sky" style="padding-top:64px">
+<section class="section sky roster">
   <div class="wrap">
-    {divisions.map((d, di) => (
-      <div class="group" class:list={[{ 'group--first': di === 0 }]}>
-        <div class="group-head">
-          <span class="eyebrow"><i class="pent"></i><span>{t(lang, d.key)}</span></span>
-        </div>
-        <div class="staff-grid">
-          {d.people.map((person, pi) => (
-            <div class="person card reveal" class:list={[{ 'person--wide': 'bio' in person && person.bio }]} style={`--d:${pi * 90}ms`}>
-              {'photo' in person && person.photo ? (
-                <img class="person__photo" src={person.photo} alt={t(lang, `${person.key}.n`)} width="160" height="160" loading="lazy" />
-              ) : (
-                <div class="person__avatar" aria-hidden="true">{initials(t(lang, `${person.key}.n`))}</div>
-              )}
-              <h3>{t(lang, `${person.key}.n`)}</h3>
-              <p>{t(lang, `${person.key}.t`)}</p>
-              {'blurb' in person && person.blurb && <p class="person__blurb">{t(lang, `${person.key}.blurb`)}</p>}
-              {'bio' in person && person.bio && <p class="person__bio">{t(lang, `${person.key}.bio`)}</p>}
-              {'note' in person && person.note && <p class="person__note">{t(lang, `${person.key}.note`)}</p>}
-            </div>
-          ))}
-        </div>
-      </div>
-    ))}
+    <TeamShowcase client:visible groups={groups} />
     <p class="staff-growing reveal">{t(lang, 'st.growing')}</p>
   </div>
 </section>
@@ -211,86 +214,10 @@ const personLd = {
       grid-template-columns: 1fr;
     }
   }
-  .group--first {
-    margin-top: 0;
-  }
-  .staff-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .person {
-    text-align: center;
-    padding: 34px 26px;
-  }
-  .person__photo,
-  .person__avatar {
-    width: 108px;
-    height: 108px;
-    border-radius: 50%;
-    margin: 0 auto 18px;
-    object-fit: cover;
-    display: grid;
-    place-items: center;
-    border: 3px solid var(--gold);
-  }
-  .person__avatar {
-    background: var(--sky);
-    color: var(--blue-deep);
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 1.6rem;
-    letter-spacing: 0.02em;
-  }
-  .person h3 {
-    font-size: 1.14rem;
-  }
-  .person p {
-    margin-top: 6px;
-    font-size: 0.92rem;
-  }
-  .person__blurb {
-    margin-top: 12px;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-  .person--wide {
-    grid-column: span 2;
-  }
-  @media (max-width: 920px) {
-    .person--wide {
-      grid-column: span 1;
-    }
-  }
-  .person__bio {
-    text-align: left;
-    color: var(--ink-soft);
-    margin-top: 14px;
-  }
-  .person__note {
-    text-align: left;
-    color: var(--ink-soft);
-    font-size: 0.78rem;
-    font-style: italic;
-    margin-top: 12px;
-    border-top: 1px solid var(--line);
-    padding-top: 10px;
-  }
   .staff-growing {
-    margin-top: 44px;
+    margin-top: 56px;
     color: var(--ink-soft);
     font-size: 1.02rem;
     max-width: 62ch;
-  }
-  @media (max-width: 920px) {
-    .staff-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (max-width: 560px) {
-    .staff-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

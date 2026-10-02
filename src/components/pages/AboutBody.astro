@@ -1,5 +1,6 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
+import GlowCard from '../GlowCard.astro';
 import CtaBanner from '../CtaBanner.astro';
 
 interface Props {
@@ -99,7 +100,7 @@ const values = ['ab.v1', 'ab.v2', 'ab.v3', 'ab.v4'];
     </div>
     <div class="grid g4">
       {values.map((k, i) => (
-        <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        <GlowCard class="reveal" style={`--d:${i * 80}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
       ))}
     </div>
   </div>

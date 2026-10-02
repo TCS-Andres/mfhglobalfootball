@@ -1,5 +1,6 @@
 ---
 import { t, localizePath, type Lang } from '../../i18n/ui';
+import GlowCard from '../GlowCard.astro';
 import CtaBanner from '../CtaBanner.astro';
 import Pathway from '../Pathway.astro';
 
@@ -75,7 +76,7 @@ const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
       </div>
       <div class="grid g3">
         {players.map((k, i) => (
-          <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+          <GlowCard class="reveal" style={`--d:${i * 80}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
         ))}
       </div>
     </div>
@@ -87,7 +88,7 @@ const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
       </div>
       <div class="grid g3">
         {coaches.map((k, i) => (
-          <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+          <GlowCard class="reveal" style={`--d:${i * 80}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
         ))}
       </div>
     </div>
@@ -99,7 +100,7 @@ const cat2Examples = Array.from({ length: 5 }, (_, i) => `sv.cat2.e${i + 1}`);
       </div>
       <div class="grid g3">
         {families.map((k, i) => (
-          <div class="card reveal" style={`--d:${i * 80}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+          <GlowCard class="reveal" style={`--d:${i * 80}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
         ))}
       </div>
     </div>

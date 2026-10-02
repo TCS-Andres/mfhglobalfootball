@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// Loaded after global.css so Tailwind utilities win ties inside the React islands.
+import '../styles/tailwind.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { t, localePaths, hreflangCodes, ogLocales, type Lang } from '../i18n/ui';

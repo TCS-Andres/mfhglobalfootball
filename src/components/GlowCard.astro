@@ -1,0 +1,23 @@
+---
+// Wraps a card in the 21st.dev "Glowing Effect": a gold and blue border glow that
+// follows the pointer. The glow is a React island that only loads on devices with
+// a real pointer and no reduced-motion preference, so phones never download it.
+import GlowingEffect from './react/GlowingEffect';
+
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className, style } = Astro.props;
+---
+
+<div class:list={['glow-wrap', className]} style={style}>
+  <GlowingEffect
+    client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
+    spread={38}
+    proximity={64}
+    inactiveZone={0.01}
+    borderWidth={2}
+  />
+  <slot />
+</div>

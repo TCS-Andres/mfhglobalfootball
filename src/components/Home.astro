@@ -1,5 +1,6 @@
 ---
 import { t, localizePath, type Lang } from '../i18n/ui';
+import GlowCard from './GlowCard.astro';
 import QuoteBand from './QuoteBand.astro';
 import MeetBert from './MeetBert.astro';
 import StatsBand from './StatsBand.astro';
@@ -61,7 +62,7 @@ const who = ['w1', 'w2', 'w3'];
     </div>
     <div class="grid g4">
       {problems.map((k, i) => (
-        <div class="card reveal" style={`--d:${i * 90}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        <GlowCard class="reveal" style={`--d:${i * 90}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
       ))}
     </div>
   </div>
@@ -124,7 +125,7 @@ const who = ['w1', 'w2', 'w3'];
     </div>
     <div class="grid g3">
       {who.map((k, i) => (
-        <div class="card reveal" style={`--d:${i * 90}ms`}><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div>
+        <GlowCard class="reveal" style={`--d:${i * 90}ms`}><div class="card"><i class="pent"></i><h3>{t(lang, `${k}.t`)}</h3><p>{t(lang, `${k}.d`)}</p></div></GlowCard>
       ))}
     </div>
   </div>
@@ -142,9 +143,9 @@ const who = ['w1', 'w2', 'w3'];
       <p class="lead">{t(lang, 'services.intro')}</p>
     </div>
     <div class="svc">
-      <div class="card reveal" style="--d:0ms"><i class="pent"></i><h3>{t(lang, 'b1.t')}</h3><p class="items">{t(lang, 'b1.i')}</p></div>
-      <div class="card reveal" style="--d:90ms"><i class="pent"></i><h3>{t(lang, 'b2.t')}</h3><p class="items">{t(lang, 'b2.i')}</p></div>
-      <div class="card reveal" style="--d:180ms"><i class="pent"></i><h3>{t(lang, 'b3.t')}</h3><p class="items">{t(lang, 'b3.i')}</p></div>
+      <GlowCard class="reveal" style="--d:0ms"><div class="card"><i class="pent"></i><h3>{t(lang, 'b1.t')}</h3><p class="items">{t(lang, 'b1.i')}</p></div></GlowCard>
+      <GlowCard class="reveal" style="--d:90ms"><div class="card"><i class="pent"></i><h3>{t(lang, 'b2.t')}</h3><p class="items">{t(lang, 'b2.i')}</p></div></GlowCard>
+      <GlowCard class="reveal" style="--d:180ms"><div class="card"><i class="pent"></i><h3>{t(lang, 'b3.t')}</h3><p class="items">{t(lang, 'b3.i')}</p></div></GlowCard>
     </div>
     <div style="margin-top:30px" class="reveal"><a href={services} class="btn btn-outline">{t(lang, 'services.cta')}</a></div>
   </div>
