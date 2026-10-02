@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
     "@astrojs/react": "^7.0.0",
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.4",
@@ -27,6 +28,7 @@
     "react-dom": "^19.3.0",
     "resend": "^6.18.1",
     "tailwind-merge": "^3.7.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
   }
 }

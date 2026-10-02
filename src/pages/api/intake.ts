@@ -12,6 +12,9 @@
 //
 // Required env var (set in Vercel, NOT prefixed PUBLIC_ so it stays server-side):
 //   RESEND_API_KEY   your Resend API key
+// Optional:
+//   ANTHROPIC_API_KEY  lets Claude draft the profile's summary lines. Without it the
+//                      profile is built with no summary.
 // Optional overrides:
 //   INTAKE_TO_EMAIL  destination (default info@mfhglobal.football)
 //   INTAKE_FROM      from address (default onboarding@resend.dev; use a
@@ -23,6 +26,7 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { SECTIONS, toQLang } from '../../data/questionnaire';
 import { buildPlayerProfile } from '../../lib/playerProfile';
+import { writeProfileSummary } from '../../lib/profileSummary';
 // Fonts and logo are inlined into the function bundle (base64 data URLs), so the
 // profile renders the same on every deployment without fetching anything.
 import fontRegular from '../../assets/profile/SourceSans3-Regular.ttf?inline';
@@ -103,9 +107,14 @@ export const POST: APIRoute = async ({ request }) => {
   // Draft Player Profile for Bert. A failure here must never block the intake email.
   const photo = readPhoto(body.photoBase64);
   let profileBuilt = false;
+  let summaryDrafted = false;
   try {
+    // Returns undefined (never throws) when there is no key or the request fails.
+    const summary = await writeProfileSummary(answers, process.env.ANTHROPIC_API_KEY);
+    summaryDrafted = !!summary;
     const profile = await buildPlayerProfile(answers, {
       photoJpg: photo,
+      summary,
       assets: {
         regular: fromDataUrl(fontRegular),
         bold: fromDataUrl(fontBold),
@@ -125,6 +134,7 @@ export const POST: APIRoute = async ({ request }) => {
     profileBuilt ? ', a draft Player Profile (for MFH use only, not sent to the player)' : '',
     photo ? ', and the player photo' : '',
     '.',
+    profileBuilt && summaryDrafted ? ' The summary lines on the profile were drafted by Claude from the answers: review them before sharing.' : '',
     profileBuilt ? '' : ' The Player Profile could not be generated for this submission.',
   ].join('');
   const emailHtml = html.replace('__ATTACHED__', esc(attachedNote));
