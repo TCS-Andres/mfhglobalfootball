@@ -12,10 +12,20 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^7.0.0",
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "astro": "^7.0.3",
+    "clsx": "^2.1.1",
+    "motion": "^13.5.0",
     "pdf-lib": "^1.17.1",
-    "resend": "^6.18.1"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "resend": "^6.18.1",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3"
   }
 }

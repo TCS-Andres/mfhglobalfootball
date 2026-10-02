@@ -1,0 +1,27 @@
+/* Tailwind for the React islands (21st.dev components).
+   Two deliberate choices keep it from disturbing the existing site:
+   1. No preflight: the base reset is never imported, so global.css stays in charge
+      of every element default.
+   2. Utilities are imported unlayered: global.css is unlayered too, and layered
+      rules always lose to unlayered ones, so a layered `mt-4` would be beaten by
+      the global `p{margin:0}`. */
+@layer theme;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+
+/* Brand tokens exposed as Tailwind utilities (bg-navy, text-gold, font-display).
+   `inline` makes each utility read the tokens.css variable directly. */
+@theme inline {
+  --color-brand: var(--blue);
+  --color-navy: var(--blue-deep);
+  --color-brand-700: var(--blue-700);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-sky: var(--sky);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}

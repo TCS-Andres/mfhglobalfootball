@@ -5,6 +5,10 @@ import sitemap from '@astrojs/sitemap';
 
 import vercel from '@astrojs/vercel';
 
+import react from '@astrojs/react';
+
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mfhglobal.football',
@@ -27,16 +31,20 @@ export default defineConfig({
     },
   },
 
-  integrations: [
-    sitemap({
-      // The player questionnaire is unlisted/noindex, keep it out of the sitemap.
-      filter: (page) => !page.includes('/questionnaire'),
-      i18n: {
-        defaultLocale: 'en',
-        locales: { en: 'en', es: 'es', fr: 'fr', it: 'it', pt: 'pt-PT' },
-      },
-    }),
-  ],
+  integrations: [sitemap({
+    // The player questionnaire is unlisted/noindex, keep it out of the sitemap.
+    filter: (page) => !page.includes('/questionnaire'),
+    i18n: {
+      defaultLocale: 'en',
+      locales: { en: 'en', es: 'es', fr: 'fr', it: 'it', pt: 'pt-PT' },
+    },
+  }), react()],
+
+  // Tailwind powers the React islands only (21st.dev components). Its base reset is
+  // deliberately not loaded, see src/styles/tailwind.css.
+  vite: {
+    plugins: [tailwindcss()],
+  },
 
   adapter: vercel(),
 });
