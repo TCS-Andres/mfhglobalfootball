@@ -376,6 +376,30 @@ const T = {
           };
           im.src = url;
         });
+      // Encode the image as a JPEG whose base64 length is at or below maxB64, by
+      // stepping the dimension (from 900px) and JPEG quality (from 0.72) down until
+      // it fits. This keeps even a huge phone photo small, so the submission never
+      // trips Vercel's ~4.5MB POST body limit. Returns a data URL (best effort if
+      // nothing fits, which only happens for pathological inputs).
+      const encodeUnder = (im, maxB64) => {
+        let best = '';
+        for (const dim of [900, 760, 640, 520, 420]) {
+          const scale = Math.min(1, dim / Math.max(im.naturalWidth, im.naturalHeight));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(im.naturalWidth * scale));
+          canvas.height = Math.max(1, Math.round(im.naturalHeight * scale));
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#fff'; // white behind transparent PNGs, saved as JPEG
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(im, 0, 0, canvas.width, canvas.height);
+          for (const q of [0.72, 0.6, 0.5, 0.42, 0.35]) {
+            const url = canvas.toDataURL('image/jpeg', q);
+            best = url;
+            if (url.length - url.indexOf(',') - 1 <= maxB64) return url;
+          }
+        }
+        return best;
+      };
       photoInput.addEventListener('change', async () => {
         const file = photoInput.files && photoInput.files[0];
         photo.name = '';
@@ -385,20 +409,9 @@ const T = {
         if (file) {
           try {
             const im = await loadImage(file);
-            // Keep the encoded photo small: Vercel rejects POST bodies over ~4.5MB
-            // (FUNCTION_PAYLOAD_TOO_LARGE), and this photo rides in the JSON body
-            // alongside the filled PDF. 900px at 0.72 quality is plenty for the
-            // Player Profile headshot and keeps the whole submission well under the limit.
-            const scale = Math.min(1, 900 / Math.max(im.naturalWidth, im.naturalHeight));
-            const canvas = document.createElement('canvas');
-            canvas.width = Math.round(im.naturalWidth * scale);
-            canvas.height = Math.round(im.naturalHeight * scale);
-            const ctx = canvas.getContext('2d');
-            // White behind transparent PNGs, since the copy is saved as JPEG.
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(im, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
+            // Compress down to a hard budget (~1.3MB base64) so it always fits the
+            // POST body alongside the filled PDF, whatever the camera produced.
+            const dataUrl = encodeUnder(im, 1_300_000);
             photo.data = dataUrl.slice(dataUrl.indexOf(',') + 1);
             photo.name = file.name;
             preview.src = dataUrl;
@@ -498,18 +511,19 @@ const T = {
       // Defaults to our own /api/intake serverless function (Resend); can be
       // overridden with PUBLIC_QUESTIONNAIRE_ENDPOINT if a different backend is used.
       const endpoint = window.__Q_ENDPOINT__ || '/api/intake';
+      // Final safety net: the photo is already compressed to a budget, but if the
+      // whole body would still exceed Vercel's ~4.5MB cap (e.g. a very large PDF),
+      // drop the photo so the answers and PDF still reach Bert rather than 413-ing.
+      const BODY_LIMIT = 4_300_000;
+      const base = { answers, pdfBase64, filename: pdfFilename, lang: form.dataset.lang };
+      let bodyStr = JSON.stringify({ ...base, photoBase64: photo.data });
+      if (bodyStr.length > BODY_LIMIT && photo.data) bodyStr = JSON.stringify(base);
       let delivered = false;
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            answers,
-            pdfBase64,
-            filename: pdfFilename,
-            lang: form.dataset.lang,
-            photoBase64: photo.data,
-          }),
+          body: bodyStr,
         });
         // Only claim success when the server actually accepted it. A silent
         // failure (e.g. a 413 on an oversized body) must not look like success.
