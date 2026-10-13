@@ -49,6 +49,9 @@ const T = {
   doneMsg: isEs
     ? 'Tu PDF se ha descargado y hemos recibido tus respuestas. Bert revisará el envío y te contactará para agendar tu consulta.'
     : 'Your PDF has downloaded and we have received your answers. Bert will review the submission and reach out to schedule your consultation.',
+  failMsg: isEs
+    ? 'Tu PDF se ha descargado, pero no pudimos enviar tus respuestas automáticamente. Por favor envía el PDF descargado por correo a info@mfhglobal.football para que lo recibamos.'
+    : 'Your PDF has downloaded, but we could not send your answers automatically. Please email the downloaded PDF to info@mfhglobal.football so our team receives it.',
   saving: isEs ? 'Generando tu PDF...' : 'Building your PDF...',
   step: isEs ? 'Paso' : 'Step',
   of: isEs ? 'de' : 'of',
@@ -175,7 +178,8 @@ const T = {
       <div class="q-panel" data-step="done" hidden>
         <div class="panel-card q-done">
           <h2>{T.done}</h2>
-          <p>{T.doneMsg}</p>
+          <p data-done-ok>{T.doneMsg}</p>
+          <p class="q-fail" data-done-fail hidden>{T.failMsg}</p>
         </div>
       </div>
     </form>
@@ -381,7 +385,11 @@ const T = {
         if (file) {
           try {
             const im = await loadImage(file);
-            const scale = Math.min(1, 1200 / Math.max(im.naturalWidth, im.naturalHeight));
+            // Keep the encoded photo small: Vercel rejects POST bodies over ~4.5MB
+            // (FUNCTION_PAYLOAD_TOO_LARGE), and this photo rides in the JSON body
+            // alongside the filled PDF. 900px at 0.72 quality is plenty for the
+            // Player Profile headshot and keeps the whole submission well under the limit.
+            const scale = Math.min(1, 900 / Math.max(im.naturalWidth, im.naturalHeight));
             const canvas = document.createElement('canvas');
             canvas.width = Math.round(im.naturalWidth * scale);
             canvas.height = Math.round(im.naturalHeight * scale);
@@ -390,7 +398,7 @@ const T = {
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(im, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.86);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
             photo.data = dataUrl.slice(dataUrl.indexOf(',') + 1);
             photo.name = file.name;
             preview.src = dataUrl;
@@ -490,8 +498,9 @@ const T = {
       // Defaults to our own /api/intake serverless function (Resend); can be
       // overridden with PUBLIC_QUESTIONNAIRE_ENDPOINT if a different backend is used.
       const endpoint = window.__Q_ENDPOINT__ || '/api/intake';
+      let delivered = false;
       try {
-        await fetch(endpoint, {
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -502,10 +511,19 @@ const T = {
             photoBase64: photo.data,
           }),
         });
+        // Only claim success when the server actually accepted it. A silent
+        // failure (e.g. a 413 on an oversized body) must not look like success.
+        delivered = res.ok;
       } catch (err) {
-        /* non-blocking: the player already has the downloaded PDF */
+        delivered = false;
       }
       saving.hidden = true;
+      // Switch the confirmation message to the email fallback when delivery failed,
+      // so the player (and Bert) are not told it went through when it did not.
+      const okMsg = form.querySelector('[data-done-ok]');
+      const failMsg = form.querySelector('[data-done-fail]');
+      if (okMsg) okMsg.hidden = delivered === false;
+      if (failMsg) failMsg.hidden = delivered !== false;
       show(stepOrder.indexOf('done'));
     });
 
@@ -695,6 +713,10 @@ const T = {
   .q-done {
     text-align: center;
     padding: 44px 30px;
+  }
+  .q-fail {
+    color: #b00020;
+    font-weight: 600;
   }
   @media (max-width: 560px) {
     .q-rrow {
