@@ -40,21 +40,34 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   League: "Liga BetPlay" (never "La Liga BetPlay"); corridor order MLS, Liga BetPlay, Europe.
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
-- Team page at /team: order, groups, and titles were set by Bert on Oct 2 2026 and must be shown
-  exactly in this order. Operations: Fabian Mahecha (Chief Operating Officer), Carlos Bernal
-  (Director of Accounting), Gustavo Rodriguez (Director of Counsel, Colombia), Maria del Pilar
-  Alvarez (Executive Assistant). Marketing: Andres Eduardo Diaz (Chief Marketing Officer).
-  Scouting, South America: John Mahecha (Vice President, South America), then his team, Carlos
-  Andres Hernandez (Scout, Cali, Colombia) and Alejandro Valdes (Scout, Medellín, Colombia).
-  Scouting, USA: Ezzy Ihekoronye (Head Scout, USA), Sebastian Mahecha (Scout, USA Women).
+- Team page at /team: structure and titles follow MFH's Team Page Restructure brief (Oct 2026)
+  and must be shown exactly in this order. Executive Leadership: Bert Mahecha (Founder & CEO ·
+  FIFA-Licensed Football Agent, featured founder section), Fabian Mahecha (Chief Operating
+  Officer). Scouting & Player Development, USA first: Ezzy Ihekoronye (Director of Scouting for
+  the USA), Sebastian Mahecha (Scout for USA Women's Football); then Colombia: John Mahecha
+  (Director of Scouting for Colombia), Carlos Andres Hernandez (Scout in Cali), Alejandro Valdes
+  (Scout in Medellín).
+  Operations Support: Maria del Pilar Alvarez (Executive Assistant to the CEO). Advisors &
+  Independent Partners: Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor, BM Accountax LLC),
+  Andres Eduardo Diaz (Marketing & Brand Advisor, The Creative Strategist), Gustavo Rodriguez
+  (Legal Counsel for Colombia). On the site, region titles are written "Title, em dash, Region"
+  (the only place em dashes are allowed, see the brand rules). Title rules from MFH: "Director"
+  is the only mid-level rank, with nothing between it and the C-suite; C-suite titles are for owners
+  and employees only; contractors never hold C-suite or Director titles and appear only under
+  Advisors with their firm name and a disclaimer; scout titles must never suggest agent
+  services. Spanish keeps "Scout" (the brief's "Ojeador" is pending MFH confirmation).
+  Gustavo's disclaimer is a PLACEHOLDER: StaffBody.astro shows it highlighted on Vercel previews
+  only and leaves his card off every other build until the confirmed text arrives.
   Miguel Benito was removed at the client's request (Oct 2026); Phil Zayas was removed earlier.
   Gustavo and Maria have no headshot yet and show initials tiles. Bios (`blurb`) exist only
-  for Fabian, Andres, and Ezzy, and still describe their earlier roles until Bert sends new copy.
+  for Fabian, Andres, and Ezzy. Ezzy's headshot (Oct 2026) is his own photo with only the
+  background replaced, because the earlier generated one did not look like him.
   All staff headshots are approved by the people shown (Oct 2026). House style for any new
   headshot: navy jacket, open-collar dress shirt, no tie, soft light grey studio backdrop.
 - Carlos Bernal, CPA, MAcc is independent (CEO of BM Accountax LLC), per his official bio of
-  July 2026. His displayed title is now "Director of Accounting" (Bert, Oct 2026). Do not call
-  him CFO. His row carries the independence disclaimer; keep it, whatever the title says.
+  July 2026. He is an advisor, never a director or officer. Do not call him CFO. His row carries
+  the independence disclaimer; keep it, whatever the title says. Andres Diaz (The Creative
+  Strategist) is an independent contractor with the same treatment and his own disclaimer.
 - The Player Intake Questionnaire is INTERNAL / by invitation only (client decision,
   July 2026). It is NOT published on the website: the public PDF and its Contact-page
   download were removed. Do not re-add a public download link. It will move behind a
@@ -88,6 +101,8 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype, no aggressive
   sales language, no profanity, no naming or criticizing competitors.
 - Zero em dashes anywhere, in code, comments, or copy. Use commas, colons, or periods.
+  One client-mandated exception (MFH, Oct 2026): team titles with a region on the Team page
+  use an em dash between title and region, per MFH's compliance format. Nowhere else.
 - Headings and calls to action use Title Case in ENGLISH: capitalize the first letter of every
   word (Aug 2026, Andres). Spanish, French, Italian, and Portuguese keep their correct sentence
   case (first word and proper nouns only); capitalizing every word is grammatically wrong there,

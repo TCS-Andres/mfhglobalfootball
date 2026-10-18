@@ -17,6 +17,10 @@ export interface TeamMember {
   blurb?: string;
   /** Always-visible fine print (the independent partner disclaimer). */
   note?: string;
+  /** Note is unconfirmed placeholder text: highlighted for reviewers (staging only). */
+  pending?: boolean;
+  /** Region subheading inside a group (Scouting: USA, then Colombia). */
+  region?: string;
 }
 
 export interface TeamGroup {
@@ -90,24 +94,44 @@ export default function TeamShowcase({ groups }: TeamShowcaseProps) {
               <i className="pent" />
               <span>{group.label}</span>
             </p>
-            <ul className="m-0 flex list-none flex-col gap-1 border-0 border-t border-solid border-line p-0">
-              {group.members.map((member) => (
-                <MemberRow
-                  key={member.id}
-                  member={member}
-                  isActive={activeId === member.id}
-                  isDimmed={hoveredId !== null && hoveredId !== member.id}
-                  isOpen={openId === member.id}
-                  onHover={setHoveredId}
-                  onToggle={(id) => setOpenId((current) => (current === id ? null : id))}
-                />
-              ))}
-            </ul>
+            {byRegion(group.members).map((block) => (
+              <div key={block.region ?? 'all'} className={block.region ? 'mb-5 last:mb-0' : undefined}>
+                {block.region && (
+                  <p className="!mb-2 font-display text-[0.78rem] font-extrabold uppercase tracking-[0.16em] text-brand">
+                    {block.region}
+                  </p>
+                )}
+                <ul className="m-0 flex list-none flex-col gap-1 border-0 border-t border-solid border-line p-0">
+                  {block.members.map((member) => (
+                    <MemberRow
+                      key={member.id}
+                      member={member}
+                      isActive={activeId === member.id}
+                      isDimmed={hoveredId !== null && hoveredId !== member.id}
+                      isOpen={openId === member.id}
+                      onHover={setHoveredId}
+                      onToggle={(id) => setOpenId((current) => (current === id ? null : id))}
+                    />
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         ))}
       </div>
     </div>
   );
+}
+
+// Splits a group's members into consecutive runs that share a region, keeping order.
+function byRegion(members: TeamMember[]) {
+  const blocks: { region?: string; members: TeamMember[] }[] = [];
+  for (const member of members) {
+    const last = blocks[blocks.length - 1];
+    if (last && last.region === member.region) last.members.push(member);
+    else blocks.push({ region: member.region, members: [member] });
+  }
+  return blocks;
 }
 
 function PhotoTile({
@@ -290,7 +314,9 @@ function MemberRow({
       )}
 
       {member.note && (
-        <p className="max-w-[62ch] pl-[38px] pt-3 text-[0.78rem] italic leading-snug text-ink-soft">{member.note}</p>
+        <p className="max-w-[62ch] pl-[38px] pt-3 text-[0.78rem] italic leading-snug text-ink-soft">
+          <span className={member.pending ? 'pending-confirmation' : undefined}>{member.note}</span>
+        </p>
       )}
     </li>
   );

@@ -8,23 +8,50 @@ interface Props {
 }
 const { lang } = Astro.props;
 
-// Bert leads the page in a featured founder section; the staff follow in the
-// TeamShowcase island (a 21st.dev component, see src/components/react).
+// Bert leads the page in a featured founder section (the start of Executive
+// Leadership); the staff follow in the TeamShowcase island (a 21st.dev component,
+// see src/components/react).
 //
-// Order, groups, and titles are Bert's (Oct 2026) and are shown exactly as listed:
-// operations, marketing, then each scouting region with its lead first and the
-// lead's team under them. Do not reorder without the client.
+// Structure per MFH's Team Page Restructure brief (Oct 2026), in this exact order:
+// Executive Leadership, Scouting & Player Development (USA, then Colombia; each
+// region's director first), Operations Support, Advisors & Independent Partners.
+// Contractors appear only under Advisors, each with a firm name and disclaimer.
+// Do not reorder or retitle without the client.
 //
 // Members without a headshot (Gustavo, Maria) get an initials tile until photos
 // arrive. A member gets an expandable `blurb` only when they have approved copy:
 // Fabian (p6), Andres (p5), and Ezzy (p2). Carlos expands to his independent
-// partner bio, and his disclaimer `note` is always visible.
+// partner bio. Advisor disclaimers (`note`) are always visible.
+
+// Gustavo's disclaimer is unconfirmed placeholder text. It renders, highlighted,
+// on Vercel preview deployments and in local dev only. Every other build (Vercel
+// production, a plain local build, a static upload) leaves his card out.
+// TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production,
+// then delete `pending` and this gate.
+const showPending = process.env.VERCEL_ENV === 'preview' || import.meta.env.DEV;
+
 const divisions = [
-  // Carlos is an independent partner (BM Accountax LLC); bio + disclaimer per his official one-pager.
-  { key: 'st.div4', people: [{ key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true }, { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true }, { key: 'st.p12' }, { key: 'st.p7' }] },
-  { key: 'st.div3', people: [{ key: 'st.p5', photo: '/photos/andres.jpg', blurb: true }] },
-  { key: 'st.div2', people: [{ key: 'st.p4', photo: '/photos/john.jpg' }, { key: 'st.p10', photo: '/photos/andres-hernandez.jpg' }, { key: 'st.p11', photo: '/photos/alejandro.jpg' }] },
-  { key: 'st.div5', people: [{ key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true }, { key: 'st.p3', photo: '/photos/sebastian.jpg' }] },
+  { key: 'st.div1', people: [{ key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true }] },
+  {
+    key: 'st.div2',
+    people: [
+      { key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true, region: 'st.reg.usa' },
+      { key: 'st.p3', photo: '/photos/sebastian.jpg', region: 'st.reg.usa' },
+      { key: 'st.p4', photo: '/photos/john.jpg', region: 'st.reg.col' },
+      { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', region: 'st.reg.col' },
+      { key: 'st.p11', photo: '/photos/alejandro.jpg', region: 'st.reg.col' },
+    ],
+  },
+  { key: 'st.div3', people: [{ key: 'st.p7' }] },
+  {
+    key: 'st.div4',
+    people: [
+      // Carlos: bio + disclaimer per his official one-pager (BM Accountax LLC).
+      { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true },
+      { key: 'st.p5', photo: '/photos/andres.jpg', blurb: true, note: true },
+      ...(showPending ? [{ key: 'st.p12', note: true, pending: true }] : []),
+    ],
+  },
 ];
 
 const initials = (name: string) =>
@@ -55,6 +82,8 @@ const groups: TeamGroup[] = divisions.map((d) => ({
             ? t(lang, `${person.key}.bio`)
             : undefined,
       note: 'note' in person && person.note ? t(lang, `${person.key}.note`) : undefined,
+      pending: 'pending' in person && person.pending ? true : undefined,
+      region: 'region' in person && person.region ? t(lang, person.region) : undefined,
     };
   }),
 }));
@@ -64,7 +93,7 @@ const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Bert Mahecha',
-  jobTitle: 'Founder & FIFA-Licensed Football Agent',
+  jobTitle: 'Founder & CEO · FIFA-Licensed Football Agent',
   image: 'https://mfhglobal.football/photos/bert.jpg',
   sameAs: ['https://www.linkedin.com/in/berts'],
   worksFor: {
@@ -211,6 +240,14 @@ const personLd = {
     .founder__creds {
       grid-template-columns: 1fr;
     }
+  }
+  /* Staging-only marker for unconfirmed placeholder copy (Gustavo's disclaimer). */
+  :global(.pending-confirmation) {
+    background: #fff3a3;
+    color: var(--ink);
+    padding: 1px 3px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
   .staff-growing {
     margin-top: 56px;
