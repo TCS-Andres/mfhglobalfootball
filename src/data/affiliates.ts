@@ -38,7 +38,6 @@ export const AFFILIATES: Affiliate[] = [
     region: 'uefa',
     based: ['ES', 'PT', 'VE'],
     focus: ['ES', 'PT', 'VE', 'MX'],
-    transfermarkt: 'https://www.transfermarkt.com/sousa-football-agents/beraterfirma/berater/16350',
   },
   {
     // Works from Madrid and Bogota; listed under Europe, where it is headquartered first.
@@ -55,7 +54,6 @@ export const AFFILIATES: Affiliate[] = [
     region: 'uefa',
     based: ['ES'],
     focus: ['ES'],
-    website: 'https://oceanusport.com',
   },
   {
     id: 'scout-valencia',
