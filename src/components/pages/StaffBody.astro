@@ -12,11 +12,13 @@ const { lang } = Astro.props;
 // Leadership); the staff follow in the TeamShowcase island (a 21st.dev component,
 // see src/components/react).
 //
-// Structure per MFH's Team Page Restructure brief (Oct 2026), in this exact order:
-// Executive Leadership, Scouting & Player Development (USA, then Colombia; each
-// region's director first), Operations Support, Advisors & Independent Partners.
-// Contractors appear only under Advisors, each with a firm name and disclaimer.
-// Do not reorder or retitle without the client.
+// Structure and titles per MFH's title list (Oct 2026), in this order: Executive
+// Leadership (Bert in the featured founder section, then Fabian and Maria), Scouting
+// grouped by region with each region's head first (North America, Latin America,
+// EMEA), then Advisors, who are external to MFH and carry a disclaimer. Bert is the
+// only person described as an agent. Scouting and Advisor titles never use "agent",
+// "director", "manager" or "VP", and no title names a country except Gustavo's
+// (Colombia). Do not reorder or retitle without the client.
 //
 // Members without a headshot (Gustavo, Maria) get an initials tile until photos
 // arrive. A member gets an expandable `blurb` only when they have approved copy:
@@ -40,25 +42,30 @@ const founded = [
 const showPending = process.env.VERCEL_ENV === 'preview' || import.meta.env.DEV;
 
 const divisions = [
-  { key: 'st.div1', people: [{ key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true }] },
+  {
+    key: 'st.div1',
+    people: [
+      { key: 'st.p6', photo: '/photos/fabian.jpg', blurb: true },
+      { key: 'st.p7', photo: '/photos/maria.jpg' },
+    ],
+  },
   {
     key: 'st.div2',
     people: [
-      { key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true, region: 'st.reg.usa' },
-      { key: 'st.p3', photo: '/photos/sebastian.jpg', region: 'st.reg.usa' },
-      { key: 'st.p4', photo: '/photos/john.jpg', region: 'st.reg.col' },
-      { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', region: 'st.reg.col' },
+      { key: 'st.p2', photo: '/photos/ezzy.jpg', blurb: true, region: 'st.reg.na' },
+      { key: 'st.p3', photo: '/photos/sebastian.jpg', region: 'st.reg.na' },
+      { key: 'st.p4', photo: '/photos/john.jpg', region: 'st.reg.la' },
+      { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', region: 'st.reg.la' },
       { key: 'st.p13', photo: '/photos/abdellah.jpg', blurb: true, region: 'st.reg.emea' },
     ],
   },
-  { key: 'st.div3', people: [{ key: 'st.p7', photo: '/photos/maria.jpg' }] },
   {
     key: 'st.div4',
     people: [
+      ...(showPending ? [{ key: 'st.p12', photo: '/photos/gustavo.jpg', note: true, pending: true }] : []),
       // Carlos: bio + disclaimer per his official one-pager (BM Accountax LLC).
       { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true },
       { key: 'st.p5', photo: '/photos/andres.jpg', blurb: true, note: true },
-      ...(showPending ? [{ key: 'st.p12', photo: '/photos/gustavo.jpg', note: true, pending: true }] : []),
     ],
   },
 ];
@@ -102,7 +109,7 @@ const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Bert Mahecha',
-  jobTitle: 'Founder & CEO · FIFA-Licensed Football Agent',
+  jobTitle: 'President & CEO · FIFA-Licensed Football Agent',
   image: 'https://mfhglobal.football/photos/bert.jpg',
   sameAs: ['https://www.linkedin.com/in/berts'],
   worksFor: {

@@ -41,22 +41,20 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   League: "Liga BetPlay" (never "La Liga BetPlay"); corridor order MLS, Liga BetPlay, Europe.
 - Age categories start at U12. Never offer U10 or younger in forms.
 - Site email: info@mfhglobal.football.
-- Team page at /team: structure and titles follow MFH's Team Page Restructure brief (Oct 2026)
-  and must be shown exactly in this order. Executive Leadership: Bert Mahecha (Founder & CEO ·
-  FIFA-Licensed Football Agent, featured founder section), Fabian Mahecha (Chief Operating
-  Officer). Scouting & Player Development, USA first: Ezzy Ihekoronye (Director of Scouting for
-  the USA), Sebastian Mahecha (Scout for USA Women's Football); then Colombia: John Mahecha
-  (Director of Scouting for Colombia), Carlos Andres Hernandez (Scout in Cali); then EMEA:
-  Abdellah El Jalaoui (Scout for EMEA). Alejandro Valdes was removed (Oct 19 2026, Andres).
-  Operations Support: Maria del Pilar Alvarez (Executive Assistant to the CEO). Advisors &
-  Independent Partners: Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor, BM Accountax LLC),
-  Andres Eduardo Diaz (Marketing & Brand Advisor, The Creative Strategist), Gustavo Rodriguez
-  (Legal Counsel for Colombia). On the site, region titles are written "Title, em dash, Region"
-  (the only place em dashes are allowed, see the brand rules). Title rules from MFH: "Director"
-  is the only mid-level rank, with nothing between it and the C-suite; C-suite titles are for owners
-  and employees only; contractors never hold C-suite or Director titles and appear only under
-  Advisors with their firm name and a disclaimer; scout titles must never suggest agent
-  services. Spanish keeps "Scout" (the brief's "Ojeador" is pending MFH confirmation).
+- Team page at /team: titles follow MFH's title list (Oct 2026), which superseded the earlier
+  restructure brief. Executive Leadership: Bert Mahecha (President & CEO · FIFA-Licensed
+  Football Agent, featured founder section), Fabian Mahecha (COO (Chief Operating Officer)),
+  Maria del Pilar Alvarez (Executive Assistant to the President & CEO). Scouting & Player
+  Development, by region, head first: North America (Ezzy Ihekoronye, Head of Scouting; Sebastian
+  Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos Andres Hernandez,
+  Scout), EMEA (Abdellah El Jalaoui, Scout). Advisors (external to MFH, not staff, each with a
+  disclaimer): Gustavo Rodriguez (Legal Advisor, Colombia · Rodríguez & Arboleda Consultoría
+  Legal), Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor), Andres Eduardo Diaz (Marketing &
+  Brand Advisor). Title rules from MFH: Bert is the only person described as an agent or as
+  representing players; Scouting and Advisor titles never use "agent", "director", "manager" or
+  "VP"; no title names a country except Colombia on Gustavo's; titles use "Title, Region" with a
+  comma. Alejandro Valdes was removed (Oct 19 2026, Andres) and is not shown even though MFH's
+  list still names him; confirm with Andres before re-adding.
   Gustavo's firm is Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón,
   Abogado, Cali), from his business card. His Tarjeta Profesional number is still missing, so his
   disclaimer remains a PLACEHOLDER: StaffBody.astro shows it highlighted on Vercel previews only
@@ -112,8 +110,6 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Voice: straightforward, trustworthy, knowledgeable, warm, educational. No hype, no aggressive
   sales language, no profanity, no naming or criticizing competitors.
 - Zero em dashes anywhere, in code, comments, or copy. Use commas, colons, or periods.
-  One client-mandated exception (MFH, Oct 2026): team titles with a region on the Team page
-  use an em dash between title and region, per MFH's compliance format. Nowhere else.
 - Headings and calls to action use Title Case in ENGLISH: capitalize the first letter of every
   word (Aug 2026, Andres). Spanish, French, Italian, and Portuguese keep their correct sentence
   case (first word and proper nouns only); capitalizing every word is grammatically wrong there,
