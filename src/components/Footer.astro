@@ -40,8 +40,9 @@ const social = {
       <div>
         <h4>{t(lang, 'footer.col2')}</h4>
         <ul>
+          <li><a href={localizePath('/questionnaire', lang)}>{t(lang, 'cta.qshort')}</a></li>
           <li><a href={localizePath('/contact', lang)}>{t(lang, 'cta.consult')}</a></li>
-          <li>{t(lang, 'footer.contactLine')}</li>
+          <li><a href="mailto:info@mfhglobal.football">info@mfhglobal.football</a></li>
         </ul>
         <div class="social" aria-label="Social media">
           <a href={social.instagram} aria-label="Instagram" rel="me noopener" target="_blank">
