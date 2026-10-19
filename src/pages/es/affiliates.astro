@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliatesBody from '../../components/pages/AffiliatesBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'es';
+---
+
+<BaseLayout lang={lang} title={`${t(lang, 'aff.title')} | MFH Global Football Agency`} description={t(lang, 'aff.metaDesc')}>
+  <AffiliatesBody lang={lang} />
+</BaseLayout>
