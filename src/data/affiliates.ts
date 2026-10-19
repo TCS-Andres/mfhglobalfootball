@@ -2,10 +2,10 @@
 //
 // Affiliates are independent agents, agencies, and scouts who work with MFH. They are not
 // staff: never give them MFH titles. Affiliates show organization names only, never the names
-// of individual people (Andres, Oct 19 2026). MFH's own scouts (SCOUTS below) are the
-// exception: they show name and title, exactly as on the Team page. An affiliate without an organization is shown
-// by its role, e.g. "Independent Scout". Countries use ISO 3166 alpha-2 codes; the page prints
-// each name in the visitor's language with Intl.DisplayNames.
+// of individual people (Andres, Oct 19 2026), so every affiliate needs an `org`. MFH's own
+// scouts (SCOUTS below) are the exception: they show name and title, exactly as on the Team
+// page. Countries use ISO 3166 alpha-2 codes; the page prints each name in the visitor's
+// language with Intl.DisplayNames.
 //
 // The map (src/data/world-dots.json) tags its dots with ISO numeric codes, so every country
 // used below also needs an entry in COUNTRY_NUM.
@@ -14,11 +14,10 @@ export type Region = 'uefa' | 'concacaf' | 'conmebol';
 
 export interface Affiliate {
   id: string;
-  /** Organization name, printed as written. Leave it out for an independent individual. */
-  org?: string;
-  /** i18n key for the role; it is the card title when there is no organization */
-  role?: string;
-  city?: string;
+  /** Organization name, printed as written */
+  org: string;
+  /** City per `based` country, shown as "City, Country" (e.g. { ES: 'Madrid' }) */
+  cities?: Record<string, string>;
   region: Region;
   /** Countries the affiliate works from; each one gets a pin on the map */
   based: string[];
@@ -43,7 +42,7 @@ export const AFFILIATES: Affiliate[] = [
     // Works from Madrid and Bogota; listed under Europe, where it is headquartered first.
     id: 'barron',
     org: 'Barron Management',
-    city: 'Madrid, Bogotá',
+    cities: { ES: 'Madrid', CO: 'Bogotá' },
     region: 'uefa',
     based: ['ES', 'CO'],
     focus: ['ES', 'CO'],
@@ -51,14 +50,6 @@ export const AFFILIATES: Affiliate[] = [
   {
     id: 'oceanusport',
     org: 'OceanuSport',
-    region: 'uefa',
-    based: ['ES'],
-    focus: ['ES'],
-  },
-  {
-    id: 'scout-valencia',
-    role: 'aff.role.indScout',
-    city: 'Valencia',
     region: 'uefa',
     based: ['ES'],
     focus: ['ES'],
@@ -74,7 +65,7 @@ export const AFFILIATES: Affiliate[] = [
   {
     id: 'playgold',
     org: 'Play Gold Agency',
-    city: 'Manizales',
+    cities: { CO: 'Manizales' },
     region: 'conmebol',
     based: ['CO'],
     focus: ['CO'],

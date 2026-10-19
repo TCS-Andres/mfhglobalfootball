@@ -112,8 +112,6 @@ const cropVars = [
   `--crop-y:${((-crop.y0 / cropW) * 100).toFixed(2)}%`,
 ].join(';');
 
-// Organizations are titled by name; independents by their role.
-const title = (a: Affiliate) => a.org ?? (a.role ? t(lang, a.role) : '');
 const stats = [
   { n: AFFILIATES.length, label: t(lang, 'aff.stat.affiliates') },
   { n: SCOUTS.length, label: t(lang, 'aff.stat.scouts') },
@@ -238,7 +236,7 @@ const stats = [
           <ul>
             {p.affs.map((a) => (
               <li>
-                <p class="aff-tip__title">{title(a)}</p>
+                <p class="aff-tip__title">{a.org}</p>
                 <p class="aff-tip__focus">
                   <span>{t(lang, 'aff.focus')}:</span> {a.focus.map(country).join(', ')}
                 </p>
@@ -316,14 +314,14 @@ const stats = [
               data-pins={a.based.join(' ')}
               data-lights={unique([...a.based, ...a.focus]).join(' ')}
             >
-              <h4>{title(a)}</h4>
-              {a.org && a.role && <p class="aff-card__role">{t(lang, a.role)}</p>}
+              <h4>{a.org}</h4>
               <dl>
                 <div>
                   <dt>{t(lang, 'aff.basedIn')}</dt>
                   <dd>
-                    {a.city && <span class="aff-chip">{a.city}</span>}
-                    {a.based.map((cc) => <span class="aff-chip">{country(cc)}</span>)}
+                    {a.based.map((cc) => (
+                      <span class="aff-chip">{a.cities?.[cc] ? `${a.cities[cc]}, ${country(cc)}` : country(cc)}</span>
+                    ))}
                   </dd>
                 </div>
                 <div>
