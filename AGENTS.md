@@ -46,13 +46,13 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   Football Agent, featured founder section), Fabian Mahecha (Chief Operating Officer, no acronym),
   Maria del Pilar Alvarez (Executive Assistant; "to the President & CEO" dropped Oct 19 2026, Andres). Scouting & Player
   Development, by region, head first: North America (Ezzy Ihekoronye, Head of Scouting; Sebastian
-  Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos Andres Hernandez,
-  Scout), Europe, Middle East & Africa (Jose Francisco Garcia Quevedo, Head of Scouting, based in
+  Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos A. Hernandez,
+  Scout), Europe, Middle East & Africa (Jose F. Garcia Quevedo, Head of Scouting, based in
   Spain, initials tile until a headshot arrives, made head Oct 19 2026 by Andres; Abdellah El
   Jalaoui, Scout). Region headings are spelled
   out; the region inside a title is abbreviated: NAM, LATAM, EMEA (Andres, Oct 2026). Advisors (external to MFH, not staff, each with a
   disclaimer): Gustavo Rodriguez (Legal Advisor, Colombia · Rodríguez & Arboleda Consultoría
-  Legal), Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor), Andres Eduardo Diaz (Marketing &
+  Legal), Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor), Andres E. Diaz (Marketing &
   Brand Advisor). Title rules from MFH: Bert is the only person described as an agent or as
   representing players; Scouting and Advisor titles never use "agent", "director", "manager" or
   "VP"; no title names a country except Colombia on Gustavo's; titles use "Title, Region" with a
