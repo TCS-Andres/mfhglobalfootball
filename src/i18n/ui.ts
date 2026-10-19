@@ -599,6 +599,7 @@ export const ui = {
     'res.c.transfermarkt': "Player market values, squad data, and full transfer histories across world football.",
     'res.c.11lex': "AI research across FIFA and CAS case law, for looking up decisions comparable to an active dispute.",
     'res.c.analytic': "Structured, long-term player evaluation for U9 to U18, built to measure development over years instead of a single tryout.",
+    'res.c.scoutlab': "AI scouting reports from match video, covering technical, tactical, physical, and mental attributes, for players, parents, and coaches.",
     // ---------------- Video Resources (/videos) ----------------
     'nav.videos': "Video Resources",
     'vid.title': "Video Resources",
@@ -1288,6 +1289,7 @@ export const ui = {
     'res.c.transfermarkt': "Valores de mercado, plantillas y el historial completo de transferencias del fútbol mundial.",
     'res.c.11lex': "Investigación con IA sobre jurisprudencia de FIFA y el TAS, para consultar decisiones comparables a una disputa activa.",
     'res.c.analytic': "Evaluación estructurada y de largo plazo para jugadores U9 a U18, diseñada para medir el desarrollo durante años en lugar de un solo tryout.",
+    'res.c.scoutlab': "Informes de scouting con IA a partir de video de partidos, con atributos técnicos, tácticos, físicos y mentales, para jugadores, padres y entrenadores.",
     // ---------------- Video Resources (/videos) ----------------
     'nav.videos': "Recursos en video",
     'vid.title': "Recursos en video",
@@ -1955,6 +1957,7 @@ export const ui = {
     'res.c.transfermarkt': "Valeurs marchandes des joueurs, données d'effectifs et historiques complets de transferts du football mondial.",
     'res.c.11lex': "Recherche par IA dans la jurisprudence de la FIFA et du TAS, pour consulter des décisions comparables à un litige en cours.",
     'res.c.analytic': "Évaluation structurée et de long terme pour les joueurs U9 à U18, conçue pour mesurer le développement sur plusieurs années plutôt qu'un seul essai.",
+    'res.c.scoutlab': "Rapports de scouting par IA à partir de vidéos de match, couvrant les qualités techniques, tactiques, physiques et mentales, pour les joueurs, les parents et les entraîneurs.",
     // ---------------- Video Resources (/videos) ----------------
     'nav.videos': "Ressources vidéo",
     'vid.title': "Ressources vidéo",
@@ -2622,6 +2625,7 @@ export const ui = {
     'res.c.transfermarkt': "Valori di mercato dei giocatori, dati delle rose e storici completi dei trasferimenti del calcio mondiale.",
     'res.c.11lex': "Ricerca con IA nella giurisprudenza FIFA e TAS, per consultare decisioni comparabili a una controversia in corso.",
     'res.c.analytic': "Valutazione strutturata e a lungo termine per giocatori U9-U18, pensata per misurare lo sviluppo negli anni invece di un solo provino.",
+    'res.c.scoutlab': "Report di scouting con IA dai video delle partite, su qualità tecniche, tattiche, fisiche e mentali, per giocatori, genitori e allenatori.",
     // ---------------- Video Resources (/videos) ----------------
     'nav.videos': "Risorse video",
     'vid.title': "Risorse video",
@@ -3289,6 +3293,7 @@ export const ui = {
     'res.c.transfermarkt': "Valores de mercado dos jogadores, dados de plantéis e historiais completos de transferências do futebol mundial.",
     'res.c.11lex': "Investigação com IA na jurisprudência da FIFA e do TAS, para consultar decisões comparáveis a um litígio em curso.",
     'res.c.analytic': "Avaliação estruturada e de longo prazo para jogadores U9 a U18, criada para medir o desenvolvimento ao longo dos anos em vez de um único teste.",
+    'res.c.scoutlab': "Relatórios de scouting com IA a partir de vídeo de jogos, com atributos técnicos, táticos, físicos e mentais, para jogadores, pais e treinadores.",
     // ---------------- Video Resources (/videos) ----------------
     'nav.videos': "Recursos em vídeo",
     'vid.title': "Recursos em vídeo",

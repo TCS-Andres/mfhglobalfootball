@@ -7,7 +7,7 @@
 // gating, and which links are private, is an OPEN DECISION, not yet closed.
 // Do not implement authentication until that is decided. When it is, mark the
 // personal links `visibility: 'private'` and render them only behind the gate.
-// All three links below are public today: none expose anything confidential.
+// All links below are public today: none expose anything confidential.
 //
 // Brand rule 0.8: third party companies are named ONLY here, never in the
 // ecosystem / services / how-it-works copy.
@@ -39,6 +39,12 @@ export const RESOURCES: ResourceLink[] = [
     title: 'Eleven Lex',
     url: 'https://elevenlex.com/',
     descKey: 'res.c.11lex',
+    visibility: 'public',
+  },
+  {
+    title: 'ScoutLab', // added Oct 19 2026 (Andres)
+    url: 'https://scoutlab.ai/home/',
+    descKey: 'res.c.scoutlab',
     visibility: 'public',
   },
 ];
