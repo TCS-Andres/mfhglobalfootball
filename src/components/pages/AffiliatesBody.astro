@@ -319,9 +319,7 @@ const stats = [
                 <div>
                   <dt>{t(lang, 'aff.basedIn')}</dt>
                   <dd>
-                    {a.based.map((cc) => (
-                      <span class="aff-chip">{a.cities?.[cc] ? `${a.cities[cc]}, ${country(cc)}` : country(cc)}</span>
-                    ))}
+                    {a.based.map((cc) => <span class="aff-chip">{country(cc)}</span>)}
                   </dd>
                 </div>
                 <div>

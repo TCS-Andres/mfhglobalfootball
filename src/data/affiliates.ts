@@ -5,7 +5,8 @@
 // of individual people (Andres, Oct 19 2026), so every affiliate needs an `org`. MFH's own
 // scouts (SCOUTS below) are the exception: they show name and title, exactly as on the Team
 // page. Countries use ISO 3166 alpha-2 codes; the page prints each name in the visitor's
-// language with Intl.DisplayNames.
+// language with Intl.DisplayNames. The page shows countries only, never cities (Andres, Oct 19
+// 2026).
 //
 // The map (src/data/world-dots.json) tags its dots with ISO numeric codes, so every country
 // used below also needs an entry in COUNTRY_NUM.
@@ -16,8 +17,6 @@ export interface Affiliate {
   id: string;
   /** Organization name, printed as written */
   org: string;
-  /** City per `based` country, shown as "City, Country" (e.g. { ES: 'Madrid' }) */
-  cities?: Record<string, string>;
   region: Region;
   /** Countries the affiliate works from; each one gets a pin on the map */
   based: string[];
@@ -42,7 +41,6 @@ export const AFFILIATES: Affiliate[] = [
     // Works from Madrid and Bogota; listed under Europe, where it is headquartered first.
     id: 'barron',
     org: 'Barron Management',
-    cities: { ES: 'Madrid', CO: 'Bogotá' },
     region: 'uefa',
     based: ['ES', 'CO'],
     focus: ['ES', 'CO'],
@@ -65,7 +63,6 @@ export const AFFILIATES: Affiliate[] = [
   {
     id: 'playgold',
     org: 'Play Gold Agency',
-    cities: { CO: 'Manizales' },
     region: 'conmebol',
     based: ['CO'],
     focus: ['CO'],
@@ -80,7 +77,7 @@ export const PIN_AT: Record<string, { lat: number; lng: number }> = {
   MX: { lat: 19.43, lng: -99.13 },
   VE: { lat: 10.48, lng: -66.9 },
   // Colombia's affiliate pin sits on the north coast (near Cartagena) instead of the capital,
-  // so it does not cover MFH's own Colombia pin in Bogota. Cards still show the real cities.
+  // so it does not cover MFH's own Colombia pin in Bogota.
   CO: { lat: 10.39, lng: -75.51 },
 };
 
