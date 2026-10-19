@@ -43,7 +43,7 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
 - Site email: info@mfhglobal.football.
 - Team page at /team: titles follow MFH's title list (Oct 2026), which superseded the earlier
   restructure brief. Executive Leadership: Bert Mahecha (President & CEO · FIFA-Licensed
-  Football Agent, featured founder section), Fabian Mahecha (COO (Chief Operating Officer)),
+  Football Agent, featured founder section), Fabian Mahecha (Chief Operating Officer, no acronym),
   Maria del Pilar Alvarez (Executive Assistant; "to the President & CEO" dropped Oct 19 2026, Andres). Scouting & Player
   Development, by region, head first: North America (Ezzy Ihekoronye, Head of Scouting; Sebastian
   Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos Andres Hernandez,
