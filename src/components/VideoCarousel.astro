@@ -1,0 +1,211 @@
+---
+// Homepage strip of Bert's educational videos: a horizontal scroll-snap row
+// (swipe on touch, arrow buttons on desktop). Each card plays inline through
+// EduVideo, which also keeps only one video playing at a time.
+import { t, localizePath, type Lang } from '../i18n/ui';
+import EduVideo from './EduVideo.astro';
+import { VIDEOS, clock } from '../data/videos';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const showLangBadge = lang !== 'en';
+const arrow = (d: string) =>
+  `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+---
+
+<section class="section" id="videos">
+  <div class="wrap">
+    <div class="vc-top">
+      <div class="head vc-head">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'vid.h1')}</span></span>
+        <h2>{t(lang, 'vid.home.h2')}</h2>
+        <p class="lead">{t(lang, 'vid.home.p')}</p>
+      </div>
+      <div class="vc-nav">
+        <button class="vc-btn" type="button" data-vc-prev aria-label={t(lang, 'vid.prev')} disabled>
+          <Fragment set:html={arrow('M15 6l-6 6 6 6')} />
+        </button>
+        <button class="vc-btn" type="button" data-vc-next aria-label={t(lang, 'vid.next')}>
+          <Fragment set:html={arrow('M9 6l6 6-6 6')} />
+        </button>
+      </div>
+    </div>
+
+    <ul class="vc-track" data-vc-track aria-label={t(lang, 'vid.h1')}>
+      {VIDEOS.map((v) => (
+        <li class="vc-card">
+          <EduVideo lang={lang} video={v} />
+          <h3>{t(lang, `vid.${v.key}.t`)}</h3>
+          <div class="vc-meta">
+            <span>{clock(v.seconds)}</span>
+            {showLangBadge && <span>{t(lang, 'vid.inEnglish')}</span>}
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="vc-more">
+      <a class="btn btn-outline" href={localizePath('/videos', lang)}>{t(lang, 'vid.more')}</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('#videos').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-vc-track]');
+    const prev = root.querySelector<HTMLButtonElement>('[data-vc-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-vc-next]');
+    if (!track || !prev || !next) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scroll by one card (card width plus the gap).
+    const step = () => {
+      const card = track.querySelector<HTMLElement>('.vc-card');
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card ? card.offsetWidth + gap : track.clientWidth;
+    };
+    // Track the card we are heading to, so quick repeat clicks during a smooth
+    // scroll each advance one card instead of restarting from mid-scroll.
+    let target: number | null = null;
+    let settle = 0;
+    const go = (dir: number) => {
+      const w = step();
+      const max = track.scrollWidth - track.clientWidth;
+      const last = Math.ceil(max / w - 0.01);
+      const from = target ?? Math.round(track.scrollLeft / w);
+      target = Math.max(0, Math.min(last, from + dir));
+      track.scrollTo({ left: Math.min(target * w, max), behavior: reduce ? 'auto' : 'smooth' });
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => (target = null), 700);
+    };
+    prev.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    };
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .vc-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .vc-head {
+    margin-bottom: 0;
+  }
+  .vc-nav {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .vc-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    background: transparent;
+    color: var(--blue);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+  .vc-btn:hover:not(:disabled) {
+    background: var(--blue);
+    color: #fff;
+  }
+  .vc-btn:focus-visible {
+    outline: 3px solid var(--gold-soft);
+    outline-offset: 2px;
+  }
+  .vc-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .vc-track {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0 12px;
+    display: grid;
+    grid-auto-flow: column;
+    /* Three cards plus a peek of the next one, so the row reads as scrollable. */
+    grid-auto-columns: 30%;
+    column-gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .vc-track::-webkit-scrollbar {
+    display: none;
+  }
+  .vc-card {
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+  .vc-card h3 {
+    margin-top: 14px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+  .vc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .vc-meta span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    color: var(--blue);
+    background: var(--sky);
+    border-radius: 999px;
+    padding: 4px 11px;
+  }
+  .vc-more {
+    margin-top: 28px;
+  }
+
+  @media (max-width: 1024px) {
+    .vc-track {
+      grid-auto-columns: 46%;
+    }
+  }
+  @media (max-width: 640px) {
+    .vc-top {
+      display: block;
+    }
+    .vc-nav {
+      display: none;
+    }
+    .vc-track {
+      grid-auto-columns: 84%;
+      column-gap: 16px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vc-track {
+      scroll-behavior: auto;
+    }
+    .vc-btn {
+      transition: none;
+    }
+  }
+</style>
