@@ -27,15 +27,12 @@ const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
   </div>
 </section>
 
-<!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
-<Pathway lang={lang} />
-
-<!-- Bert explains the five steps on video -->
-<section class="section" style="padding-top:0">
+<!-- Bert explains the five steps on video, first thing after the hero -->
+<section class="section">
   <div class="wrap">
-    <div class="head" style="text-align:center;margin-inline:auto">
+    <div class="head" style="text-align:center;margin-inline:auto;max-width:880px">
       <span class="eyebrow" style="justify-content:center"><i class="pent"></i><span>{t(lang, 'vid.plan.eyebrow')}</span></span>
-      <h2>{t(lang, 'vid.plan.h2')}</h2>
+      <h2 style="text-wrap:balance">{t(lang, 'vid.plan.h2')}</h2>
       <p class="lead">{t(lang, 'vid.plan.p')}</p>
     </div>
     <div class="plan-video reveal">
@@ -46,6 +43,9 @@ const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
     </p>
   </div>
 </section>
+
+<!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
+<Pathway lang={lang} />
 
 <!-- Image break -->
 <section class="section" style="padding-top:0">
