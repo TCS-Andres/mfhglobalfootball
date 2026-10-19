@@ -52,7 +52,6 @@ export const AFFILIATES: Affiliate[] = [
   {
     id: 'oceanusport',
     org: 'OceanuSport',
-    role: 'aff.role.agency',
     region: 'uefa',
     based: ['ES'],
     focus: ['ES'],
