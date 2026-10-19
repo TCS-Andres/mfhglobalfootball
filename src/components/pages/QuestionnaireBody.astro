@@ -59,6 +59,9 @@ const T = {
   photoError: isEs
     ? 'No pudimos leer esa imagen. Prueba con un archivo JPG o PNG.'
     : 'We could not read that image. Please try a JPG or PNG file.',
+  emailError: isEs
+    ? 'Revisa el correo, por ejemplo nombre@gmail.com.'
+    : 'Please check the email address, for example name@gmail.com.',
 };
 ---
 
@@ -149,6 +152,7 @@ const T = {
                       placeholder={f.type === 'url' ? 'https://' : undefined}
                     />
                   )}
+                  {f.type === 'email' && <p class="q-field__error" data-email-error role="alert" hidden>{T.emailError}</p>}
                   {f.help && <small>{isEs ? f.help.es : f.help.en}</small>}
                 </div>
               ))}
@@ -315,14 +319,23 @@ const T = {
     }
     beginBtn.addEventListener('click', () => show(idx + 1));
 
-    // Validate required visible fields in the current section
+    // Same shape check as the server (/api/intake). The form is novalidate, so a
+    // mistyped address would otherwise reach the mail provider and be rejected.
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    // Validate required visible fields in the current section, plus the format of
+    // any email address that was filled in.
     const validateSection = (panel) => {
       let ok = true;
       panel.querySelectorAll('.q-field').forEach((fd) => {
         if (fd.hidden) return;
         const f = fieldById[fd.dataset.field];
-        if (!f || !f.required) return;
-        if (!val(f.id)) {
+        if (!f) return;
+        const v = val(f.id);
+        const badEmail = f.type === 'email' && !!v && !EMAIL_RE.test(v);
+        const emailErr = fd.querySelector('[data-email-error]');
+        if (emailErr) emailErr.hidden = !badEmail;
+        if ((f.required && !v) || badEmail) {
           fd.classList.add('q-invalid');
           ok = false;
         } else fd.classList.remove('q-invalid');
@@ -659,7 +672,8 @@ const T = {
     border-radius: 10px;
     border: 2px solid var(--blue);
   }
-  .q-photo__error {
+  .q-photo__error,
+  .q-field__error {
     color: #b3261e;
     font-size: 0.9rem;
     font-weight: 600;

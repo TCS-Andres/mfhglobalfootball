@@ -48,6 +48,15 @@ const readPhoto = (b64: unknown): Uint8Array | undefined => {
 const esc = (s: unknown) =>
   String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string);
 
+// Only pass the player's address as Reply-To when it looks like an email. The mail
+// provider rejects the whole message over a malformed Reply-To, and the form used
+// to accept any text in that field.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const replyToFrom = (v: unknown) => {
+  const s = String(v ?? '').trim();
+  return EMAIL_RE.test(s) ? s : undefined;
+};
+
 const json = (obj: unknown, status = 200) =>
   new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json' } });
 
@@ -152,15 +161,26 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const resend = new Resend(apiKey as string);
-    const { error } = await resend.emails.send({
+    const message = {
       from,
       to,
-      replyTo: answers.q6 || undefined, // player's email, if provided
       subject: `New player questionnaire: ${playerName}`,
       html: emailHtml,
       attachments,
-    });
-    if (error) return json({ ok: false, error: String((error as any).message || error) }, 502);
+    };
+    const replyTo = replyToFrom(answers.q6); // player's email, if provided
+    let { error } = await resend.emails.send({ ...message, replyTo });
+    // A Reply-To the provider still refuses must not cost Bert the submission:
+    // send once more without it (the player's email is in the body and the PDF).
+    if (error && replyTo) {
+      console.error('Intake email rejected, retrying without Reply-To:', (error as any).message || error);
+      ({ error } = await resend.emails.send(message));
+    }
+    if (error) {
+      // Logged so a failed submission can be diagnosed from the Vercel logs.
+      console.error('Intake email failed:', (error as any).name, (error as any).message || error);
+      return json({ ok: false, error: String((error as any).message || error) }, 502);
+    }
     return json({ ok: true });
   } catch (e: any) {
     return json({ ok: false, error: e?.message || 'send failed' }, 500);
