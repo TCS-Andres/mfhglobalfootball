@@ -1,0 +1,111 @@
+---
+// One of Bert's educational videos: native player with poster, optional English
+// captions track, and a gold play button overlay (same look as the Journey video).
+// Native controls appear once playback starts, so they never cover the title
+// graphic on the poster.
+import { t, type Lang } from '../i18n/ui';
+import { type EduVideo, videoSrc, videoPoster, videoCaptions } from '../data/videos';
+
+interface Props {
+  lang: Lang;
+  video: EduVideo;
+}
+const { lang, video } = Astro.props;
+const title = t(lang, `vid.${video.key}.t`);
+---
+
+<div class="eduv">
+  <video
+    preload="none"
+    playsinline
+    poster={videoPoster(video)}
+    aria-label={title}
+    width="1280"
+    height="720"
+  >
+    <source src={videoSrc(video)} type="video/mp4" />
+    {video.captions && <track kind="captions" src={videoCaptions(video)} srclang="en" label="English" />}
+  </video>
+  <button class="eduv__play" type="button" aria-label={`${t(lang, 'vid.play')}: ${title}`}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+  </button>
+</div>
+
+<script>
+  // Overlay play button, and only one video playing at a time on the page.
+  const wraps = document.querySelectorAll<HTMLElement>('.eduv');
+  const videos = Array.from(wraps, (w) => w.querySelector('video')).filter(
+    (v): v is HTMLVideoElement => !!v,
+  );
+  wraps.forEach((wrap) => {
+    const video = wrap.querySelector('video');
+    const btn = wrap.querySelector('.eduv__play');
+    if (!video || !btn) return;
+    btn.addEventListener('click', () => video.play());
+    // Before the first play, a click anywhere on the poster starts the video.
+    video.addEventListener('click', () => {
+      if (!video.controls) video.play();
+    });
+    video.addEventListener('play', () => {
+      video.controls = true;
+      btn.classList.add('is-hidden');
+      videos.forEach((v) => v !== video && v.pause());
+    });
+    video.addEventListener('ended', () => btn.classList.remove('is-hidden'));
+  });
+</script>
+
+<style>
+  .eduv {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--blue-deep);
+    box-shadow: var(--shadow);
+  }
+  .eduv video {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: var(--blue-deep);
+  }
+  .eduv__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(60px, 9vw, 86px);
+    height: clamp(60px, 9vw, 86px);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: var(--gold);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 2;
+  }
+  .eduv__play svg {
+    width: 40%;
+    height: 40%;
+    margin-left: 5px;
+    fill: var(--blue-deep);
+  }
+  .eduv__play:hover,
+  .eduv__play:focus-visible {
+    transform: translate(-50%, -50%) scale(1.08);
+    background: var(--gold-soft);
+  }
+  .eduv__play.is-hidden {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .eduv__play {
+      transition: none;
+    }
+  }
+</style>

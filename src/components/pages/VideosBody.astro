@@ -1,0 +1,169 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import CtaBanner from '../CtaBanner.astro';
+import EduVideo from '../EduVideo.astro';
+import { VIDEOS, clock, isoDuration, videoSrc, videoPoster } from '../../data/videos';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const [featured, ...rest] = VIDEOS;
+// The videos are recorded in English; other locales say so on each card.
+const showLangBadge = lang !== 'en';
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+const videoLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: VIDEOS.map((v, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'VideoObject',
+      name: t('en', `vid.${v.key}.t`),
+      description: t('en', `vid.${v.key}.d`),
+      thumbnailUrl: `${site}${videoPoster(v)}`,
+      contentUrl: `${site}${videoSrc(v)}`,
+      uploadDate: '2026-10-19',
+      duration: isoDuration(v.seconds),
+      inLanguage: 'en',
+    },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(videoLd)} />
+
+<section class="vid-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'vid.eyebrow')}</span></span>
+    <h1>{t(lang, 'vid.h1')}</h1>
+    <p>{t(lang, 'vid.intro')}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <article class="vid-featured reveal">
+      <EduVideo lang={lang} video={featured} />
+      <div class="vid-featured__body">
+        <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'vid.start')}</span></span>
+        <h2>{t(lang, `vid.${featured.key}.t`)}</h2>
+        <p>{t(lang, `vid.${featured.key}.d`)}</p>
+        <div class="vid-meta">
+          <span>{clock(featured.seconds)}</span>
+          {showLangBadge && <span>{t(lang, 'vid.inEnglish')}</span>}
+        </div>
+      </div>
+    </article>
+
+    <div class="vid-grid">
+      {rest.map((v, i) => (
+        <article class="vid-card reveal" style={`--d:${i * 80}ms`}>
+          <EduVideo lang={lang} video={v} />
+          <h3>{t(lang, `vid.${v.key}.t`)}</h3>
+          <p>{t(lang, `vid.${v.key}.d`)}</p>
+          <div class="vid-meta">
+            <span>{clock(v.seconds)}</span>
+            {showLangBadge && <span>{t(lang, 'vid.inEnglish')}</span>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<CtaBanner lang={lang} />
+
+<style>
+  .vid-hero {
+    background: linear-gradient(160deg, var(--blue-deep), var(--blue));
+    color: #fff;
+    padding: clamp(72px, 12vw, 128px) 0 clamp(48px, 7vw, 72px);
+  }
+  .vid-hero .eyebrow {
+    color: var(--gold-soft);
+  }
+  .vid-hero h1 {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: -0.015em;
+    line-height: 1.03;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    margin: 14px 0 0;
+  }
+  .vid-hero p {
+    color: rgba(255, 255, 255, 0.86);
+    margin-top: 16px;
+    max-width: 60ch;
+    font-size: 1.08rem;
+  }
+
+  .vid-featured {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+  }
+  .vid-featured h2 {
+    margin-top: 12px;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+  }
+  .vid-featured p {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 1.04rem;
+  }
+
+  .vid-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(28px, 4vw, 44px) clamp(20px, 3vw, 32px);
+    margin-top: clamp(48px, 7vw, 80px);
+    padding-top: clamp(40px, 6vw, 64px);
+    border-top: 1px solid var(--line);
+  }
+  .vid-card h3 {
+    margin-top: 18px;
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+  .vid-card p {
+    margin-top: 8px;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+
+  .vid-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .vid-meta span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--blue);
+    background: var(--sky);
+    border-radius: 999px;
+    padding: 4px 11px;
+  }
+
+  @media (max-width: 900px) {
+    .vid-featured {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .vid-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

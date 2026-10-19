@@ -1,8 +1,10 @@
 ---
-import { t, type Lang } from '../../i18n/ui';
+import { t, localizePath, type Lang } from '../../i18n/ui';
 import Pathway from '../Pathway.astro';
 import CtaBanner from '../CtaBanner.astro';
 import FaqSection from '../FaqSection.astro';
+import EduVideo from '../EduVideo.astro';
+import { VIDEOS } from '../../data/videos';
 
 interface Props {
   lang: Lang;
@@ -10,6 +12,8 @@ interface Props {
 const { lang } = Astro.props;
 
 const stories = ['pl.story1', 'pl.story2', 'pl.story3'];
+// Bert's "The Five Steps" video walks through the pathway above.
+const fiveSteps = VIDEOS.find((v) => v.key === 'v5')!;
 const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
 ---
 
@@ -25,6 +29,23 @@ const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
 
 <!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
 <Pathway lang={lang} />
+
+<!-- Bert explains the five steps on video -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head" style="text-align:center;margin-inline:auto">
+      <span class="eyebrow" style="justify-content:center"><i class="pent"></i><span>{t(lang, 'vid.plan.eyebrow')}</span></span>
+      <h2>{t(lang, 'vid.plan.h2')}</h2>
+      <p class="lead">{t(lang, 'vid.plan.p')}</p>
+    </div>
+    <div class="plan-video reveal">
+      <EduVideo lang={lang} video={fiveSteps} />
+    </div>
+    <p class="plan-video__more">
+      <a class="btn btn-outline" href={localizePath('/videos', lang)}>{t(lang, 'vid.more')}</a>
+    </p>
+  </div>
+</section>
 
 <!-- Image break -->
 <section class="section" style="padding-top:0">
@@ -54,3 +75,14 @@ const faqItems = [1, 2, 3].map((n) => ({ q: `pl.fq${n}`, a: `pl.fa${n}` }));
 <FaqSection lang={lang} items={faqItems} tone="plain" />
 
 <CtaBanner lang={lang} />
+
+<style>
+  .plan-video {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .plan-video__more {
+    text-align: center;
+    margin-top: 28px;
+  }
+</style>

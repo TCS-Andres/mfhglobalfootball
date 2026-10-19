@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideosBody from '../../components/pages/VideosBody.astro';
+import { t } from '../../i18n/ui';
+const lang = 'pt';
+---
+
+<BaseLayout lang={lang} title={`${t(lang, 'vid.title')} | MFH Global Football Agency`} description={t(lang, 'vid.metaDesc')}>
+  <VideosBody lang={lang} />
+</BaseLayout>
