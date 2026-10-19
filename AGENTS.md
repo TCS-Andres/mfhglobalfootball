@@ -47,8 +47,9 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   Maria del Pilar Alvarez (Executive Assistant; "to the President & CEO" dropped Oct 19 2026, Andres). Scouting & Player
   Development, by region, head first: North America (Ezzy Ihekoronye, Head of Scouting; Sebastian
   Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos Andres Hernandez,
-  Scout), Europe, Middle East & Africa (Abdellah El Jalaoui, Scout; Jose Francisco Garcia Quevedo,
-  Scout, based in Spain, initials tile until a headshot arrives). Region headings are spelled
+  Scout), Europe, Middle East & Africa (Jose Francisco Garcia Quevedo, Head of Scouting, based in
+  Spain, initials tile until a headshot arrives, made head Oct 19 2026 by Andres; Abdellah El
+  Jalaoui, Scout). Region headings are spelled
   out; the region inside a title is abbreviated: NAM, LATAM, EMEA (Andres, Oct 2026). Advisors (external to MFH, not staff, each with a
   disclaimer): Gustavo Rodriguez (Legal Advisor, Colombia · Rodríguez & Arboleda Consultoría
   Legal), Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor), Andres Eduardo Diaz (Marketing &

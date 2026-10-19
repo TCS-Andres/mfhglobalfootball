@@ -130,6 +130,6 @@ export const SCOUTS: Scout[] = [
   { key: 'st.p3', photo: '/photos/sebastian.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
   { key: 'st.p4', photo: '/photos/john.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
   { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
-  { key: 'st.p13', photo: '/photos/abdellah.jpg', country: 'GB', region: 'st.reg.emea', pin: 'GB' },
   { key: 'st.p14', country: 'ES', region: 'st.reg.emea', pin: 'ES' },
+  { key: 'st.p13', photo: '/photos/abdellah.jpg', country: 'GB', region: 'st.reg.emea', pin: 'GB' },
 ];
