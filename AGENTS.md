@@ -45,8 +45,8 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   FIFA-Licensed Football Agent, featured founder section), Fabian Mahecha (Chief Operating
   Officer). Scouting & Player Development, USA first: Ezzy Ihekoronye (Director of Scouting for
   the USA), Sebastian Mahecha (Scout for USA Women's Football); then Colombia: John Mahecha
-  (Director of Scouting for Colombia), Carlos Andres Hernandez (Scout in Cali), Alejandro Valdes
-  (Scout in Medellín).
+  (Director of Scouting for Colombia), Carlos Andres Hernandez (Scout in Cali); then EMEA:
+  Abdellah El Jalaoui (Scout for EMEA). Alejandro Valdes was removed (Oct 19 2026, Andres).
   Operations Support: Maria del Pilar Alvarez (Executive Assistant to the CEO). Advisors &
   Independent Partners: Carlos Bernal, CPA, MAcc (Accounting & Tax Advisor, BM Accountax LLC),
   Andres Eduardo Diaz (Marketing & Brand Advisor, The Creative Strategist), Gustavo Rodriguez
@@ -56,8 +56,14 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   and employees only; contractors never hold C-suite or Director titles and appear only under
   Advisors with their firm name and a disclaimer; scout titles must never suggest agent
   services. Spanish keeps "Scout" (the brief's "Ojeador" is pending MFH confirmation).
-  Gustavo's disclaimer is a PLACEHOLDER: StaffBody.astro shows it highlighted on Vercel previews
-  only and leaves his card off every other build until the confirmed text arrives.
+  Gustavo's firm is Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón,
+  Abogado, Cali), from his business card. His Tarjeta Profesional number is still missing, so his
+  disclaimer remains a PLACEHOLDER: StaffBody.astro shows it highlighted on Vercel previews only
+  and leaves his card off every other build until the number arrives. Never publish his phone,
+  email, or office address.
+  Bert's founder section lists the leagues and clubs he founded (his own list, Oct 2026): South
+  Florida Soccer League 2004, South Florida FC 2011, South Florida Youth Soccer League 2013,
+  American Premier Soccer League 2014, each with its logo and Facebook link.
   Miguel Benito was removed at the client's request (Oct 2026); Phil Zayas was removed earlier.
   Gustavo and Maria have no headshot yet and show initials tiles. Bios (`blurb`) exist only
   for Fabian, Andres, and Ezzy. Ezzy's headshot (Oct 2026) is his own photo with only the
