@@ -3,8 +3,13 @@ import { t, localizePath, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** 'coach' swaps player wording for coach wording (Coach Representation page). */
+  audience?: 'player' | 'coach';
 }
-const { lang } = Astro.props;
+const { lang, audience = 'player' } = Astro.props;
+const COACH_KEYS = new Set(['guide.body']);
+// Keys with a `.coach` variant in ui.ts use it on the coach page.
+const tk = (key: string) => t(lang, audience === 'coach' && COACH_KEYS.has(key) ? `${key}.coach` : key);
 const about = localizePath('/about', lang);
 ---
 
@@ -17,7 +22,7 @@ const about = localizePath('/about', lang);
       <div class="body reveal-r">
         <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'guide.eyebrow')}</span></span>
         <h2>{t(lang, 'guide.h2')}</h2>
-        <p>{t(lang, 'guide.body')}</p>
+        <p>{tk('guide.body')}</p>
         <div class="panel">
           <h3>{t(lang, 'guide.panel')}</h3>
           <ul>

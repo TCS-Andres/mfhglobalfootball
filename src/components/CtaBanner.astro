@@ -3,19 +3,30 @@ import { t, localizePath, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** 'coach' swaps player wording for coach wording (Coach Representation page). */
+  audience?: 'player' | 'coach';
 }
-const { lang } = Astro.props;
+const { lang, audience = 'player' } = Astro.props;
+const COACH_KEYS = new Set(['cta.sub']);
+// Keys with a `.coach` variant in ui.ts use it on the coach page.
+const tk = (key: string) => t(lang, audience === 'coach' && COACH_KEYS.has(key) ? `${key}.coach` : key);
 ---
 
 <section class="cta-banner">
   <div class="wrap">
     <div>
       <h2>{t(lang, 'cta.h2')}</h2>
-      <p>{t(lang, 'cta.sub')}</p>
+      <p>{tk('cta.sub')}</p>
     </div>
     <div class="cta-banner__actions">
-      <a href={localizePath('/questionnaire', lang)} class="btn btn-primary">{t(lang, 'cta.questionnaire')}</a>
-      <a href={localizePath('/contact', lang)} class="btn btn-ghost">{t(lang, 'cta.consult')}</a>
+      {audience === 'coach' ? (
+        <a href={localizePath('/contact', lang)} class="btn btn-primary">{t(lang, 'cta.consult')}</a>
+      ) : (
+        <>
+          <a href={localizePath('/questionnaire', lang)} class="btn btn-primary">{t(lang, 'cta.questionnaire')}</a>
+          <a href={localizePath('/contact', lang)} class="btn btn-ghost">{t(lang, 'cta.consult')}</a>
+        </>
+      )}
     </div>
   </div>
 </section>

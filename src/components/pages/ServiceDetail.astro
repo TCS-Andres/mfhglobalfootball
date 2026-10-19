@@ -13,6 +13,8 @@ interface Props {
   service: 'youth' | 'player' | 'transfers' | 'coach' | 'eval';
 }
 const { lang, service } = Astro.props;
+// The coach page speaks to coaches: shared sections switch to their coach wording.
+const audience = service === 'coach' ? 'coach' : 'player';
 
 // slug, hero image, and the four ping-pong images (none repeats that page's hero).
 const SERVICES = {
@@ -107,15 +109,15 @@ const breadcrumbLd = {
 />
 
 <!-- The MFH Pathway (circular ecosystem, replaces the old four-step block) -->
-<Pathway lang={lang} />
+<Pathway lang={lang} audience={audience} />
 
 <!-- The experience you can count on (counter) -->
-<StatsBand lang={lang} />
+<StatsBand lang={lang} audience={audience} />
 
 <!-- The person in your corner (Bert) -->
-<MeetBert lang={lang} />
+<MeetBert lang={lang} audience={audience} />
 
 <!-- FAQs -->
 <FaqSection lang={lang} items={faqItems} tone="plain" />
 
-<CtaBanner lang={lang} />
+<CtaBanner lang={lang} audience={audience} />

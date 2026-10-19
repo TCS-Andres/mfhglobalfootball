@@ -3,8 +3,13 @@ import { t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** 'coach' swaps player wording for coach wording (Coach Representation page). */
+  audience?: 'player' | 'coach';
 }
-const { lang } = Astro.props;
+const { lang, audience = 'player' } = Astro.props;
+const COACH_KEYS = new Set(['stat6.l']);
+// Keys with a `.coach` variant in ui.ts use it on the coach page.
+const tk = (key: string) => t(lang, audience === 'coach' && COACH_KEYS.has(key) ? `${key}.coach` : key);
 
 // Honest facts only (the "5 sides of the game" stat lives on the About page).
 // 38 years and 1,000+ players confirmed on the July 2026 review call.
@@ -23,7 +28,7 @@ const stats = [
       {stats.map((s, i) => (
         <div class="stat reveal-scale" style={`--d:${i * 110}ms`}>
           <div class="n" class:list={[{ count: s.count }]} data-count={s.count ? t(lang, s.n) : undefined}>{t(lang, s.n)}</div>
-          <div class="l">{t(lang, s.l)}</div>
+          <div class="l">{tk(s.l)}</div>
         </div>
       ))}
     </div>

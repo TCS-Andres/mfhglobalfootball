@@ -3,8 +3,13 @@ import { t, localizePath, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** 'coach' swaps player wording for coach wording (Coach Representation page). */
+  audience?: 'player' | 'coach';
 }
-const { lang } = Astro.props;
+const { lang, audience = 'player' } = Astro.props;
+const COACH_KEYS = new Set(['pw.sub', 'pw.s1.d', 'pw.s2.n', 'pw.s2.d', 'pw.s3.d', 'pw.s5.d']);
+// Keys with a `.coach` variant in ui.ts use it on the coach page.
+const tk = (key: string) => t(lang, audience === 'coach' && COACH_KEYS.has(key) ? `${key}.coach` : key);
 
 // "How We Work Together": one section. Five step CARDS carry the copy and the
 // calls to action; below them the same five steps are drawn as a circular
@@ -13,7 +18,11 @@ const { lang } = Astro.props;
 // and Opportunity have no action: the site no longer offers self-booking (Oct 2026).
 const analyticSoccer = 'https://analyticsoccer.com/';
 const stages = [1, 2, 3, 4, 5];
-const cardCta: Record<number, { key: string; href: string; external: boolean }> = {
+// The questionnaire and Analytic Soccer are built for players, so on the coach page the
+// first card points to the contact page and the profile/evaluation cards have no link.
+const cardCta: Record<number, { key: string; href: string; external: boolean }> = audience === 'coach'
+  ? { 1: { key: 'cta.consult', href: localizePath('/contact', lang), external: false } }
+  : {
   1: { key: 'pw.s1.cta', href: localizePath('/questionnaire', lang), external: false },
   2: { key: 'pw.s2.cta', href: analyticSoccer, external: true },
   3: { key: 'pw.s3.cta', href: analyticSoccer, external: true },
@@ -67,8 +76,8 @@ const arcs = nodes.map((nd) => {
         return (
           <li class="pw-card reveal" style={`--d:${i * 70}ms`}>
             <span class="pw-card__num" aria-hidden="true">{n}</span>
-            <h3 class="pw-card__name">{t(lang, `pw.s${n}.n`)}</h3>
-            <p class="pw-card__copy">{t(lang, `pw.s${n}.d`)}</p>
+            <h3 class="pw-card__name">{tk(`pw.s${n}.n`)}</h3>
+            <p class="pw-card__copy">{tk(`pw.s${n}.d`)}</p>
             {c && (
               <a
                 class="pw-card__cta"
@@ -107,14 +116,14 @@ const arcs = nodes.map((nd) => {
 
       <div class="pathway__hub">
         <h3 class="pathway__title">{t(lang, 'pw.hub')}</h3>
-        <p class="pathway__sub">{t(lang, 'pw.sub')}</p>
+        <p class="pathway__sub">{tk('pw.sub')}</p>
       </div>
 
       <ol class="pathway__list">
         {stages.map((n) => (
           <li class={`pathway__step pathway__step--${n}`}>
             <span class="pathway__badge">{n}</span>
-            <span class="pathway__name">{t(lang, `pw.s${n}.n`)}</span>
+            <span class="pathway__name">{tk(`pw.s${n}.n`)}</span>
           </li>
         ))}
       </ol>
