@@ -58,10 +58,9 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   comma. Alejandro Valdes was removed (Oct 19 2026, Andres) and is not shown even though MFH's
   list still names him; confirm with Andres before re-adding.
   Gustavo's firm is Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón,
-  Abogado, Cali), from his business card. His Tarjeta Profesional number is still missing, so his
-  disclaimer remains a PLACEHOLDER: StaffBody.astro shows it highlighted on Vercel previews only
-  and leaves his card off every other build until the number arrives. Never publish his phone,
-  email, or office address.
+  Abogado, Cali), from his business card. He is shown on the live site (Oct 2026); his disclaimer
+  omits the professional registration line until his Tarjeta Profesional number arrives, then add
+  it in all five languages. Never publish his phone, email, or office address.
   Bert's founder section lists the leagues and clubs he founded (his own list, Oct 2026): South
   Florida Soccer League 2004, South Florida FC 2011, South Florida Youth Soccer League 2013,
   American Premier Soccer League 2014, each with its logo and Facebook link.

@@ -236,9 +236,7 @@ export const ui = {
     'st.p14.t': "Scout, EMEA",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Legal Advisor, Colombia · Rodríguez & Arboleda Consultoría Legal",
-    // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
-    // PLACEHOLDER: shown (highlighted) on staging only; StaffBody.astro hides Gustavo on production.
-    'st.p12.note': "Legal services are provided independently by Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) under a separate engagement agreement. They are limited to matters of Colombian law and do not include football agent representation or investment advisory services. [Professional registration: Tarjeta Profesional No. XXXXXX]",
+    'st.p12.note': "Legal services are provided independently by Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) under a separate engagement agreement. They are limited to matters of Colombian law and do not include football agent representation or investment advisory services.",
     'st.growing': 'And the bench keeps growing: legal, sports psychology, performance analytics, player welfare, and marketing specialists are joining the roster.',
     'media.altStadium': 'A professional football stadium at golden hour',
     'media.altQuote': 'A lone football player on a misty floodlit pitch at dusk',
@@ -938,9 +936,7 @@ export const ui = {
     'st.p14.t': "Scout, EMEA",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Asesor Legal, Colombia · Rodríguez & Arboleda Consultoría Legal",
-    // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
-    // PLACEHOLDER: shown (highlighted) on staging only; StaffBody.astro hides Gustavo on production.
-    'st.p12.note': "Los servicios legales son prestados de forma independiente por Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) bajo un acuerdo de servicios separado. Se limitan a asuntos de derecho colombiano y no incluyen representación como agente de fútbol ni asesoría de inversiones. [Registro profesional: Tarjeta Profesional No. XXXXXX]",
+    'st.p12.note': "Los servicios legales son prestados de forma independiente por Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) bajo un acuerdo de servicios separado. Se limitan a asuntos de derecho colombiano y no incluyen representación como agente de fútbol ni asesoría de inversiones.",
     'st.growing': 'Y el equipo sigue creciendo: se están sumando especialistas en lo legal, psicología deportiva, analítica de rendimiento, bienestar del jugador y mercadeo.',
     'media.altStadium': 'Un estadio de fútbol profesional al atardecer',
     'media.altQuote': 'Un jugador de fútbol solo en una cancha iluminada y con niebla al anochecer',
@@ -1632,9 +1628,7 @@ export const ui = {
     'st.p14.t': "Recruteur, EMEA",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Conseiller Juridique, Colombie · Rodríguez & Arboleda Consultoría Legal",
-    // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
-    // PLACEHOLDER: shown (highlighted) on staging only; StaffBody.astro hides Gustavo on production.
-    'st.p12.note': "Les services juridiques sont fournis de manière indépendante par Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) dans le cadre d'un accord séparé. Ils se limitent aux questions de droit colombien et n'incluent pas la représentation d'agent de football ni le conseil en investissement. [Inscription professionnelle : Tarjeta Profesional No. XXXXXX]",
+    'st.p12.note': "Les services juridiques sont fournis de manière indépendante par Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) dans le cadre d'un accord séparé. Ils se limitent aux questions de droit colombien et n'incluent pas la représentation d'agent de football ni le conseil en investissement.",
     'st.growing': "Et l'équipe continue de grandir : des spécialistes du droit, de la psychologie du sport, de l'analyse de performance, du bien-être des joueurs et du marketing rejoignent l'effectif.",
 
     'quote.small': "Le talent vous fait remarquer. La discipline, les bonnes questions et les personnes qui vous protègent construisent une carrière.",
@@ -2312,9 +2306,7 @@ export const ui = {
     'st.p14.t': "Osservatore, EMEA",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Consulente Legale, Colombia · Rodríguez & Arboleda Consultoría Legal",
-    // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
-    // PLACEHOLDER: shown (highlighted) on staging only; StaffBody.astro hides Gustavo on production.
-    'st.p12.note': "I servizi legali sono forniti in modo indipendente da Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) con un accordo separato. Si limitano a questioni di diritto colombiano e non includono rappresentanza come agente di calcio o consulenza sugli investimenti. [Iscrizione professionale: Tarjeta Profesional No. XXXXXX]",
+    'st.p12.note': "I servizi legali sono forniti in modo indipendente da Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) con un accordo separato. Si limitano a questioni di diritto colombiano e non includono rappresentanza come agente di calcio o consulenza sugli investimenti.",
     'st.growing': "E la squadra continua a crescere: specialisti di diritto, psicologia dello sport, analisi delle prestazioni, benessere dei giocatori e marketing si stanno unendo alla rosa.",
 
     'quote.small': "Il talento ti fa notare. La disciplina, le domande giuste e le persone che ti proteggono costruiscono una carriera.",
@@ -2992,9 +2984,7 @@ export const ui = {
     'st.p14.t': "Olheiro, EMEA",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Consultor Jurídico, Colômbia · Rodríguez & Arboleda Consultoría Legal",
-    // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
-    // PLACEHOLDER: shown (highlighted) on staging only; StaffBody.astro hides Gustavo on production.
-    'st.p12.note': "Os serviços jurídicos são prestados de forma independente por Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) ao abrigo de um acordo separado. Limitam-se a matérias de direito colombiano e não incluem representação como agente de futebol nem consultoria de investimentos. [Registo profissional: Tarjeta Profesional No. XXXXXX]",
+    'st.p12.note': "Os serviços jurídicos são prestados de forma independente por Rodríguez & Arboleda Consultoría Legal (Gustavo Eneas Rodríguez Rincón, Abogado) ao abrigo de um acordo separado. Limitam-se a matérias de direito colombiano e não incluem representação como agente de futebol nem consultoria de investimentos.",
     'st.growing': "E a equipa continua a crescer: especialistas em direito, psicologia do desporto, análise de desempenho, bem-estar do jogador e marketing estão a juntar-se ao plantel.",
 
     'quote.small': "O talento faz com que reparem em si. A disciplina, as perguntas certas e as pessoas que o protegem constroem uma carreira.",

@@ -35,12 +35,8 @@ const founded = [
   { name: 'American Premier Soccer League', year: 2014, logo: '/photos/leagues/apsl.jpg', w: 320, h: 102, url: 'https://www.facebook.com/share/19VEQpDfdi/' },
 ];
 
-// Gustavo's disclaimer is unconfirmed placeholder text. It renders, highlighted,
-// on Vercel preview deployments and in local dev only. Every other build (Vercel
-// production, a plain local build, a static upload) leaves his card out.
-// TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production,
-// then delete `pending` and this gate.
-const showPending = process.env.VERCEL_ENV === 'preview' || import.meta.env.DEV;
+// Gustavo's Tarjeta Profesional number is still to come: when it arrives, add it to the
+// end of his disclaimer (st.p12.note) in all five languages.
 
 const divisions = [
   {
@@ -65,7 +61,7 @@ const divisions = [
   {
     key: 'st.div4',
     people: [
-      ...(showPending ? [{ key: 'st.p12', photo: '/photos/gustavo.jpg', note: true, pending: true }] : []),
+      { key: 'st.p12', photo: '/photos/gustavo.jpg', note: true },
       // Carlos: bio + disclaimer per his official one-pager (BM Accountax LLC).
       { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true },
       { key: 'st.p5', photo: '/photos/andres.jpg', blurb: true, note: true },
@@ -101,7 +97,6 @@ const groups: TeamGroup[] = divisions.map((d) => ({
             ? t(lang, `${person.key}.bio`)
             : undefined,
       note: 'note' in person && person.note ? t(lang, `${person.key}.note`) : undefined,
-      pending: 'pending' in person && person.pending ? true : undefined,
       region: 'region' in person && person.region ? t(lang, person.region) : undefined,
     };
   }),
@@ -380,14 +375,6 @@ const personLd = {
     .founded__list {
       grid-template-columns: 1fr;
     }
-  }
-  /* Staging-only marker for unconfirmed placeholder copy (Gustavo's disclaimer). */
-  :global(.pending-confirmation) {
-    background: #fff3a3;
-    color: var(--ink);
-    padding: 1px 3px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
   }
   .staff-growing {
     margin-top: 56px;
