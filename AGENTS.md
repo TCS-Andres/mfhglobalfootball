@@ -6,8 +6,9 @@ This file governs how you build and maintain this repository. Re-read it before 
 MFH Global Football is a FIFA licensed, faith driven football (soccer) agency that represents
 players and coaches and guides families through the path to professional football. This repo is
 the public marketing website at mfhglobal.football. We are in the foundation phase: credibility,
-education, and intake. The single most important goal of the site is to get visitors to book a
-free bilingual consultation.
+education, and intake. The single most important goal of the site is to get visitors to start the
+player questionnaire. The site no longer offers call booking (Oct 2026, Andres): Calendly and every
+"Book a Free Consultation" CTA were removed. Do not re-add self-booking.
 
 ## Source of truth
 The original homepage prototype is at `/reference/mfh_home.html`. It defined the palette,
@@ -191,7 +192,7 @@ English first, Spanish mirror under /es/:
   Families and Youth, framed by FIFA's two categories (Football Agent Services and Other Services)
 - `/about` and `/es/about` — Bert's trajectory, the family business, faith as foundation, the bridge
 - `/the-mfh-plan` and `/es/the-mfh-plan` — the four step journey plus the teaching stories
-- `/contact` and `/es/contact` — consultation booking and footage submission
+- `/contact` and `/es/contact`: the questionnaire entry point and footage submission
 
 Use mirrored English slugs under /es/ for simplicity and consistency. The footer carries the
 Jeremiah 29:11 line and the social links on every page.
@@ -213,13 +214,14 @@ Jeremiah 29:11 line and the social links on every page.
   client JS. Language is determined by the route.
 
 ## Calls to action
-- Primary, on every page: "Book a Free Consultation" / "Agenda una Consulta Gratis", linking to the
-  contact page.
+- Primary, on every page: "Start The Player Questionnaire" (`cta.questionnaire`), linking to
+  /questionnaire. Secondary: "Contact Us" (`cta.consult`), linking to the contact page.
 - Secondary on the hero: "See how it works" / "Conoce cómo funciona", linking to the MFH Plan.
+- The How We Work Together step 4 is "Agent Call" and has no button (no self-booking).
 
-## Forms and booking (final choice still pending from the client)
-- Consultation booking: build the contact page so either a Calendly embed or a simple email form
-  can drop in. Put the embed URL or form endpoint in an environment variable.
+## Forms
+- No consultation booking (Calendly removed Oct 2026). The contact page leads with the
+  questionnaire, then the footage form.
 - Footage submission: collect a link (Google Drive or YouTube) plus name, contact, age group, and
   position. Do not build direct video upload. Match footage is too large for a static form, and a
   link field is the correct pattern.

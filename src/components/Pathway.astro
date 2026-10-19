@@ -9,17 +9,15 @@ const { lang } = Astro.props;
 // "How We Work Together": one section. Five step CARDS carry the copy and the
 // calls to action; below them the same five steps are drawn as a circular
 // ecosystem (headings only, the fancier visual). Player Profile + Evaluation
-// link to Analytic Soccer, Book A Call opens the Calendly booking, the
-// Questionnaire card opens the intake form, Opportunity has no action.
-const bookingUrl = import.meta.env.PUBLIC_BOOKING_URL || 'https://calendly.com/mfhglobal-football';
+// link to Analytic Soccer and the Questionnaire card opens the intake form. Agent Call
+// and Opportunity have no action: the site no longer offers self-booking (Oct 2026).
 const analyticSoccer = 'https://analyticsoccer.com/';
 const stages = [1, 2, 3, 4, 5];
 const cardCta: Record<number, { key: string; href: string; external: boolean }> = {
   1: { key: 'pw.s1.cta', href: localizePath('/questionnaire', lang), external: false },
   2: { key: 'pw.s2.cta', href: analyticSoccer, external: true },
   3: { key: 'pw.s3.cta', href: analyticSoccer, external: true },
-  4: { key: 'pw.s4.cta', href: bookingUrl, external: true },
-  // Opportunity (5) has no call to action.
+  // Agent Call (4) and Opportunity (5) have no call to action.
 };
 
 // Circular ecosystem geometry (viewBox 0..100), kept in sync with the CSS positions.
