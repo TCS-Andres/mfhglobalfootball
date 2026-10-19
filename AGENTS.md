@@ -91,7 +91,8 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   until the Claude API key is supplied. Transfer fee and salary asks are Bert's call: the profile
   prints only what the player reported (release clause, last salary).
 - Official social profiles (provided July 2026): Instagram
-  https://www.instagram.com/mfhglobalfootball/, company LinkedIn
+  https://www.instagram.com/mfhglobalfootball/, Facebook (added Oct 2026)
+  https://www.facebook.com/profile.php?id=61595269360142, company LinkedIn
   https://www.linkedin.com/company/mfh-global-football, and Bert's personal LinkedIn
   https://www.linkedin.com/in/berts. These live in the footer, the founder card, and JSON-LD
   sameAs. There is no YouTube channel yet, do not link one.
