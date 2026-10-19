@@ -9,7 +9,7 @@
 // The map (src/data/world-dots.json) tags its dots with ISO numeric codes, so every country
 // used below also needs an entry in COUNTRY_NUM.
 
-export type Region = 'uefa' | 'concacaf';
+export type Region = 'uefa' | 'concacaf' | 'conmebol';
 
 export interface Affiliate {
   id: string;
@@ -28,16 +28,25 @@ export interface Affiliate {
 }
 
 // Europe first, then the Americas (site rule: Europe, USA, Colombia order).
-export const REGIONS: Region[] = ['uefa', 'concacaf'];
+export const REGIONS: Region[] = ['uefa', 'concacaf', 'conmebol'];
 
 export const AFFILIATES: Affiliate[] = [
   {
     id: 'sousa',
     org: 'Sousa Football Agents',
     region: 'uefa',
-    based: ['ES', 'PT'],
+    based: ['ES', 'PT', 'VE'],
     focus: ['ES', 'PT', 'VE', 'MX'],
     transfermarkt: 'https://www.transfermarkt.com/sousa-football-agents/beraterfirma/berater/16350',
+  },
+  {
+    // Works from Madrid and Bogota; listed under Europe, where it is headquartered first.
+    id: 'barron',
+    org: 'Barron Management',
+    city: 'Madrid, Bogotá',
+    region: 'uefa',
+    based: ['ES', 'CO'],
+    focus: ['ES', 'CO'],
   },
   {
     id: 'oceanusport',
@@ -57,11 +66,20 @@ export const AFFILIATES: Affiliate[] = [
     focus: ['ES'],
   },
   {
-    id: 'agent-mexico',
-    role: 'aff.role.indAgent',
+    // Formerly listed as an unnamed independent FIFA agent (Mexico and UK).
+    id: 'tufg',
+    org: 'The United Football Group',
     region: 'concacaf',
     based: ['MX', 'GB'],
     focus: ['MX'],
+  },
+  {
+    id: 'playgold',
+    org: 'Play Gold Agency',
+    city: 'Manizales',
+    region: 'conmebol',
+    based: ['CO'],
+    focus: ['CO'],
   },
 ];
 
@@ -71,6 +89,10 @@ export const PIN_AT: Record<string, { lat: number; lng: number }> = {
   PT: { lat: 38.72, lng: -9.14 },
   GB: { lat: 51.51, lng: -0.13 },
   MX: { lat: 19.43, lng: -99.13 },
+  VE: { lat: 10.48, lng: -66.9 },
+  // Colombia's affiliate pin sits on the north coast (near Cartagena) instead of the capital,
+  // so it does not cover MFH's own Colombia pin in Bogota. Cards still show the real cities.
+  CO: { lat: 10.39, lng: -75.51 },
 };
 
 // MFH's own bases. The arcs on the map start from South Florida.
