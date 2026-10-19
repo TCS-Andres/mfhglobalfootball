@@ -15,10 +15,11 @@ const { lang } = Astro.props;
 // Structure and titles per MFH's title list (Oct 2026), in this order: Executive
 // Leadership (Bert in the featured founder section, then Fabian and Maria), Scouting
 // grouped by region with each region's head first (North America, Latin America,
-// EMEA), then Advisors, who are external to MFH and carry a disclaimer. Bert is the
+// Europe, Middle East & Africa), then Advisors, who are external to MFH and carry a disclaimer. Bert is the
 // only person described as an agent. Scouting and Advisor titles never use "agent",
 // "director", "manager" or "VP", and no title names a country except Gustavo's
-// (Colombia). Do not reorder or retitle without the client.
+// (Colombia). Region headings are spelled out; the region inside a title is
+// abbreviated (NAM, LATAM, EMEA). Do not reorder or retitle without the client.
 //
 // Members without a headshot (Gustavo, Maria) get an initials tile until photos
 // arrive. A member gets an expandable `blurb` only when they have approved copy:
@@ -57,6 +58,8 @@ const divisions = [
       { key: 'st.p4', photo: '/photos/john.jpg', region: 'st.reg.la' },
       { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', region: 'st.reg.la' },
       { key: 'st.p13', photo: '/photos/abdellah.jpg', blurb: true, region: 'st.reg.emea' },
+      // Jose Francisco Garcia Quevedo (Spain): no headshot yet, so an initials tile.
+      { key: 'st.p14', region: 'st.reg.emea' },
     ],
   },
   {
