@@ -65,8 +65,11 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   Florida Soccer League 2004, South Florida FC 2011, South Florida Youth Soccer League 2013,
   American Premier Soccer League 2014, each with its logo and Facebook link.
   Miguel Benito was removed at the client's request (Oct 2026); Phil Zayas was removed earlier.
-  Gustavo and Maria have no headshot yet and show initials tiles. Bios (`blurb`) exist only
-  for Fabian, Andres, and Ezzy. Ezzy's headshot (Oct 2026) is his own photo with only the
+  Maria and Gustavo got headshots on Oct 19 2026 (their own photos restyled to the house style).
+  New headshots ship at 600px progressive JPEG, metadata stripped (tiles never render wider than
+  192px, so 600px stays sharp at 3x). Bios (`blurb`) exist only
+  for Fabian, Andres, Ezzy, and Abdellah (his own text, Oct 19 2026, rewritten in the third
+  person with "securing" trials softened to "arranging", since the site never promises outcomes). Ezzy's headshot (Oct 2026) is his own photo with only the
   background replaced, because the earlier generated one did not look like him.
   All staff headshots are approved by the people shown (Oct 2026). House style for any new
   headshot: navy jacket, open-collar dress shirt, no tie, soft light grey studio backdrop.

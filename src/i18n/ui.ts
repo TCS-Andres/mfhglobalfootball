@@ -226,6 +226,7 @@ export const ui = {
     'st.p10.t': "Scout — Cali",
     'st.p13.n': "Abdellah El Jalaoui",
     'st.p13.t': "Scout — EMEA",
+    'st.p13.blurb': "A football consultant and the founder of Jalawi Talents Pathways, Abdellah El Jalaoui was scouted by the Real Madrid Academy at a young age and went on to play competitive football across Morocco, Spain, France, and England. Drawing on that first-hand experience, he has spent years building direct club networks and pathways for emerging talent. Today, as a UEFA and FA qualified coach and scout, he focuses on running international training camps, organizing professional player showcases, and arranging academy trials across the UK, Europe, and North Africa.",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Legal Counsel — Colombia",
     // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
@@ -866,6 +867,7 @@ export const ui = {
     'st.p10.t': "Scout — Cali",
     'st.p13.n': "Abdellah El Jalaoui",
     'st.p13.t': "Scout — EMEA",
+    'st.p13.blurb': "Consultor de fútbol y fundador de Jalawi Talents Pathways, Abdellah El Jalaoui fue descubierto desde muy joven por la academia del Real Madrid y luego jugó fútbol competitivo en Marruecos, España, Francia e Inglaterra. A partir de esa experiencia de primera mano, ha dedicado años a construir redes directas con clubes y caminos para el talento emergente. Hoy, como entrenador y scout con titulaciones de la UEFA y de la FA, se enfoca en dirigir campamentos de entrenamiento internacionales, organizar showcases de jugadores profesionales y gestionar pruebas en academias del Reino Unido, Europa y el norte de África.",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Asesor Legal — Colombia",
     // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
@@ -1498,6 +1500,7 @@ export const ui = {
     'st.p10.t': "Recruteur — Cali",
     'st.p13.n': "Abdellah El Jalaoui",
     'st.p13.t': "Recruteur — EMEA",
+    'st.p13.blurb': "Consultant en football et fondateur de Jalawi Talents Pathways, Abdellah El Jalaoui a été repéré très jeune par l'académie du Real Madrid, puis a joué en compétition au Maroc, en Espagne, en France et en Angleterre. Fort de cette expérience vécue, il a passé des années à bâtir des réseaux directs avec les clubs et des parcours pour les jeunes talents. Aujourd'hui entraîneur et recruteur diplômé de l'UEFA et de la FA, il se consacre à l'organisation de stages internationaux, de showcases de joueurs professionnels et d'essais en académie au Royaume-Uni, en Europe et en Afrique du Nord.",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Conseiller Juridique — Colombie",
     // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
@@ -2116,6 +2119,7 @@ export const ui = {
     'st.p10.t': "Osservatore — Cali",
     'st.p13.n': "Abdellah El Jalaoui",
     'st.p13.t': "Osservatore — EMEA",
+    'st.p13.blurb': "Consulente calcistico e fondatore di Jalawi Talents Pathways, Abdellah El Jalaoui è stato notato giovanissimo dall'accademia del Real Madrid e ha poi giocato a livello competitivo in Marocco, Spagna, Francia e Inghilterra. Forte di questa esperienza diretta, ha dedicato anni a costruire reti dirette con i club e percorsi per i giovani talenti. Oggi, come allenatore e osservatore qualificato UEFA e FA, si occupa di gestire camp di allenamento internazionali, organizzare showcase per giocatori professionisti e provini in accademia nel Regno Unito, in Europa e in Nord Africa.",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Consulente Legale — Colombia",
     // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.
@@ -2734,6 +2738,7 @@ export const ui = {
     'st.p10.t': "Olheiro — Cali",
     'st.p13.n': "Abdellah El Jalaoui",
     'st.p13.t': "Olheiro — EMEA",
+    'st.p13.blurb': "Consultor de futebol e fundador da Jalawi Talents Pathways, Abdellah El Jalaoui foi descoberto muito jovem pela academia do Real Madrid e jogou depois a nível competitivo em Marrocos, Espanha, França e Inglaterra. Com base nessa experiência vivida, passou anos a construir redes diretas com clubes e percursos para talentos emergentes. Hoje, como treinador e olheiro qualificado pela UEFA e pela FA, dedica-se a gerir campos de treino internacionais, organizar showcases de jogadores profissionais e provas em academias no Reino Unido, na Europa e no Norte de África.",
     'st.p12.n': "Gustavo Rodriguez",
     'st.p12.t': "Consultor Jurídico — Colômbia",
     // TODO: replace with confirmed disclaimer from Gustavo Rodriguez before production.

@@ -20,7 +20,7 @@ const { lang } = Astro.props;
 //
 // Members without a headshot (Gustavo, Maria) get an initials tile until photos
 // arrive. A member gets an expandable `blurb` only when they have approved copy:
-// Fabian (p6), Andres (p5), and Ezzy (p2). Carlos expands to his independent
+// Fabian (p6), Andres (p5), Ezzy (p2), and Abdellah (p13). Carlos expands to his independent
 // partner bio. Advisor disclaimers (`note`) are always visible.
 
 // Leagues and clubs Bert founded, owned, and presided over (his own list, Oct 2026).
@@ -48,17 +48,17 @@ const divisions = [
       { key: 'st.p3', photo: '/photos/sebastian.jpg', region: 'st.reg.usa' },
       { key: 'st.p4', photo: '/photos/john.jpg', region: 'st.reg.col' },
       { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', region: 'st.reg.col' },
-      { key: 'st.p13', photo: '/photos/abdellah.jpg', region: 'st.reg.emea' },
+      { key: 'st.p13', photo: '/photos/abdellah.jpg', blurb: true, region: 'st.reg.emea' },
     ],
   },
-  { key: 'st.div3', people: [{ key: 'st.p7' }] },
+  { key: 'st.div3', people: [{ key: 'st.p7', photo: '/photos/maria.jpg' }] },
   {
     key: 'st.div4',
     people: [
       // Carlos: bio + disclaimer per his official one-pager (BM Accountax LLC).
       { key: 'st.p8', photo: '/photos/carlos.jpg', bio: true, note: true },
       { key: 'st.p5', photo: '/photos/andres.jpg', blurb: true, note: true },
-      ...(showPending ? [{ key: 'st.p12', note: true, pending: true }] : []),
+      ...(showPending ? [{ key: 'st.p12', photo: '/photos/gustavo.jpg', note: true, pending: true }] : []),
     ],
   },
 ];
