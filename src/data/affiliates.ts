@@ -1,8 +1,9 @@
 // Global Affiliates (About > Global Affiliates, /affiliates).
 //
 // Affiliates are independent agents, agencies, and scouts who work with MFH. They are not
-// staff: never give them MFH titles. The page shows organization names only, never the names
-// of individual people (Andres, Oct 19 2026). An affiliate without an organization is shown
+// staff: never give them MFH titles. Affiliates show organization names only, never the names
+// of individual people (Andres, Oct 19 2026). MFH's own scouts (SCOUTS below) are the
+// exception: they show name and title, exactly as on the Team page. An affiliate without an organization is shown
 // by its role, e.g. "Independent Scout". Countries use ISO 3166 alpha-2 codes; the page prints
 // each name in the visitor's language with Intl.DisplayNames.
 //
@@ -110,3 +111,25 @@ export const COUNTRY_NUM: Record<string, string> = {
   US: '840',
   VE: '862',
 };
+
+// MFH's own scouts, in the Team page order (North America, Latin America, then Europe,
+// Middle East & Africa). Names and titles come from the Team page keys (st.pN.n / st.pN.t), so
+// both pages always agree. `pin` is the map pin they join: an MFH base ('base-fl', 'base-co')
+// or a country pin. Carlos (Cali) shares the Colombia pin because Cali sits too close to Bogota
+// for its own pin; Jose Francisco (Valencia) and Abdellah (England) join the Spain and UK pins.
+export interface Scout {
+  key: string;
+  photo?: string;
+  country: string;
+  region: string;
+  pin: string;
+}
+
+export const SCOUTS: Scout[] = [
+  { key: 'st.p2', photo: '/photos/ezzy.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
+  { key: 'st.p3', photo: '/photos/sebastian.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
+  { key: 'st.p4', photo: '/photos/john.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
+  { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
+  { key: 'st.p13', photo: '/photos/abdellah.jpg', country: 'GB', region: 'st.reg.emea', pin: 'GB' },
+  { key: 'st.p14', country: 'ES', region: 'st.reg.emea', pin: 'ES' },
+];

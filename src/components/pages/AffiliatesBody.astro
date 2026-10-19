@@ -9,7 +9,7 @@ import { geoNaturalEarth1 } from 'd3-geo';
 import { t, type Lang } from '../../i18n/ui';
 import CtaBanner from '../CtaBanner.astro';
 import world from '../../data/world-dots.json';
-import { AFFILIATES, REGIONS, PIN_AT, MFH_BASES, COUNTRY_NUM, type Affiliate } from '../../data/affiliates';
+import { AFFILIATES, REGIONS, PIN_AT, MFH_BASES, COUNTRY_NUM, SCOUTS, type Affiliate, type Scout } from '../../data/affiliates';
 
 interface Props {
   lang: Lang;
@@ -35,17 +35,35 @@ const regionName = new Intl.DisplayNames([lang === 'pt' ? 'pt-PT' : lang], { typ
 const country = (cc: string) => regionName.of(cc) ?? cc;
 const unique = <T,>(xs: T[]) => [...new Set(xs)];
 
-// One pin per country an affiliate works from.
+// MFH scouts join a base pin or a country pin (see SCOUTS). Cards and pins share ids so
+// hovering either one lights up the other.
+const scoutId = (sc: Scout) => `scout-${sc.key.replace('st.', '')}`;
+const scoutsAt = (pin: string) => SCOUTS.filter((sc) => sc.pin === pin);
+
+// One pin per country an affiliate works from. A pin that also hosts MFH scouts is drawn
+// as an MFH pin (white), since MFH has its own people there.
 const pins = unique(AFFILIATES.flatMap((a) => a.based)).map((cc) => {
   const affs = AFFILIATES.filter((a) => a.based.includes(cc));
+  const scouts = scoutsAt(cc);
   return {
     cc,
     ...project(PIN_AT[cc].lat, PIN_AT[cc].lng),
     affs,
-    lights: unique(affs.flatMap((a) => [...a.based, ...a.focus])),
+    scouts,
+    ids: [...scouts.map(scoutId), ...affs.map((a) => a.id)],
+    lights: unique([...scouts.map((sc) => sc.country), ...affs.flatMap((a) => [...a.based, ...a.focus])]),
   };
 });
-const bases = MFH_BASES.map((b) => ({ ...b, ...project(b.lat, b.lng) }));
+const bases = MFH_BASES.map((b) => {
+  const scouts = scoutsAt(`base-${b.id}`);
+  return {
+    ...b,
+    ...project(b.lat, b.lng),
+    scouts,
+    ids: scouts.map(scoutId),
+    lights: unique([b.country, ...scouts.map((sc) => sc.country)]),
+  };
+});
 const home = bases[0];
 
 // Gentle arcs from the South Florida home base to every pin and to Colombia.
@@ -57,14 +75,18 @@ const arc = (from: { x: number; y: number }, to: { x: number; y: number }) => {
 };
 const arcs = [
   ...bases.slice(1).map((b) => ({ id: `base-${b.id}`, d: arc(home, b), base: true })),
-  ...pins.map((p) => ({ id: p.cc, d: arc(home, p), base: false })),
+  ...pins.map((p) => ({ id: p.cc, d: arc(home, p), base: p.scouts.length > 0 })),
 ];
 
 // Country layers: MFH bases glow softly, affiliate countries are tinted, and every
 // country an affiliate covers can light up gold on hover.
 const baseCountries = MFH_BASES.map((b) => b.country);
 const presence = unique(AFFILIATES.flatMap((a) => a.based));
-const lightable = unique(AFFILIATES.flatMap((a) => [...a.based, ...a.focus]));
+const lightable = unique([
+  ...SCOUTS.map((sc) => sc.country),
+  ...MFH_BASES.map((b) => b.country),
+  ...AFFILIATES.flatMap((a) => [...a.based, ...a.focus]),
+]);
 
 // Where each tooltip opens, so it never runs off the map.
 const tipSide = (x: number, y: number) =>
@@ -94,6 +116,7 @@ const cropVars = [
 const title = (a: Affiliate) => a.org ?? (a.role ? t(lang, a.role) : '');
 const stats = [
   { n: AFFILIATES.length, label: t(lang, 'aff.stat.affiliates') },
+  { n: SCOUTS.length, label: t(lang, 'aff.stat.scouts') },
   { n: lightable.length, label: t(lang, 'aff.stat.countries') },
   { n: REGIONS.length, label: t(lang, 'aff.stat.regions') },
 ];
@@ -138,7 +161,8 @@ const stats = [
               class="aff-pin aff-pin--base"
               style={`left:${pct(b.x, W)};top:${pct(b.y, H)};--i:${i}`}
               data-pin={`base-${b.id}`}
-              data-lights={b.country}
+              data-lights={b.lights.join(' ')}
+              data-affs={b.ids.join(' ')}
               aria-controls={`aff-tip-base-${b.id}`}
               aria-expanded="false"
             >
@@ -148,11 +172,11 @@ const stats = [
           {pins.map((p, i) => (
             <button
               type="button"
-              class="aff-pin"
+              class:list={['aff-pin', p.scouts.length > 0 && 'aff-pin--base']}
               style={`left:${pct(p.x, W)};top:${pct(p.y, H)};--i:${i + bases.length}`}
               data-pin={p.cc}
               data-lights={p.lights.join(' ')}
-              data-affs={p.affs.map((a) => a.id).join(' ')}
+              data-affs={p.ids.join(' ')}
               aria-controls={`aff-tip-${p.cc}`}
               aria-expanded="false"
             >
@@ -174,6 +198,16 @@ const stats = [
         >
           <p class="aff-tip__kicker">MFH Global Football Agency</p>
           <p class="aff-tip__title">{t(lang, b.label)}</p>
+          {b.scouts.length > 0 && (
+            <ul class="aff-tip__scouts">
+              {b.scouts.map((sc) => (
+                <li>
+                  <p class="aff-tip__name">{t(lang, `${sc.key}.n`)}</p>
+                  <p class="aff-tip__sub">{t(lang, `${sc.key}.t`)}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       ))}
       {pins.map((p) => (
@@ -187,6 +221,20 @@ const stats = [
           hidden
         >
           <p class="aff-tip__kicker">{country(p.cc)}</p>
+          {p.scouts.length > 0 && (
+            <>
+              <p class="aff-tip__group">MFH Global Football Agency</p>
+              <ul class="aff-tip__scouts">
+                {p.scouts.map((sc) => (
+                  <li>
+                    <p class="aff-tip__name">{t(lang, `${sc.key}.n`)}</p>
+                    <p class="aff-tip__sub">{t(lang, `${sc.key}.t`)}</p>
+                  </li>
+                ))}
+              </ul>
+              <p class="aff-tip__group">{t(lang, 'aff.tip.affiliates')}</p>
+            </>
+          )}
           <ul>
             {p.affs.map((a) => (
               <li>
@@ -203,7 +251,7 @@ const stats = [
 
     <div class="aff-legend">
       <ul>
-        <li><i class="aff-key aff-key--base"></i>MFH Global Football Agency</li>
+        <li><i class="aff-key aff-key--base"></i>{t(lang, 'aff.legend.team')}</li>
         <li><i class="aff-key aff-key--pin"></i>{t(lang, 'aff.legend.affiliate')}</li>
         <li><i class="aff-key aff-key--focus"></i>{t(lang, 'aff.legend.focus')}</li>
       </ul>
@@ -216,6 +264,45 @@ const stats = [
   <div class="wrap">
     <span class="eyebrow"><i class="pent"></i><span>{t(lang, 'aff.listEyebrow')}</span></span>
     <h2>{t(lang, 'aff.listH2')}</h2>
+
+    <div class="aff-region">
+      <h3 class="aff-region__name">{t(lang, 'aff.scouts.h')}</h3>
+      <div class="aff-grid">
+        {SCOUTS.map((sc, i) => (
+          <article
+            class="aff-card aff-card--scout reveal"
+            style={`--d:${i * 80}ms`}
+            data-aff-card={scoutId(sc)}
+            data-pins={sc.pin}
+            data-lights={sc.country}
+          >
+            <div class="aff-scout">
+              {sc.photo ? (
+                <img class="aff-scout__photo" src={sc.photo} alt="" width="64" height="64" loading="lazy" decoding="async" />
+              ) : (
+                <span class="aff-scout__photo aff-scout__initials" aria-hidden="true">
+                  {t(lang, `${sc.key}.n`).split(' ').slice(0, 2).map((w) => w[0]).join('')}
+                </span>
+              )}
+              <div>
+                <h4>{t(lang, `${sc.key}.n`)}</h4>
+                <p class="aff-card__role">{t(lang, `${sc.key}.t`)}</p>
+              </div>
+            </div>
+            <dl>
+              <div>
+                <dt>{t(lang, 'aff.basedIn')}</dt>
+                <dd><span class="aff-chip">{country(sc.country)}</span></dd>
+              </div>
+              <div>
+                <dt>{t(lang, 'aff.regionLabel')}</dt>
+                <dd><span class="aff-chip aff-chip--gold">{t(lang, sc.region)}</span></dd>
+              </div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </div>
 
     {REGIONS.map((r) => (
       <div class="aff-region">
@@ -354,7 +441,10 @@ const stats = [
       var(--blue-deep);
     color: #fff;
     padding: clamp(72px, 12vw, 120px) 0 clamp(40px, 6vw, 64px);
-    overflow: hidden;
+    /* No overflow clipping: a busy pin's card may run past the bottom of the section.
+       Sideways overflow is already clipped by main. */
+    position: relative;
+    z-index: 1;
   }
   .aff-hero .pent {
     background-image: url('/logos/ball.png');
@@ -624,6 +714,40 @@ const stats = [
     line-height: 1.2;
     margin: 0;
   }
+  .aff-tip__group {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+  }
+  .aff-tip .aff-tip__scouts {
+    margin-bottom: 12px;
+  }
+  .aff-tip--base .aff-tip__scouts {
+    margin: 10px 0 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .aff-tip__scouts li + li {
+    margin-top: 6px;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .aff-tip__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .aff-tip__sub {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    margin: 1px 0 0;
+  }
   .aff-tip__focus {
     font-size: 0.86rem;
     margin: 6px 0 0;
@@ -747,6 +871,28 @@ const stats = [
     font-size: 1.2rem;
     line-height: 1.2;
     margin: 0;
+  }
+  .aff-scout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .aff-scout__photo {
+    width: 64px;
+    height: 64px;
+    flex: none;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--sky);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--gold);
+  }
+  .aff-scout__initials {
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--blue-deep);
   }
   .aff-card__role {
     margin-top: 4px;
