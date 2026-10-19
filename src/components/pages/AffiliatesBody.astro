@@ -90,9 +90,8 @@ const cropVars = [
   `--crop-y:${((-crop.y0 / cropW) * 100).toFixed(2)}%`,
 ].join(';');
 
-// Organizations are titled by name with their role underneath; independents by their role.
+// Organizations are titled by name; independents by their role.
 const title = (a: Affiliate) => a.org ?? (a.role ? t(lang, a.role) : '');
-const roleLine = (a: Affiliate) => [a.org && a.role ? t(lang, a.role) : '', a.city ?? ''].filter(Boolean).join(', ');
 const stats = [
   { n: AFFILIATES.length, label: t(lang, 'aff.stat.affiliates') },
   { n: lightable.length, label: t(lang, 'aff.stat.countries') },
@@ -192,7 +191,6 @@ const stats = [
             {p.affs.map((a) => (
               <li>
                 <p class="aff-tip__title">{title(a)}</p>
-                {roleLine(a) && <p class="aff-tip__role">{roleLine(a)}</p>}
                 <p class="aff-tip__focus">
                   <span>{t(lang, 'aff.focus')}:</span> {a.focus.map(country).join(', ')}
                 </p>
@@ -625,11 +623,6 @@ const stats = [
     font-size: 1.02rem;
     line-height: 1.2;
     margin: 0;
-  }
-  .aff-tip__role {
-    font-size: 0.92rem;
-    color: var(--ink-soft);
-    margin: 2px 0 0;
   }
   .aff-tip__focus {
     font-size: 0.86rem;
