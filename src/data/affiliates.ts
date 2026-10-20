@@ -113,6 +113,7 @@ export interface Scout {
 export const SCOUTS: Scout[] = [
   { key: 'st.p2', photo: '/photos/ezzy.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
   { key: 'st.p3', photo: '/photos/sebastian.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
+  { key: 'st.p15', photo: '/photos/christian.jpg', country: 'US', region: 'st.reg.na', pin: 'base-fl' },
   { key: 'st.p4', photo: '/photos/john.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
   { key: 'st.p10', photo: '/photos/andres-hernandez.jpg', country: 'CO', region: 'st.reg.la', pin: 'base-co' },
   { key: 'st.p14', country: 'ES', region: 'st.reg.emea', pin: 'ES' },

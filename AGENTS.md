@@ -46,7 +46,9 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   Football Agent, featured founder section), Fabian Mahecha (Chief Operating Officer, no acronym),
   Maria del Pilar Alvarez (Executive Assistant; "to the President & CEO" dropped Oct 19 2026, Andres). Scouting & Player
   Development, by region, head first: North America (Ezzy Ihekoronye, Head of Scouting; Sebastian
-  Mahecha, Scout), Latin America (John Mahecha, Head of Scouting; Carlos A. Hernandez,
+  Mahecha, Scout; Christian Lopez, Scout, added Oct 19 2026 from Bert's career list, Colombian
+  former pro, headshot restyled to the house style from his own photo, pending his approval),
+  Latin America (John Mahecha, Head of Scouting; Carlos A. Hernandez,
   Scout), Europe, Middle East & Africa (Jose F. Garcia Quevedo, Head of Scouting, based in
   Spain, initials tile until a headshot arrives, made head Oct 19 2026 by Andres; Abdellah El
   Jalaoui, Scout). Region headings are spelled
@@ -69,7 +71,7 @@ reveals, parallax, count-up stats) but always disabled under prefers-reduced-mot
   Maria and Gustavo got headshots on Oct 19 2026 (their own photos restyled to the house style).
   New headshots ship at 600px progressive JPEG, metadata stripped (tiles never render wider than
   192px, so 600px stays sharp at 3x). Bios (`blurb`) exist only
-  for Fabian, Andres, Ezzy, and Abdellah (his own text, Oct 19 2026, rewritten in the third
+  for Fabian, Andres, Ezzy, Christian (drawn from Bert's list of his clubs), and Abdellah (his own text, Oct 19 2026, rewritten in the third
   person with "securing" trials softened to "arranging", since the site never promises outcomes). Ezzy's headshot (Oct 2026) is his own photo with only the
   background replaced, because the earlier generated one did not look like him.
   All staff headshots are approved by the people shown (Oct 2026). House style for any new
