@@ -46,12 +46,16 @@ const T = {
   required: isEs ? 'obligatorio' : 'required',
   empty: isEs ? '(sin responder)' : '(not answered)',
   done: isEs ? '¡Listo!' : 'All done!',
+  almost: isEs ? 'Casi listo' : 'Almost Done',
   doneMsg: isEs
     ? 'Tu PDF se ha descargado y hemos recibido tus respuestas. Bert revisará el envío y te contactará para agendar tu consulta.'
     : 'Your PDF has downloaded and we have received your answers. Bert will review the submission and reach out to schedule your consultation.',
   failMsg: isEs
-    ? 'Tu PDF se ha descargado, pero no pudimos enviar tus respuestas automáticamente. Por favor envía el PDF descargado por correo a info@mfhglobal.football para que lo recibamos.'
-    : 'Your PDF has downloaded, but we could not send your answers automatically. Please email the downloaded PDF to info@mfhglobal.football so our team receives it.',
+    ? 'Todavía no pudimos enviar tus respuestas. Toca "Intentar de nuevo". Si aún no se envían, descarga tu PDF y envíalo por correo a info@mfhglobal.football para que lo recibamos. Si abriste este enlace dentro de una app como WhatsApp o Instagram, abrirlo en Safari o Chrome también ayuda.'
+    : 'We could not send your answers just yet. Please tap "Try Sending Again". If it still does not go through, download your PDF and email it to info@mfhglobal.football so our team receives it. If you opened this link inside an app such as WhatsApp or Instagram, opening it in Safari or Chrome also helps.',
+  retry: isEs ? 'Intentar de nuevo' : 'Try Sending Again',
+  downloadPdf: isEs ? 'Descargar mi PDF' : 'Download My PDF',
+  sending: isEs ? 'Enviando tus respuestas...' : 'Sending your answers...',
   saving: isEs ? 'Generando tu PDF...' : 'Building your PDF...',
   step: isEs ? 'Paso' : 'Step',
   of: isEs ? 'de' : 'of',
@@ -181,9 +185,16 @@ const T = {
       <!-- Done -->
       <div class="q-panel" data-step="done" hidden>
         <div class="panel-card q-done">
-          <h2>{T.done}</h2>
+          <h2><span data-done-ok>{T.done}</span><span data-done-fail hidden>{T.almost}</span></h2>
           <p data-done-ok>{T.doneMsg}</p>
-          <p class="q-fail" data-done-fail hidden>{T.failMsg}</p>
+          <div data-done-fail hidden>
+            <p class="q-fail">{T.failMsg}</p>
+            <div class="q-fail__actions">
+              <button type="button" class="btn btn-primary" data-retry>{T.retry}</button>
+              <button type="button" class="btn btn-outline" data-download-pdf>{T.downloadPdf}</button>
+            </div>
+            <p class="q-saving" data-retrying hidden>{T.sending}</p>
+          </div>
         </div>
       </div>
     </form>
@@ -467,18 +478,72 @@ const T = {
     const escapeHtml = (s) =>
       s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-    // Submit: fill PDF client-side, download, POST answers
+    // Submit: fill the PDF client-side, send the answers to Bert, THEN download the player's copy.
+    // The send must come first: some phone browsers (in-app browsers such as WhatsApp or
+    // Instagram) cannot save a blob download and treat it as a page navigation, which cancels
+    // any request still in flight. Sending first means Bert gets the submission either way.
+    let lastBody = '';
+    let lastPdf = null;
+    let lastPdfName = '';
+    const endpoint = window.__Q_ENDPOINT__ || '/api/intake';
+
+    // POST the answers, retrying a dropped connection or a server hiccup. A 4xx other than
+    // 408/429 is final, so there is no point repeating it.
+    const send = async (body) => {
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+          });
+          // Only claim success when the server actually accepted it. A silent
+          // failure (e.g. a 413 on an oversized body) must not look like success.
+          if (res.ok) return true;
+          if (res.status < 500 && res.status !== 408 && res.status !== 429) return false;
+        } catch (err) {
+          /* network error: retry below */
+        }
+        if (attempt < 3) await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+      return false;
+    };
+
+    // Save the player's copy. The object URL is released later, not right away, so slower
+    // browsers can still read it.
+    const downloadPdf = () => {
+      if (!lastPdf) return;
+      try {
+        const url = URL.createObjectURL(new Blob([lastPdf], { type: 'application/pdf' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = lastPdfName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      } catch (err) {
+        console.error('PDF download failed', err);
+      }
+    };
+
+    const showResult = (delivered) => {
+      form.querySelectorAll('[data-done-ok]').forEach((el) => (el.hidden = !delivered));
+      form.querySelectorAll('[data-done-fail]').forEach((el) => (el.hidden = delivered));
+    };
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const saving = form.querySelector('[data-saving]');
       saving.hidden = false;
+      form.querySelector('[data-submit]').disabled = true;
       computeAge();
       const answers = {};
       schema.forEach((s) => s.fields.forEach((f) => (answers[f.id] = val(f.id))));
       answers.who = val_who();
       answers.age = val('q3');
       let pdfBase64 = '';
-      const pdfFilename = `MFH-Player-Intake-${(answers.q1 || 'player').replace(/\s+/g, '-')}.pdf`;
+      lastPdfName = `MFH-Player-Intake-${(answers.q1 || 'player').replace(/\s+/g, '-')}.pdf`;
       try {
         const bytes = await fetch('/docs/player-intake-template.pdf').then((r) => r.arrayBuffer());
         const pdf = await PDFDocument.load(bytes);
@@ -500,59 +565,48 @@ const T = {
             }
           })
         );
-        const out = await pdf.save();
+        lastPdf = await pdf.save();
         // base64 copy of the filled PDF, for the intake email attachment
-        const outBytes = new Uint8Array(out);
+        const outBytes = new Uint8Array(lastPdf);
         let bin = '';
         const CH = 0x8000;
         for (let i = 0; i < outBytes.length; i += CH) bin += String.fromCharCode.apply(null, outBytes.subarray(i, i + CH));
         pdfBase64 = btoa(bin);
-        // download a copy for the player
-        const blob = new Blob([out], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = pdfFilename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
       } catch (err) {
         console.error('PDF generation failed', err);
       }
       // Email the submission and the filled PDF to the intake inbox.
       // Defaults to our own /api/intake serverless function (Resend); can be
       // overridden with PUBLIC_QUESTIONNAIRE_ENDPOINT if a different backend is used.
-      const endpoint = window.__Q_ENDPOINT__ || '/api/intake';
       // Final safety net: the photo is already compressed to a budget, but if the
       // whole body would still exceed Vercel's ~4.5MB cap (e.g. a very large PDF),
       // drop the photo so the answers and PDF still reach Bert rather than 413-ing.
       const BODY_LIMIT = 4_300_000;
-      const base = { answers, pdfBase64, filename: pdfFilename, lang: form.dataset.lang };
-      let bodyStr = JSON.stringify({ ...base, photoBase64: photo.data });
-      if (bodyStr.length > BODY_LIMIT && photo.data) bodyStr = JSON.stringify(base);
-      let delivered = false;
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: bodyStr,
-        });
-        // Only claim success when the server actually accepted it. A silent
-        // failure (e.g. a 413 on an oversized body) must not look like success.
-        delivered = res.ok;
-      } catch (err) {
-        delivered = false;
-      }
+      const base = { answers, pdfBase64, filename: lastPdfName, lang: form.dataset.lang };
+      lastBody = JSON.stringify({ ...base, photoBase64: photo.data });
+      if (lastBody.length > BODY_LIMIT && photo.data) lastBody = JSON.stringify(base);
+      const delivered = await send(lastBody);
       saving.hidden = true;
-      // Switch the confirmation message to the email fallback when delivery failed,
+      form.querySelector('[data-submit]').disabled = false;
+      // Switch the confirmation message to the retry panel when delivery failed,
       // so the player (and Bert) are not told it went through when it did not.
-      const okMsg = form.querySelector('[data-done-ok]');
-      const failMsg = form.querySelector('[data-done-fail]');
-      if (okMsg) okMsg.hidden = delivered === false;
-      if (failMsg) failMsg.hidden = delivered !== false;
+      showResult(delivered);
       show(stepOrder.indexOf('done'));
+      downloadPdf();
     });
+
+    // Failure panel: try the same submission again, or save the PDF to email it.
+    const retryBtn = form.querySelector('[data-retry]');
+    retryBtn?.addEventListener('click', async () => {
+      const retrying = form.querySelector('[data-retrying]');
+      retryBtn.disabled = true;
+      retrying.hidden = false;
+      const delivered = await send(lastBody);
+      retrying.hidden = true;
+      retryBtn.disabled = false;
+      showResult(delivered);
+    });
+    form.querySelector('[data-download-pdf]')?.addEventListener('click', downloadPdf);
 
     show(0);
   }
@@ -737,6 +791,13 @@ const T = {
     margin-top: 14px;
     color: var(--blue);
     font-weight: 700;
+  }
+  .q-fail__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
   }
   .q-done {
     text-align: center;
